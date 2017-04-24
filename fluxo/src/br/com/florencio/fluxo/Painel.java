@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
+	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
 	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
 	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_comentario"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
@@ -75,6 +76,7 @@ public class Painel extends JPanel {
 		popup.add(menuItemVerde);
 		popup.add(menuItemAzul);
 		popup.add(menuItemPadrao);
+		popup.add(menuItemPadraoHierarquia);
 		popup.addSeparator();
 		popup.add(menuItemComentario);
 	}
@@ -457,6 +459,18 @@ public class Painel extends JPanel {
 
 				if (objeto != null) {
 					objeto.setCor(null);
+					repaint();
+				}
+			}
+		});
+
+		menuItemPadraoHierarquia.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto != null) {
+					objeto.setCorHierarquia(null);
 					repaint();
 				}
 			}

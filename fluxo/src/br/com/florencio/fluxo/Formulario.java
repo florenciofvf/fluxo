@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -20,6 +21,7 @@ import com.sun.glass.events.KeyEvent;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
+	private JMenuItem menuItemSalvarComoArquivo = new JMenuItem(Strings.get("label_salvar_como"));
 	private JMenuItem menuItemSalvarArquivo = new JMenuItem(Strings.get("label_salvar"));
 	private JMenuItem menuItemAbrirArquivo = new JMenuItem(Strings.get("label_abrir"));
 	private JMenu menuArquivo = new JMenu(Strings.get("label_arquivo"));
@@ -43,6 +45,7 @@ public class Formulario extends JFrame {
 		setJMenuBar(menuBarra);
 		menuBarra.add(menuArquivo);
 		menuArquivo.add(menuItemSalvarArquivo);
+		menuArquivo.add(menuItemSalvarComoArquivo);
 		menuArquivo.add(menuItemAbrirArquivo);
 	}
 
@@ -94,6 +97,20 @@ public class Formulario extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				painel.salvarArquivo(null);
+			}
+		});
+
+		menuItemSalvarComoArquivo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String descricao = JOptionPane.showInputDialog(Formulario.this, textFieldArquivo.getText(), textFieldArquivo.getText());
+
+				if (descricao == null || descricao.trim().length() == 0) {
+					return;
+				}
+
+				textFieldArquivo.setText(descricao);
+				painel.salvarArquivo(textFieldArquivo.getText());
 			}
 		});
 	}

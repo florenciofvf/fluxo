@@ -518,6 +518,14 @@ public class Instancia {
 		this.cor = cor;
 	}
 
+	public void setCorHierarquia(Color cor) {
+		this.cor = cor;
+
+		for (Instancia i : filhos) {
+			i.setCorHierarquia(cor);
+		}
+	}
+
 	public boolean isMinimizado() {
 		return minimizado;
 	}
