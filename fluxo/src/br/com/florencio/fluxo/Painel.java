@@ -45,6 +45,8 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemSubir = new JMenuItem(Strings.get("label_subir"));
 	private JMenuItem menuItemVerde = new JMenuItem(Strings.get("label_verde"));
 	private JMenuItem menuItemColar = new JMenuItem(Strings.get("label_colar"));
+	private JMenuItem menuItemCinza = new JMenuItem(Strings.get("label_cinza"));
+	private JMenuItem menuItemPreto = new JMenuItem(Strings.get("label_preto"));
 	private JMenuItem menuItemNovo = new JMenuItem(Strings.get("label_novo"));
 	private JMenuItem menuItemAzul = new JMenuItem(Strings.get("label_azul"));
 	private JPopupMenu popup = new JPopupMenu();
@@ -77,6 +79,8 @@ public class Painel extends JPanel {
 		popup.add(menuItemAmarelo);
 		popup.add(menuItemVerde);
 		popup.add(menuItemAzul);
+		popup.add(menuItemCinza);
+		popup.add(menuItemPreto);
 		popup.add(menuItemPadrao);
 		popup.add(menuItemPadraoHierarquia);
 		popup.addSeparator();
@@ -475,6 +479,30 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemPreto.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto != null) {
+					objeto.setCor(new Color(78, 78, 78));
+					repaint();
+				}
+			}
+		});
+		
+		menuItemCinza.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto != null) {
+					objeto.setCor(new Color(180, 180, 180));
+					repaint();
+				}
+			}
+		});
+		
 		menuItemPadrao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
