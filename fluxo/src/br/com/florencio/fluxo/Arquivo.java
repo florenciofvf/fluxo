@@ -52,16 +52,20 @@ public class Arquivo {
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw) {
-		pw.print(
-				tab + "<instancia nome=" + citar(i.getDescricao()) + " margemInferior=" + citar("" + i.margemInferior));
+		pw.print(tab + "<instancia nome=" + citar(get(i.getDescricao())) + " margemInferior="
+				+ citar("" + i.margemInferior));
 
 		if (i.getCor() != null) {
 			pw.print(" cor=" + citar("" + i.getCor().getRGB()));
 		}
 
-		pw.print(" minimizado=" + citar("" + i.isMinimizado()));
+		if (i.isMinimizado()) {
+			pw.print(" minimizado=" + citar("true"));
+		}
 
-		pw.print(" comentario=" + citar(i.getComentario()));
+		if (i.getComentario().length() > 0) {
+			pw.print(" comentario=" + citar(get(i.getComentario())));
+		}
 
 		if (i.isVazio()) {
 			pw.println("/>");
@@ -117,5 +121,44 @@ public class Arquivo {
 		public void endElement(String uri, String localName, String qName) throws SAXException {
 			sel = sel.getPai();
 		}
+	}
+
+	private static String get(String s) {
+		if (s == null || s.length() == 0) {
+			return "";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (char c : s.toCharArray()) {
+			switch (c) {
+			case '<':
+				sb.append("&lt;");
+				break;
+			case '>':
+				sb.append("&gt;");
+				break;
+			case '&':
+				sb.append("&amp;");
+				break;
+			case '"':
+				sb.append("&quot;");
+				break;
+			case '\n':
+			case '\r':
+				sb.append("&#xa;");
+				break;
+			case '\t':
+				sb.append("&#x9;");
+				break;
+			case 0xa0:
+				sb.append("&#xa0;");
+				break;
+			default:
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
 	}
 }

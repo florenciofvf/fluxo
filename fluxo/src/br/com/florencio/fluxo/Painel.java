@@ -108,7 +108,7 @@ public class Painel extends JPanel {
 					popup.show(Painel.this, e.getX(), e.getY());
 				}
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2 && raiz != null) {
@@ -231,8 +231,8 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"), Strings.get("label_atencao"),
-						JOptionPane.YES_NO_OPTION);
+				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
+						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 
 				if (JOptionPane.OK_OPTION == resp) {
 					if (objeto.getPai() != null) {
@@ -255,8 +255,8 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"), Strings.get("label_atencao"),
-						JOptionPane.YES_NO_OPTION);
+				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
+						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 
 				if (JOptionPane.OK_OPTION == resp) {
 					objeto.sairDaHierarquia();
