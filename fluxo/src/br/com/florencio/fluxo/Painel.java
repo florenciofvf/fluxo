@@ -30,6 +30,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
 	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
+	private JMenuItem menuItemExcluirFilhos = new JMenuItem(Strings.get("label_excluir_filhos"));
 	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_comentario"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
@@ -57,6 +58,7 @@ public class Painel extends JPanel {
 		registrarEventos();
 		popup.add(menuItemNovo);
 		popup.add(menuItemExcluir);
+		popup.add(menuItemExcluirFilhos);
 		popup.add(menuItemExcluirHierarquia);
 		popup.addSeparator();
 		popup.add(menuItemCopiar);
@@ -248,6 +250,27 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemExcluirFilhos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
+						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+
+				if (JOptionPane.OK_OPTION == resp) {
+					objeto.limpar();
+					organizar();
+					tamanhoPainel();
+					repaint();
+				}
+			}
+		});
+		
 		menuItemExcluirHierarquia.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
