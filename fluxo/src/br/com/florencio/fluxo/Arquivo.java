@@ -63,6 +63,10 @@ public class Arquivo {
 			pw.print(" minimizado=" + citar("true"));
 		}
 
+		if (i.isDesenharComentario()) {
+			pw.print(" desenharComentario=" + citar("true"));
+		}
+
 		if (i.getComentario().length() > 0) {
 			pw.print(" comentario=" + citar(get(i.getComentario())));
 		}
@@ -91,6 +95,9 @@ public class Arquivo {
 
 			String minimizado = attributes.getValue("minimizado");
 			instancia.setMinimizado(Boolean.parseBoolean(minimizado));
+
+			String desenharComentario = attributes.getValue("desenharComentario");
+			instancia.setDesenharComentario(Boolean.parseBoolean(desenharComentario));
 
 			String margemInferior = attributes.getValue("margemInferior");
 			if (margemInferior != null && margemInferior.trim().length() > 0) {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Instancia {
+	private boolean desenharComentario;
 	private List<Instancia> filhos;
 	private boolean minimizado;
 	private Dimensao dimensao;
@@ -243,6 +244,9 @@ public class Instancia {
 
 			if (getComentario().length() > 0) {
 				g2.fillOval(local.x, local.y, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
+				if (desenharComentario) {
+					g2.drawString(comentario, local.x + 2, local.y + 15 + Dimensao.MARGEM_PARA_COMENTARIO - 3);
+				}
 			}
 
 			if (filhos.size() > 0) {
@@ -288,6 +292,9 @@ public class Instancia {
 			g2.drawRoundRect(local.x, local.y, largura, dimensao.altura, 8, 8);
 			if (getComentario().length() > 0) {
 				g2.fillOval(local.x, local.y, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
+				if (desenharComentario) {
+					g2.drawString(comentario, local.x + 2, local.y + 15 + Dimensao.MARGEM_PARA_COMENTARIO - 3);
+				}
 			}
 
 			if (filhos.size() > 0) {
@@ -373,11 +380,20 @@ public class Instancia {
 
 		dimensao.altura += margemInferior;
 
+		if (desenharComentario && getComentario().length() > 0 && filhos.isEmpty()) {
+			dimensao.altura += Dimensao.MARGEM_PARA_COMENTARIO;
+		}
+
 		return dimensao.altura;
 	}
 
 	public void calcularLargura(FontMetrics metrics) {
+		int larguraComentario = metrics.stringWidth(getComentario()) + 3 + Dimensao.TAMANHO_ICONE;
 		dimensao.largura = metrics.stringWidth(descricao) + 3 + Dimensao.TAMANHO_ICONE;
+
+		if (desenharComentario) {
+			dimensao.largura = Math.max(dimensao.largura, larguraComentario);
+		}
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
@@ -548,5 +564,17 @@ public class Instancia {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+
+	public boolean isDesenharComentario() {
+		return desenharComentario;
+	}
+
+	public void setDesenharComentario(boolean desenharComentario) {
+		this.desenharComentario = desenharComentario;
+	}
+
+	public int getMargemInferior() {
+		return margemInferior;
 	}
 }

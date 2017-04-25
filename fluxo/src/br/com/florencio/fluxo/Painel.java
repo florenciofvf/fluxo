@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +28,7 @@ import javax.swing.SwingUtilities;
 
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(Strings.get("label_desenhar_comentario"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
 	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
@@ -85,6 +87,7 @@ public class Painel extends JPanel {
 		popup.add(menuItemPadraoHierarquia);
 		popup.addSeparator();
 		popup.add(menuItemComentario);
+		popup.add(menuItemDesenharComentario);
 	}
 
 	private void tamanhoPainel() {
@@ -105,6 +108,12 @@ public class Painel extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					local = new Local(e.getX(), e.getY());
+					
+					Instancia objeto = procurar();
+					if (objeto != null) {
+						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
+					}
+					
 					popup.show(Painel.this, e.getX(), e.getY());
 				}
 			}
@@ -113,6 +122,12 @@ public class Painel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					local = new Local(e.getX(), e.getY());
+					
+					Instancia objeto = procurar();
+					if (objeto != null) {
+						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
+					}
+					
 					popup.show(Painel.this, e.getX(), e.getY());
 				}
 			}
@@ -191,6 +206,22 @@ public class Painel extends JPanel {
 				}
 
 				new DialogoComentario(objeto);
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+
+		menuItemDesenharComentario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				objeto.setDesenharComentario(menuItemDesenharComentario.isSelected());
 				organizar();
 				tamanhoPainel();
 				repaint();
