@@ -380,7 +380,7 @@ public class Instancia {
 
 		dimensao.altura += margemInferior;
 
-		if (desenharComentario && getComentario().length() > 0 && filhos.isEmpty()) {
+		if (desenharComentario && getComentario().length() > 0) {
 			dimensao.altura += Dimensao.MARGEM_PARA_COMENTARIO;
 		}
 

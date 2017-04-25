@@ -112,6 +112,8 @@ public class Painel extends JPanel {
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
+					} else {
+						return;
 					}
 					popup.show(Painel.this, e.getX(), e.getY());
 				}
@@ -125,6 +127,8 @@ public class Painel extends JPanel {
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
+					} else {
+						return;
 					}
 					popup.show(Painel.this, e.getX(), e.getY());
 				}
