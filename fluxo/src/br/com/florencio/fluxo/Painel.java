@@ -107,13 +107,12 @@ public class Painel extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
+					menuItemDesenharComentario.setSelected(false);
 					local = new Local(e.getX(), e.getY());
-					
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 					}
-					
 					popup.show(Painel.this, e.getX(), e.getY());
 				}
 			}
@@ -121,13 +120,12 @@ public class Painel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
+					menuItemDesenharComentario.setSelected(false);
 					local = new Local(e.getX(), e.getY());
-					
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 					}
-					
 					popup.show(Painel.this, e.getX(), e.getY());
 				}
 			}
