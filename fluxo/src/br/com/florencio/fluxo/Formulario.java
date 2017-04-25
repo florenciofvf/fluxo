@@ -103,7 +103,8 @@ public class Formulario extends JFrame {
 		menuItemSalvarComoArquivo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String descricao = JOptionPane.showInputDialog(Formulario.this, textFieldArquivo.getText(), textFieldArquivo.getText());
+				String descricao = JOptionPane.showInputDialog(Formulario.this, textFieldArquivo.getText(),
+						textFieldArquivo.getText());
 
 				if (descricao == null || descricao.trim().length() == 0) {
 					return;

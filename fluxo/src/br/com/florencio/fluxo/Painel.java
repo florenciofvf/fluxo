@@ -190,14 +190,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				String comentario = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(),
-						objeto.getComentario());
-
-				if (comentario == null) {
-					return;
-				}
-
-				objeto.setComentario(comentario);
+				new DialogoComentario(objeto);
 				organizar();
 				tamanhoPainel();
 				repaint();
@@ -274,7 +267,7 @@ public class Painel extends JPanel {
 				}
 			}
 		});
-		
+
 		menuItemExcluirHierarquia.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -490,7 +483,7 @@ public class Painel extends JPanel {
 				}
 			}
 		});
-		
+
 		menuItemCinza.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -502,7 +495,7 @@ public class Painel extends JPanel {
 				}
 			}
 		});
-		
+
 		menuItemPadrao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
