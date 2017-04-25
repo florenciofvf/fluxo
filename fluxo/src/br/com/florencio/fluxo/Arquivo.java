@@ -15,7 +15,7 @@ public class Arquivo {
 	public static final String SUFIXO = ".fvf";
 
 	public static void salvarArquivo(Instancia raiz, File file) throws Exception {
-		PrintWriter pw = new PrintWriter(file);
+		PrintWriter pw = new PrintWriter(file, "iso-8859-1");
 		gravarPrologo(pw);
 		raiz.imprimir(pw);
 		pw.close();
