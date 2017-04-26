@@ -231,21 +231,29 @@ public class Instancia {
 	}
 
 	public void desenhar(Graphics2D g2) {
-		int largura = dimensao.largura - Dimensao.TAMANHO_ICONE;
-
+		final boolean contemComentario = getComentario().length() > 0;
+		final int largura = dimensao.largura - Dimensao.TAMANHO_ICONE;
+		final byte margemSuperior = (byte) (desenharComentario && contemComentario ? 6 : 0);
+		final byte margemInferior = (byte) (margemSuperior * 2);
+		final byte auxMargemFonte = 2;
+		final byte auxComentario = 3;
+		final byte margemFonte = 18;
+		final byte auxIcone = 3;
+		final byte raio = 8;
+		
 		if (cor != null) {
 			Color c = g2.getColor();
 
 			g2.setColor(cor);
-			g2.fillRoundRect(local.x, local.y, largura, dimensao.altura, 8, 8);
+			g2.fillRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
 
 			g2.setColor(Color.BLACK);
-			g2.drawRoundRect(local.x, local.y, largura, dimensao.altura, 8, 8);
+			g2.drawRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
 
-			if (getComentario().length() > 0) {
-				g2.fillOval(local.x, local.y, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
+			if (contemComentario) {
+				g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
 				if (desenharComentario) {
-					g2.drawString(comentario, local.x + 2, local.y + 15 + Dimensao.MARGEM_PARA_COMENTARIO - 3);
+					g2.drawString(comentario, local.x + auxMargemFonte, local.y + Dimensao.ALTURA_PADRAO + auxComentario);
 				}
 			}
 
@@ -259,21 +267,21 @@ public class Instancia {
 
 				g2.setColor(Color.BLACK);
 				if (minimizado) {
-					g2.drawLine(local.x + largura + Dimensao.METADE_ICONE, local.y + Dimensao.MARGEM_ICONE + 3,
+					g2.drawLine(local.x + largura + Dimensao.METADE_ICONE, local.y + Dimensao.MARGEM_ICONE + auxIcone,
 							local.x + largura + Dimensao.METADE_ICONE,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.TAMANHO_ICONE - 3);
-					g2.drawLine(local.x + largura + 3, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - 3,
+							local.y + Dimensao.MARGEM_ICONE + Dimensao.TAMANHO_ICONE - auxIcone);
+					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
+							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
 							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
 				} else {
-					g2.drawLine(local.x + largura + 3, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - 3,
+					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
+							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
 							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
 				}
 			}
 
 			g2.setColor(Color.WHITE);
-			g2.drawString(descricao, local.x + 2, local.y + 15);
+			g2.drawString(descricao, local.x + auxMargemFonte, local.y + margemFonte);
 
 			if (!minimizado) {
 				g2.setColor(cor);
@@ -289,11 +297,12 @@ public class Instancia {
 
 			g2.setColor(c);
 		} else {
-			g2.drawRoundRect(local.x, local.y, largura, dimensao.altura, 8, 8);
-			if (getComentario().length() > 0) {
-				g2.fillOval(local.x, local.y, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
+			g2.drawRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
+			
+			if (contemComentario) {
+				g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
 				if (desenharComentario) {
-					g2.drawString(comentario, local.x + 2, local.y + 15 + Dimensao.MARGEM_PARA_COMENTARIO - 3);
+					g2.drawString(comentario, local.x + auxMargemFonte, local.y + Dimensao.ALTURA_PADRAO + auxComentario);
 				}
 			}
 
@@ -301,20 +310,20 @@ public class Instancia {
 				g2.drawOval(local.x + largura, local.y + Dimensao.MARGEM_ICONE, Dimensao.TAMANHO_ICONE,
 						Dimensao.TAMANHO_ICONE);
 				if (minimizado) {
-					g2.drawLine(local.x + largura + Dimensao.METADE_ICONE, local.y + Dimensao.MARGEM_ICONE + 3,
+					g2.drawLine(local.x + largura + Dimensao.METADE_ICONE, local.y + Dimensao.MARGEM_ICONE + auxIcone,
 							local.x + largura + Dimensao.METADE_ICONE,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.TAMANHO_ICONE - 3);
-					g2.drawLine(local.x + largura + 3, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - 3,
+							local.y + Dimensao.MARGEM_ICONE + Dimensao.TAMANHO_ICONE - auxIcone);
+					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
+							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
 							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
 				} else {
-					g2.drawLine(local.x + largura + 3, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - 3,
+					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
+							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
 							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
 				}
 			}
 
-			g2.drawString(descricao, local.x + 2, local.y + 15);
+			g2.drawString(descricao, local.x + auxMargemFonte, local.y + margemFonte);
 
 			if (!minimizado) {
 				for (Instancia i : filhos) {
@@ -379,10 +388,6 @@ public class Instancia {
 		}
 
 		dimensao.altura += margemInferior;
-
-		if (desenharComentario && getComentario().length() > 0) {
-			dimensao.altura += Dimensao.MARGEM_PARA_COMENTARIO;
-		}
 
 		return dimensao.altura;
 	}
