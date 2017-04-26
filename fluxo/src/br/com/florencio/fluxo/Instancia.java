@@ -28,6 +28,22 @@ public class Instancia {
 		local = new Local();
 	}
 
+	public Instancia clonar() {
+		Instancia obj = new Instancia(descricao);
+		obj.desenharComentario = desenharComentario;
+		obj.margemInferior = margemInferior;
+		obj.comentario = comentario;
+		obj.minimizado = minimizado;
+		obj.cor = cor;
+
+		for (Instancia i : filhos) {
+			Instancia o = i.clonar();
+			obj.adicionar(o);
+		}
+
+		return obj;
+	}
+
 	public void adicionar(Instancia i) {
 		if (i.pai != null) {
 			i.pai.excluir(i);
@@ -499,18 +515,6 @@ public class Instancia {
 		}
 
 		return null;
-	}
-
-	public Instancia clonar() {
-		Instancia obj = new Instancia(descricao);
-		obj.cor = cor;
-
-		for (Instancia i : filhos) {
-			Instancia o = i.clonar();
-			obj.adicionar(o);
-		}
-
-		return obj;
 	}
 
 	public String getDescricao() {
