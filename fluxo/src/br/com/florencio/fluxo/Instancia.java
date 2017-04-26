@@ -233,14 +233,14 @@ public class Instancia {
 	public void desenhar(Graphics2D g2) {
 		final boolean contemComentario = getComentario().length() > 0;
 		final int largura = dimensao.largura - Dimensao.TAMANHO_ICONE;
-		final byte margemSuperior = (byte) (desenharComentario && contemComentario ? 6 : 0);
+		final byte margemSuperior = (byte) (desenharComentario && contemComentario ? 6 : 2);
 		final byte margemInferior = (byte) (margemSuperior * 2);
 		final byte auxMargemFonte = 2;
 		final byte auxComentario = 3;
 		final byte margemFonte = 18;
 		final byte auxIcone = 3;
 		final byte raio = 8;
-		
+
 		if (cor != null) {
 			Color c = g2.getColor();
 
@@ -251,9 +251,12 @@ public class Instancia {
 			g2.drawRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
 
 			if (contemComentario) {
-				g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
 				if (desenharComentario) {
-					g2.drawString(comentario, local.x + auxMargemFonte, local.y + Dimensao.ALTURA_PADRAO + auxComentario);
+					g2.drawString(comentario, local.x + auxMargemFonte,
+							local.y + Dimensao.ALTURA_PADRAO + auxComentario);
+				} else {
+					g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO,
+							Dimensao.TAMANHO_ICONE_COMENTARIO);
 				}
 			}
 
@@ -298,11 +301,14 @@ public class Instancia {
 			g2.setColor(c);
 		} else {
 			g2.drawRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
-			
+
 			if (contemComentario) {
-				g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO, Dimensao.TAMANHO_ICONE_COMENTARIO);
 				if (desenharComentario) {
-					g2.drawString(comentario, local.x + auxMargemFonte, local.y + Dimensao.ALTURA_PADRAO + auxComentario);
+					g2.drawString(comentario, local.x + auxMargemFonte,
+							local.y + Dimensao.ALTURA_PADRAO + auxComentario);
+				} else {
+					g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO,
+							Dimensao.TAMANHO_ICONE_COMENTARIO);
 				}
 			}
 
