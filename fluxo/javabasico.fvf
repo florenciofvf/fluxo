@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="Java Básico" margemInferior="0" minimizado="false" comentario="">
-	<instancia nome="1" margemInferior="3" cor="-11513601" minimizado="false" comentario="">
-		<instancia nome="JDK" margemInferior="0" cor="-21946" minimizado="false" comentario="">
-			<instancia nome="bin" margemInferior="3" minimizado="false" comentario=""/>
-			<instancia nome="tools" margemInferior="3" minimizado="false" comentario=""/>
-			<instancia nome="jre" margemInferior="3" cor="-52686" minimizado="false" comentario=""/>
+<instancia nome="Java Básico" margemInferior="0">
+	<instancia nome="1" margemInferior="3" cor="-11513601">
+		<instancia nome="JDK" margemInferior="0" cor="-21946">
+			<instancia nome="bin" margemInferior="3"/>
+			<instancia nome="tools" margemInferior="3"/>
+			<instancia nome="jre" margemInferior="3" cor="-52686"/>
 		</instancia>
 	</instancia>
-	<instancia nome="2" margemInferior="3" cor="-11513601" minimizado="false" comentario="Segunda aula">
-		<instancia nome="eclipse" margemInferior="0" cor="-21946" minimizado="false" comentario="">
-			<instancia nome="views" margemInferior="3" minimizado="false" comentario="">
-				<instancia nome="package explorer" margemInferior="3" minimizado="false" comentario=""/>
-				<instancia nome="console" margemInferior="3" minimizado="false" comentario=""/>
-				<instancia nome="navigator" margemInferior="3" minimizado="false" comentario=""/>
+	<instancia nome="2" margemInferior="3" cor="-11513601" comentario="Segunda aula">
+		<instancia nome="eclipse" margemInferior="0" cor="-21946">
+			<instancia nome="views" margemInferior="3">
+				<instancia nome="package explorer" margemInferior="3"/>
+				<instancia nome="console" margemInferior="3"/>
+				<instancia nome="navigator" margemInferior="3"/>
 			</instancia>
-			<instancia nome="perspective" margemInferior="3" minimizado="false" comentario="">
-				<instancia nome="Java" margemInferior="3" minimizado="false" comentario=""/>
-				<instancia nome="Java EE" margemInferior="3" minimizado="false" comentario=""/>
+			<instancia nome="perspective" margemInferior="3">
+				<instancia nome="Java" margemInferior="3"/>
+				<instancia nome="Java EE" margemInferior="3"/>
 			</instancia>
-			<instancia nome="Exemplo" margemInferior="3" cor="-16738816" minimizado="false" comentario="">
-				<instancia nome="main" margemInferior="0" cor="-11513601" minimizado="false" comentario="">
-					<instancia nome="System.out.println('Ola mundo!');" margemInferior="0" minimizado="false" comentario=""/>
+			<instancia nome="Exemplo" margemInferior="3" cor="-16738816">
+				<instancia nome="main" margemInferior="0" cor="-11513601">
+					<instancia nome="System.out.println(&quot;Ola mundo!&quot;);" margemInferior="0"/>
 				</instancia>
 			</instancia>
 		</instancia>
