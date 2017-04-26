@@ -598,13 +598,13 @@ public class Painel extends JPanel {
 					File file = fileChooser.getSelectedFile();
 					if (file != null) {
 						BufferedImage bi = new BufferedImage(Dimensao.larguraTotal + margemLarguraImagem,
-								Dimensao.alturaTotal + margemAlturaImagem, BufferedImage.TYPE_INT_RGB);
+								Dimensao.alturaTotal + margemAlturaImagem, BufferedImage.TYPE_INT_ARGB);
 						Graphics2D g2 = bi.createGraphics();
 						g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 						g2.setColor(Color.WHITE);
 						g2.fillRect(0, 0, Dimensao.larguraTotal + margemLarguraImagem,
 								Dimensao.alturaTotal + margemAlturaImagem);
-						g2.setColor(getBackground());
+						g2.setColor(Color.BLACK);
 						g2.setFont(getFont());
 						raiz.desenhar(g2);
 						try {
