@@ -553,6 +553,14 @@ public class Instancia {
 		}
 	}
 
+	public void minMaxTodos(boolean b) {
+		minimizado = b;
+
+		for (Instancia i : filhos) {
+			i.minMaxTodos(b);
+		}
+	}
+
 	public boolean isMinimizado() {
 		return minimizado;
 	}

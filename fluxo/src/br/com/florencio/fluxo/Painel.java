@@ -28,10 +28,13 @@ import javax.swing.SwingUtilities;
 
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(Strings.get("label_desenhar_comentario"));
+	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_comentario"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
 	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
+	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
+	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
 	private JMenuItem menuItemExcluirFilhos = new JMenuItem(Strings.get("label_excluir_filhos"));
 	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_comentario"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
@@ -51,6 +54,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemPreto = new JMenuItem(Strings.get("label_preto"));
 	private JMenuItem menuItemNovo = new JMenuItem(Strings.get("label_novo"));
 	private JMenuItem menuItemAzul = new JMenuItem(Strings.get("label_azul"));
+	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
 	private Instancia copiado;
 	private Instancia raiz;
@@ -88,6 +92,9 @@ public class Painel extends JPanel {
 		popup.addSeparator();
 		popup.add(menuItemComentario);
 		popup.add(menuItemDesenharComentario);
+
+		popupPainel.add(menuItemMinimizarTodos);
+		popupPainel.add(menuItemMaximizarTodos);
 	}
 
 	private void tamanhoPainel() {
@@ -112,10 +119,10 @@ public class Painel extends JPanel {
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
+						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
-						return;
+						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
-					popup.show(Painel.this, e.getX(), e.getY());
 				}
 			}
 
@@ -127,10 +134,10 @@ public class Painel extends JPanel {
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
+						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
-						return;
+						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
-					popup.show(Painel.this, e.getX(), e.getY());
 				}
 			}
 
@@ -550,6 +557,26 @@ public class Painel extends JPanel {
 					objeto.setCorHierarquia(null);
 					repaint();
 				}
+			}
+		});
+
+		menuItemMinimizarTodos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				raiz.minMaxTodos(true);
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+
+		menuItemMaximizarTodos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				raiz.minMaxTodos(false);
+				organizar();
+				tamanhoPainel();
+				repaint();
 			}
 		});
 	}
