@@ -44,7 +44,7 @@ public class Instancia {
 		return obj;
 	}
 
-	public void adicionar(Instancia i) {
+	public void adicionar(Instancia i, int indice) {
 		if (i.pai != null) {
 			i.pai.excluir(i);
 		}
@@ -59,7 +59,16 @@ public class Instancia {
 		}
 
 		i.pai = this;
-		filhos.add(i);
+
+		if (indice == -1) {
+			filhos.add(i);
+		} else {
+			filhos.add(indice, i);
+		}
+	}
+
+	public void adicionar(Instancia i) {
+		adicionar(i, -1);
 	}
 
 	public void sairDaHierarquia() {
@@ -74,8 +83,14 @@ public class Instancia {
 			lista.add(o);
 		}
 
+		int indice = pai.getIndice(this);
+
 		for (Instancia i : lista) {
-			pai.adicionar(i);
+			if (lista.size() == 1) {
+				pai.adicionar(i, indice);
+			} else {
+				pai.adicionar(i);
+			}
 		}
 
 		pai.excluir(this);
@@ -181,6 +196,10 @@ public class Instancia {
 		}
 
 		return filhos.get(index);
+	}
+
+	public int getIndice(Instancia i) {
+		return filhos.indexOf(i);
 	}
 
 	public Instancia getFilho(String descricao) {

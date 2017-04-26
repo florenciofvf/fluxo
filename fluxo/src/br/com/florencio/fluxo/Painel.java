@@ -45,6 +45,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
 	private JMenuItem menuItemRecortar = new JMenuItem(Strings.get("label_recortar"));
+	private JMenuItem menuItemNovoPai = new JMenuItem(Strings.get("label_novo_pai"));
 	private JMenuItem menuItemAmarelo = new JMenuItem(Strings.get("label_amarelo"));
 	private JMenuItem menuItemLaranja = new JMenuItem(Strings.get("label_laranja"));
 	private JMenuItem menuItemExcluir = new JMenuItem(Strings.get("label_excluir"));
@@ -72,6 +73,8 @@ public class Painel extends JPanel {
 		this.raiz = raiz;
 		registrarEventos();
 		popup.add(menuItemNovo);
+		popup.add(menuItemNovoPai);
+		popup.addSeparator();
 		popup.add(menuItemExcluir);
 		popup.add(menuItemExcluirFilhos);
 		popup.add(menuItemExcluirHierarquia);
@@ -215,6 +218,34 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemNovoPai.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null || objeto.getPai() == null) {
+					return;
+				}
+
+				String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao());
+
+				if (descricao == null || descricao.trim().length() == 0) {
+					return;
+				}
+
+				Instancia pai = objeto.getPai();
+				int indice = pai.getIndice(objeto);
+
+				Instancia novoPai = new Instancia(descricao);
+				novoPai.adicionar(objeto);
+				
+				pai.adicionar(novoPai, indice);
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+		
 		menuItemComentario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
