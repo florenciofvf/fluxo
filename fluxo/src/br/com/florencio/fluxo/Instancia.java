@@ -237,7 +237,7 @@ public class Instancia {
 		final byte margemInferior = (byte) (margemSuperior * 2);
 		final byte auxMargemFonte = 2;
 		final byte auxComentario = 3;
-		final byte margemFonte = 18;
+		final byte margemFonte = 17;
 		final byte auxIcone = 3;
 		final byte raio = 8;
 
