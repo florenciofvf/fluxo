@@ -9,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,7 +21,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
+import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -36,6 +40,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
 	private JMenuItem menuItemExcluirFilhos = new JMenuItem(Strings.get("label_excluir_filhos"));
+	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
 	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_comentario"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
@@ -56,6 +61,8 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemAzul = new JMenuItem(Strings.get("label_azul"));
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
+	private short margemLarguraImagem = 139;
+	private short margemAlturaImagem = 139;
 	private Instancia copiado;
 	private Instancia raiz;
 	private String arquivo;
@@ -95,10 +102,12 @@ public class Painel extends JPanel {
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
+		popupPainel.add(menuItemGerarImagem);
 	}
 
 	private void tamanhoPainel() {
-		Dimension d = new Dimension(Dimensao.larguraTotal + 139, Dimensao.alturaTotal + 139);
+		Dimension d = new Dimension(Dimensao.larguraTotal + margemLarguraImagem,
+				Dimensao.alturaTotal + margemAlturaImagem);
 		setPreferredSize(d);
 		setMinimumSize(d);
 		SwingUtilities.updateComponentTreeUI(getParent());
@@ -579,6 +588,35 @@ public class Painel extends JPanel {
 				repaint();
 			}
 		});
+
+		menuItemGerarImagem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				int i = fileChooser.showSaveDialog(Painel.this);
+				if (i == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					if (file != null) {
+						BufferedImage bi = new BufferedImage(Dimensao.larguraTotal + margemLarguraImagem,
+								Dimensao.alturaTotal + margemAlturaImagem, BufferedImage.TYPE_INT_RGB);
+						Graphics2D g2 = bi.createGraphics();
+						g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+						g2.setColor(Color.WHITE);
+						g2.fillRect(0, 0, Dimensao.larguraTotal + margemLarguraImagem,
+								Dimensao.alturaTotal + margemAlturaImagem);
+						g2.setColor(getBackground());
+						g2.setFont(getFont());
+						raiz.desenhar(g2);
+						try {
+							ImageIO.write(bi, "png", file);
+						} catch (IOException e1) {
+							JOptionPane.showMessageDialog(Painel.this, e1.getMessage());
+						}
+					}
+				}
+			}
+		});
+
 	}
 
 	public void setArquivo(String arq) {

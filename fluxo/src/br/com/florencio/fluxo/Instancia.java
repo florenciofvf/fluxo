@@ -477,7 +477,7 @@ public class Instancia {
 				int x2 = i.local.x;
 				int y2 = i.local.y + i.dimensao.altura / 2;
 
-				linhas.add(new Linha(x1, y1, x2, y2));
+				linhas.add(new Linha(x1 + 1, y1, x2 - 1, y2));
 				i.criarLinhas();
 			}
 		}
