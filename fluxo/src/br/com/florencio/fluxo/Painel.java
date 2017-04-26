@@ -102,6 +102,7 @@ public class Painel extends JPanel {
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
+		popupPainel.addSeparator();
 		popupPainel.add(menuItemGerarImagem);
 	}
 
