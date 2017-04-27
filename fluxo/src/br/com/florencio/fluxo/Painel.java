@@ -41,6 +41,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
 	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
+	private JMenuItem menuItemColarPaiPonta = new JMenuItem(Strings.get("label_colar_pai_ponta"));
 	private JMenuItem menuItemExcluirFilhos = new JMenuItem(Strings.get("label_excluir_filhos"));
 	private JMenuItem menuItemExcluirAbaixo = new JMenuItem(Strings.get("label_excluir_abaixo"));
 	private JMenuItem menuItemExcluirOutros = new JMenuItem(Strings.get("label_excluir_outros"));
@@ -92,6 +93,7 @@ public class Painel extends JPanel {
 		popup.add(menuItemRecortar);
 		popup.add(menuItemColar);
 		popup.add(menuItemColarPai);
+		popup.add(menuItemColarPaiPonta);
 		popup.addSeparator();
 		popup.add(menuItemMargemInferior);
 		popup.addSeparator();
@@ -515,7 +517,30 @@ public class Painel extends JPanel {
 				repaint();
 			}
 		});
-		
+
+		menuItemColarPaiPonta.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null || objeto.getPai() == null || copiado == null) {
+					return;
+				}
+
+				Instancia pai = objeto.getPai();
+				int indice = pai.getIndice(objeto);
+
+				Instancia novoPai = copiado.clonar();
+				Instancia ponta = novoPai.getPonta();
+				ponta.adicionar(objeto);
+
+				pai.adicionar(novoPai, indice);
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+
 		menuItemPrimeiro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -724,7 +749,7 @@ public class Painel extends JPanel {
 				if (objeto == null) {
 					return;
 				}
-			
+
 				objeto.minMaxTodos(true);
 				organizar();
 				tamanhoPainel();
@@ -740,14 +765,14 @@ public class Painel extends JPanel {
 				if (objeto == null) {
 					return;
 				}
-			
+
 				objeto.minMaxTodos(false);
 				organizar();
 				tamanhoPainel();
 				repaint();
 			}
 		});
-		
+
 		menuItemGerarImagem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

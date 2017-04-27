@@ -679,4 +679,12 @@ public class Instancia {
 	public int getMargemInferior() {
 		return margemInferior;
 	}
+
+	public Instancia getPonta() {
+		if (isVazio()) {
+			return this;
+		}
+
+		return getFilho(getTamanho() - 1).getPonta();
+	}
 }
