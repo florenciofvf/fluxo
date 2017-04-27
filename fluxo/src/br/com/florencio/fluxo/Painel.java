@@ -47,6 +47,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemExcluirAcima = new JMenuItem(Strings.get("label_excluir_acima"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
 	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_comentario"));
+	private JMenuItem menuItemColarPai = new JMenuItem(Strings.get("label_colar_pai"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
 	private JMenuItem menuItemRecortar = new JMenuItem(Strings.get("label_recortar"));
@@ -90,6 +91,7 @@ public class Painel extends JPanel {
 		popup.add(menuItemCopiar);
 		popup.add(menuItemRecortar);
 		popup.add(menuItemColar);
+		popup.add(menuItemColarPai);
 		popup.addSeparator();
 		popup.add(menuItemMargemInferior);
 		popup.addSeparator();
@@ -492,6 +494,28 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemColarPai.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null || objeto.getPai() == null || copiado == null) {
+					return;
+				}
+
+				Instancia pai = objeto.getPai();
+				int indice = pai.getIndice(objeto);
+
+				Instancia novoPai = copiado.clonar();
+				novoPai.adicionar(objeto);
+
+				pai.adicionar(novoPai, indice);
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+		
 		menuItemPrimeiro.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
