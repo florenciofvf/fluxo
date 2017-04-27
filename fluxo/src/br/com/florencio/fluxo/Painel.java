@@ -36,6 +36,8 @@ public class Painel extends JPanel {
 			Strings.get("label_desenhar_comentario"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
+	private JMenuItem menuItemMinimizarTodos2 = new JMenuItem(Strings.get("label_minimizar_todos"));
+	private JMenuItem menuItemMaximizarTodos2 = new JMenuItem(Strings.get("label_maximizar_todos"));
 	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
 	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
@@ -90,6 +92,9 @@ public class Painel extends JPanel {
 		popup.add(menuItemColar);
 		popup.addSeparator();
 		popup.add(menuItemMargemInferior);
+		popup.addSeparator();
+		popup.add(menuItemMinimizarTodos2);
+		popup.add(menuItemMaximizarTodos2);
 		popup.addSeparator();
 		popup.add(menuItemPrimeiro);
 		popup.add(menuItemSubir);
@@ -687,6 +692,38 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemMinimizarTodos2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+			
+				objeto.minMaxTodos(true);
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+
+		menuItemMaximizarTodos2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+			
+				objeto.minMaxTodos(false);
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+		
 		menuItemGerarImagem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
