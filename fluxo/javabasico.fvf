@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="Java BÃ¡sico" margemInferior="0">
+<instancia nome="Java Básico" margemInferior="0">
 	<instancia nome="1" margemInferior="3" cor="-11513601">
 		<instancia nome="JDK" margemInferior="0" cor="-21946">
 			<instancia nome="bin" margemInferior="3"/>

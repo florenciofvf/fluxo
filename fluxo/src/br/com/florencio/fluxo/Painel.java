@@ -40,6 +40,9 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
 	private JMenuItem menuItemExcluirFilhos = new JMenuItem(Strings.get("label_excluir_filhos"));
+	private JMenuItem menuItemExcluirAbaixo = new JMenuItem(Strings.get("label_excluir_abaixo"));
+	private JMenuItem menuItemExcluirOutros = new JMenuItem(Strings.get("label_excluir_outros"));
+	private JMenuItem menuItemExcluirAcima = new JMenuItem(Strings.get("label_excluir_acima"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
 	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_comentario"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
@@ -77,6 +80,9 @@ public class Painel extends JPanel {
 		popup.addSeparator();
 		popup.add(menuItemExcluir);
 		popup.add(menuItemExcluirFilhos);
+		popup.add(menuItemExcluirOutros);
+		popup.add(menuItemExcluirAcima);
+		popup.add(menuItemExcluirAbaixo);
 		popup.add(menuItemExcluirHierarquia);
 		popup.addSeparator();
 		popup.add(menuItemCopiar);
@@ -238,14 +244,14 @@ public class Painel extends JPanel {
 
 				Instancia novoPai = new Instancia(descricao);
 				novoPai.adicionar(objeto);
-				
+
 				pai.adicionar(novoPai, indice);
 				organizar();
 				tamanhoPainel();
 				repaint();
 			}
 		});
-		
+
 		menuItemComentario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -304,6 +310,69 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemExcluirAcima.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
+						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+
+				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
+					objeto.getPai().excluirAcima(objeto);
+					organizar();
+					tamanhoPainel();
+					repaint();
+				}
+			}
+		});
+
+		menuItemExcluirAbaixo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
+						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+
+				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
+					objeto.getPai().excluirAbaixo(objeto);
+					organizar();
+					tamanhoPainel();
+					repaint();
+				}
+			}
+		});
+
+		menuItemExcluirOutros.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
+						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+
+				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
+					objeto.getPai().excluirOutros(objeto);
+					organizar();
+					tamanhoPainel();
+					repaint();
+				}
+			}
+		});
+
 		menuItemExcluir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -316,11 +385,8 @@ public class Painel extends JPanel {
 				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
 						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 
-				if (JOptionPane.OK_OPTION == resp) {
-					if (objeto.getPai() != null) {
-						objeto.getPai().excluir(objeto);
-					}
-
+				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
+					objeto.getPai().excluir(objeto);
 					organizar();
 					tamanhoPainel();
 					repaint();

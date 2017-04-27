@@ -179,6 +179,66 @@ public class Instancia {
 		filhos.remove(i);
 	}
 
+	public void excluirOutros(Instancia i) {
+		if (i.pai != this) {
+			return;
+		}
+
+		List<Instancia> lista = new ArrayList<>();
+
+		for (Instancia obj : filhos) {
+			if (obj != i) {
+				lista.add(obj);
+			}
+		}
+
+		for (Instancia obj : lista) {
+			excluir(obj);
+		}
+	}
+
+	public void excluirAcima(Instancia i) {
+		if (i.pai != this) {
+			return;
+		}
+
+		List<Instancia> lista = new ArrayList<>();
+
+		for (Instancia obj : filhos) {
+			if (obj != i) {
+				lista.add(obj);
+			} else {
+				break;
+			}
+		}
+
+		for (Instancia obj : lista) {
+			excluir(obj);
+		}
+	}
+
+	public void excluirAbaixo(Instancia i) {
+		if (i.pai != this) {
+			return;
+		}
+
+		List<Instancia> lista = new ArrayList<>();
+
+		boolean ativado = false;
+
+		for (Instancia obj : filhos) {
+			if (obj == i) {
+				ativado = true;
+			} else if (ativado) {
+				lista.add(obj);
+			}
+		}
+
+		for (Instancia obj : lista) {
+			excluir(obj);
+		}
+	}
+
 	public void limpar() {
 		while (getTamanho() > 0) {
 			Instancia i = getFilho(0);
