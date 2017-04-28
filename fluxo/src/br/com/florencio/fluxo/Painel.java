@@ -24,6 +24,7 @@ import java.sql.ResultSetMetaData;
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -44,30 +45,30 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
 	private JMenuItem menuItemColarPaiPonta = new JMenuItem(Strings.get("label_colar_pai_ponta"));
+	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_adicionar_alterar"));
 	private JMenuItem menuItemExcluirFilhos = new JMenuItem(Strings.get("label_excluir_filhos"));
 	private JMenuItem menuItemExcluirAbaixo = new JMenuItem(Strings.get("label_excluir_abaixo"));
 	private JMenuItem menuItemExcluirOutros = new JMenuItem(Strings.get("label_excluir_outros"));
 	private JMenuItem menuItemExcluirAcima = new JMenuItem(Strings.get("label_excluir_acima"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
-	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_comentario"));
 	private JMenuItem menuItemColarPai = new JMenuItem(Strings.get("label_colar_pai"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
-	private JMenuItem menuItemRecortar = new JMenuItem(Strings.get("label_recortar"));
-	private JMenuItem menuItemNovoPai = new JMenuItem(Strings.get("label_novo_pai"));
+	private JMenuItem menuItemColar = new JMenuItem(Strings.get("label_colar_filho"));
 	private JMenuItem menuItemAmarelo = new JMenuItem(Strings.get("label_amarelo"));
 	private JMenuItem menuItemLaranja = new JMenuItem(Strings.get("label_laranja"));
-	private JMenuItem menuItemExcluir = new JMenuItem(Strings.get("label_excluir"));
+	private JMenuItem menuItemNovoFilho = new JMenuItem(Strings.get("label_filho"));
+	private JMenuItem menuItemRecortar = new JMenuItem(Strings.get("label_este"));
 	private JMenuItem menuItemPadrao = new JMenuItem(Strings.get("label_padrao"));
-	private JMenuItem menuItemCopiar = new JMenuItem(Strings.get("label_copiar"));
 	private JMenuItem menuItemUltimo = new JMenuItem(Strings.get("label_ultimo"));
 	private JMenuItem menuItemDescer = new JMenuItem(Strings.get("label_descer"));
+	private JMenuItem menuItemExcluir = new JMenuItem(Strings.get("label_este"));
+	private JMenuItem menuItemNovoPai = new JMenuItem(Strings.get("label_pai"));
+	private JMenuItem menuItemCopiar = new JMenuItem(Strings.get("label_este"));
 	private JMenuItem menuItemSubir = new JMenuItem(Strings.get("label_subir"));
 	private JMenuItem menuItemVerde = new JMenuItem(Strings.get("label_verde"));
-	private JMenuItem menuItemColar = new JMenuItem(Strings.get("label_colar"));
 	private JMenuItem menuItemCinza = new JMenuItem(Strings.get("label_cinza"));
 	private JMenuItem menuItemPreto = new JMenuItem(Strings.get("label_preto"));
-	private JMenuItem menuItemNovo = new JMenuItem(Strings.get("label_novo"));
 	private JMenuItem menuItemAzul = new JMenuItem(Strings.get("label_azul"));
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
@@ -81,47 +82,73 @@ public class Painel extends JPanel {
 	public Painel(Instancia raiz) {
 		this.raiz = raiz;
 		registrarEventos();
-		popup.add(menuItemNovo);
-		popup.add(menuItemNovoPai);
+
+		JMenu menuNovo = new JMenu(Strings.get("label_novo"));
+		menuNovo.add(menuItemNovoFilho);
+		menuNovo.add(menuItemNovoPai);
+		popup.add(menuNovo);
+
 		popup.addSeparator();
-		popup.add(menuItemExcluir);
-		popup.add(menuItemExcluirFilhos);
-		popup.add(menuItemExcluirOutros);
-		popup.add(menuItemExcluirAcima);
-		popup.add(menuItemExcluirAbaixo);
-		popup.add(menuItemExcluirHierarquia);
+		JMenu menuExcluir = new JMenu(Strings.get("label_excluir"));
+		menuExcluir.add(menuItemExcluir);
+		menuExcluir.add(menuItemExcluirFilhos);
+		menuExcluir.add(menuItemExcluirOutros);
+		menuExcluir.add(menuItemExcluirAcima);
+		menuExcluir.add(menuItemExcluirAbaixo);
+		menuExcluir.add(menuItemExcluirHierarquia);
+		popup.add(menuExcluir);
+
 		popup.addSeparator();
-		popup.add(menuItemCopiar);
-		popup.add(menuItemCopiarSFilhos);
-		popup.add(menuItemRecortar);
-		popup.add(menuItemRecortarSFilhos);
+		JMenu menuCopiar = new JMenu(Strings.get("label_copiar"));
+		menuCopiar.add(menuItemCopiar);
+		menuCopiar.add(menuItemCopiarSFilhos);
+		popup.add(menuCopiar);
+
+		JMenu menuRecortar = new JMenu(Strings.get("label_recortar"));
+		menuRecortar.add(menuItemRecortar);
+		menuRecortar.add(menuItemRecortarSFilhos);
+		popup.add(menuRecortar);
+
 		popup.addSeparator();
-		popup.add(menuItemColar);
-		popup.add(menuItemColarPai);
-		popup.add(menuItemColarPaiPonta);
+		JMenu menuColar = new JMenu(Strings.get("label_colar"));
+		menuColar.add(menuItemColar);
+		menuColar.add(menuItemColarPai);
+		menuColar.add(menuItemColarPaiPonta);
+		popup.add(menuColar);
+
 		popup.addSeparator();
 		popup.add(menuItemMargemInferior);
+
 		popup.addSeparator();
 		popup.add(menuItemMinimizarTodos2);
 		popup.add(menuItemMaximizarTodos2);
+
 		popup.addSeparator();
-		popup.add(menuItemPrimeiro);
-		popup.add(menuItemSubir);
-		popup.add(menuItemDescer);
-		popup.add(menuItemUltimo);
+		JMenu menuPosicao = new JMenu(Strings.get("label_posicao"));
+		menuPosicao.add(menuItemPrimeiro);
+		menuPosicao.add(menuItemSubir);
+		menuPosicao.add(menuItemDescer);
+		menuPosicao.add(menuItemUltimo);
+		popup.add(menuPosicao);
+
 		popup.addSeparator();
-		popup.add(menuItemVermelho);
-		popup.add(menuItemLaranja);
-		popup.add(menuItemAmarelo);
-		popup.add(menuItemVerde);
-		popup.add(menuItemAzul);
-		popup.add(menuItemCinza);
-		popup.add(menuItemPreto);
-		popup.add(menuItemPadrao);
-		popup.add(menuItemPadraoHierarquia);
+		JMenu menuCor = new JMenu(Strings.get("label_cor"));
+		menuCor.add(menuItemVermelho);
+		menuCor.add(menuItemLaranja);
+		menuCor.add(menuItemAmarelo);
+		menuCor.add(menuItemVerde);
+		menuCor.add(menuItemAzul);
+		menuCor.add(menuItemCinza);
+		menuCor.add(menuItemPreto);
+		menuCor.add(menuItemPadrao);
+		menuCor.add(menuItemPadraoHierarquia);
+		popup.add(menuCor);
+
 		popup.addSeparator();
-		popup.add(menuItemComentario);
-		popup.add(menuItemDesenharComentario);
+		JMenu menuComentario = new JMenu(Strings.get("label_comentario"));
+		menuComentario.add(menuItemComentario);
+		menuComentario.add(menuItemDesenharComentario);
+		popup.add(menuComentario);
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
@@ -216,7 +243,7 @@ public class Painel extends JPanel {
 			}
 		});
 
-		menuItemNovo.addActionListener(new ActionListener() {
+		menuItemNovoFilho.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Instancia objeto = procurar();
@@ -478,7 +505,7 @@ public class Painel extends JPanel {
 				copiado.limpar();
 			}
 		});
-		
+
 		menuItemRecortar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -521,7 +548,7 @@ public class Painel extends JPanel {
 				}
 			}
 		});
-		
+
 		menuItemColar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
