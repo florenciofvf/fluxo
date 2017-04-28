@@ -36,8 +36,10 @@ public class Painel extends JPanel {
 			Strings.get("label_desenhar_comentario"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
+	private JMenuItem menuItemRecortarSFilhos = new JMenuItem(Strings.get("label_recortar_sem_filhos"));
 	private JMenuItem menuItemMinimizarTodos2 = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos2 = new JMenuItem(Strings.get("label_maximizar_todos"));
+	private JMenuItem menuItemCopiarSFilhos = new JMenuItem(Strings.get("label_copiar_sem_filhos"));
 	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
 	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
@@ -90,7 +92,10 @@ public class Painel extends JPanel {
 		popup.add(menuItemExcluirHierarquia);
 		popup.addSeparator();
 		popup.add(menuItemCopiar);
+		popup.add(menuItemCopiarSFilhos);
 		popup.add(menuItemRecortar);
+		popup.add(menuItemRecortarSFilhos);
+		popup.addSeparator();
 		popup.add(menuItemColar);
 		popup.add(menuItemColarPai);
 		popup.add(menuItemColarPaiPonta);
@@ -459,6 +464,21 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemCopiarSFilhos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					copiado = null;
+					return;
+				}
+
+				copiado = objeto.clonar();
+				copiado.limpar();
+			}
+		});
+		
 		menuItemRecortar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -480,6 +500,28 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemRecortarSFilhos.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					copiado = null;
+					return;
+				}
+
+				copiado = objeto.clonar();
+				copiado.limpar();
+
+				if (objeto.getPai() != null) {
+					objeto.getPai().excluir(objeto);
+					organizar();
+					tamanhoPainel();
+					repaint();
+				}
+			}
+		});
+		
 		menuItemColar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
