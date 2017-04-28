@@ -35,9 +35,12 @@ public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
 			Strings.get("label_desenhar_comentario"));
+	private JMenuItem menuItemComentarioEmFilho = new JMenuItem(Strings.get("label_transformar_comentario_filho"));
+	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
 	private JMenuItem menuItemRecortarSFilhos = new JMenuItem(Strings.get("label_recortar_sem_filhos"));
+	private JMenuItem menuItemComentarioVirar = new JMenuItem(Strings.get("label_virar_comentario"));
 	private JMenuItem menuItemMinimizarTodos2 = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos2 = new JMenuItem(Strings.get("label_maximizar_todos"));
 	private JMenuItem menuItemCopiarSFilhos = new JMenuItem(Strings.get("label_copiar_sem_filhos"));
@@ -148,6 +151,9 @@ public class Painel extends JPanel {
 		JMenu menuComentario = new JMenu(Strings.get("label_comentario"));
 		menuComentario.add(menuItemComentario);
 		menuComentario.add(menuItemDesenharComentario);
+		menuComentario.add(menuItemComentarioEmFilho);
+		menuComentario.add(menuItemComentarioEmPai);
+		menuComentario.add(menuItemComentarioVirar);
 		popup.add(menuComentario);
 
 		popupPainel.add(menuItemMinimizarTodos);
@@ -319,6 +325,79 @@ public class Painel extends JPanel {
 				}
 
 				objeto.setDesenharComentario(menuItemDesenharComentario.isSelected());
+				organizar();
+				tamanhoPainel();
+				repaint();
+			}
+		});
+
+		menuItemComentarioEmFilho.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				if (objeto.getComentario().length() > 0) {
+					Instancia filho = new Instancia(objeto.getComentario());
+					objeto.adicionar(filho);
+					objeto.setComentario(null);
+					organizar();
+					tamanhoPainel();
+					repaint();
+				}
+			}
+		});
+
+		menuItemComentarioEmPai.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null || objeto.getPai() == null) {
+					return;
+				}
+
+				if (objeto.getComentario().length() > 0) {
+					Instancia pai = objeto.getPai();
+					int indice = pai.getIndice(objeto);
+
+					Instancia novoPai = new Instancia(objeto.getComentario());
+					objeto.setComentario(null);
+					novoPai.adicionar(objeto);
+
+					pai.adicionar(novoPai, indice);
+					organizar();
+					tamanhoPainel();
+					repaint();
+				}
+			}
+		});
+
+		menuItemComentarioVirar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null || objeto.getPai() == null) {
+					return;
+				}
+
+				if (!objeto.isVazio()) {
+					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_contem_filhos"),
+							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+
+					if (JOptionPane.OK_OPTION != resp) {
+						return;
+					}
+				}
+
+				Instancia pai = objeto.getPai();
+				pai.setComentario(objeto.getDescricao());
+				pai.setDesenharComentario(true);
+				pai.excluir(objeto);
 				organizar();
 				tamanhoPainel();
 				repaint();
