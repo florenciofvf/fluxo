@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import javax.swing.JTextArea;
 
 public class DialogoComentario extends JDialog {
 	private static final long serialVersionUID = 1L;
+	private JCheckBox checkBoxDesenhar = new JCheckBox(Strings.get("label_desenhar_comentario"));
 	private JButton buttonCancelar = new JButton(Strings.get("label_cancelar"));
 	private JButton buttonOk = new JButton(Strings.get("label_ok"));
 	private JTextArea textArea = new JTextArea();
@@ -43,6 +45,8 @@ public class DialogoComentario extends JDialog {
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(BorderLayout.WEST, buttonCancelar);
+		checkBoxDesenhar.setSelected(obj.isDesenharComentario());
+		panel.add(BorderLayout.CENTER, checkBoxDesenhar);
 		panel.add(BorderLayout.EAST, buttonOk);
 
 		add(BorderLayout.SOUTH, panel);
@@ -61,6 +65,13 @@ public class DialogoComentario extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				instancia.setComentario(textArea.getText());
 				dispose();
+			}
+		});
+		
+		checkBoxDesenhar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				instancia.setDesenharComentario(checkBoxDesenhar.isSelected());
 			}
 		});
 	}
