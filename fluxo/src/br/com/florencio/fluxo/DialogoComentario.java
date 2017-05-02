@@ -67,7 +67,7 @@ public class DialogoComentario extends JDialog {
 				dispose();
 			}
 		});
-		
+
 		checkBoxDesenhar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
