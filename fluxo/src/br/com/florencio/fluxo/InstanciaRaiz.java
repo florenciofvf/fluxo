@@ -101,14 +101,14 @@ public class InstanciaRaiz extends Instancia {
 		definirLocalizacaoAparenciaVertical(Constantes.APARENCIA_MEIO);
 		AtomicInteger valor = inverterLadoEsquerdo();
 		deslocarTodaHierarquia(valor);
-		voltarRaizELadoEsquerdo();
+		voltarRaizELadoDireito();
 		alinharLadosComRaizHorizontalmente();
 		afastarHierarquiaDaBordaEsquerda();
 		criarLinhas();
 		processado = true;
 	}
 
-	private void voltarRaizELadoEsquerdo() {
+	private void voltarRaizELadoDireito() {
 		int deslocEsquerdo = dimensao.getLargura() * 2 + Constantes.LARGURA_AFASTAMENTO;
 		somarLocalizacaoX(deslocEsquerdo * -1);
 		deslocEsquerdo += dimensao.getLargura() + Constantes.LARGURA_AFASTAMENTO;
