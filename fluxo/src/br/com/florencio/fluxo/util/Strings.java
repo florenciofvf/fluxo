@@ -1,4 +1,4 @@
-package br.com.florencio.fluxo;
+package br.com.florencio.fluxo.util;
 
 import java.util.ResourceBundle;
 

@@ -1,4 +1,4 @@
-package br.com.florencio.fluxo;
+package br.com.florencio.fluxo.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,11 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
@@ -31,10 +27,21 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
+import br.com.florencio.fluxo.Instancia;
+import br.com.florencio.fluxo.InstanciaRaiz;
+import br.com.florencio.fluxo.util.ArquivoUtil;
+import br.com.florencio.fluxo.util.Constantes;
+import br.com.florencio.fluxo.util.Localizacao;
+import br.com.florencio.fluxo.util.SQLUtil;
+import br.com.florencio.fluxo.util.Strings;
+import br.com.florencio.fluxo.util.Util;
+
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
 			Strings.get("label_desenhar_comentario"));
+	private JCheckBoxMenuItem menuItemDesenharRetangulo = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_retangulo"));
 	private JMenuItem menuItemComentarioEmFilho = new JMenuItem(Strings.get("label_transformar_comentario_filho"));
 	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
@@ -75,17 +82,18 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemAzul = new JMenuItem(Strings.get("label_azul"));
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
-	private short margemLarguraImagem = 139;
-	private short margemAlturaImagem = 139;
+	private Localizacao localizacao;
+	private InstanciaRaiz raiz;
 	private Instancia copiado;
-	private Instancia raiz;
 	private String arquivo;
-	private Local local;
 
-	public Painel(Instancia raiz) {
+	public Painel(InstanciaRaiz raiz) {
 		this.raiz = raiz;
+		montarPopups();
 		registrarEventos();
+	}
 
+	private void montarPopups() {
 		JMenu menuNovo = new JMenu(Strings.get("label_novo"));
 		menuNovo.add(menuItemNovoFilho);
 		menuNovo.add(menuItemNovoPai);
@@ -159,20 +167,30 @@ public class Painel extends JPanel {
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
 		popupPainel.addSeparator();
+		popupPainel.add(menuItemDesenharRetangulo);
+		popupPainel.addSeparator();
 		popupPainel.add(menuItemGerarImagem);
 	}
 
-	private void tamanhoPainel() {
-		Dimension d = new Dimension(Dimensao.larguraTotal + margemLarguraImagem,
-				Dimensao.alturaTotal + margemAlturaImagem);
+	public void reorganizar() {
+		raiz.processar(getFontMetrics(getFont()));
+
+		AtomicInteger largura = new AtomicInteger(0);
+		AtomicInteger altura = new AtomicInteger(0);
+
+		raiz.calcularLarguraTotal(largura);
+		raiz.calcularAlturaTotal(altura);
+
+		Dimension d = new Dimension(largura.get(), altura.get());
 		setPreferredSize(d);
 		setMinimumSize(d);
+
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	private void organizar() {
-		raiz.controlarMargemInferior();
-		raiz.organizar(getFontMetrics(getFont()));
+	private int showConfirmDialog() {
+		return JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"), Strings.get("label_atencao"),
+				JOptionPane.YES_NO_OPTION);
 	}
 
 	private void registrarEventos() {
@@ -181,12 +199,13 @@ public class Painel extends JPanel {
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					menuItemDesenharComentario.setSelected(false);
-					local = new Local(e.getX(), e.getY());
+					localizacao = new Localizacao(e.getX(), e.getY());
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
+						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
 				}
@@ -196,12 +215,13 @@ public class Painel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					menuItemDesenharComentario.setSelected(false);
-					local = new Local(e.getX(), e.getY());
+					localizacao = new Localizacao(e.getX(), e.getY());
 					Instancia objeto = procurar();
 					if (objeto != null) {
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
+						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
 				}
@@ -223,16 +243,13 @@ public class Painel extends JPanel {
 					String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(),
 							objeto.getDescricao());
 
-					if (descricao == null || descricao.trim().length() == 0) {
+					if (Util.estaVazio(descricao)) {
 						return;
 					}
 
 					objeto.setDescricao(descricao);
-					organizar();
-					tamanhoPainel();
-					repaint();
+					reorganizar();
 				} else {
-
 					Instancia objeto = raiz.procurar(e.getX(), e.getY());
 
 					if (objeto == null) {
@@ -240,10 +257,8 @@ public class Painel extends JPanel {
 					}
 
 					if (objeto.clicadoNoIcone(e.getX(), e.getY())) {
-						objeto.inverterIcone();
-						organizar();
-						tamanhoPainel();
-						repaint();
+						objeto.inverterMinMax();
+						reorganizar();
 					}
 				}
 			}
@@ -260,14 +275,12 @@ public class Painel extends JPanel {
 
 				String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao());
 
-				if (descricao == null || descricao.trim().length() == 0) {
+				if (Util.estaVazio(descricao)) {
 					return;
 				}
 
 				objeto.adicionar(new Instancia(descricao));
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -282,7 +295,7 @@ public class Painel extends JPanel {
 
 				String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao());
 
-				if (descricao == null || descricao.trim().length() == 0) {
+				if (Util.estaVazio(descricao)) {
 					return;
 				}
 
@@ -293,9 +306,7 @@ public class Painel extends JPanel {
 				novoPai.adicionar(objeto);
 
 				pai.adicionar(novoPai, indice);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -309,9 +320,7 @@ public class Painel extends JPanel {
 				}
 
 				new DialogoComentario(objeto);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -325,8 +334,14 @@ public class Painel extends JPanel {
 				}
 
 				objeto.setDesenharComentario(menuItemDesenharComentario.isSelected());
-				organizar();
-				tamanhoPainel();
+				reorganizar();
+			}
+		});
+
+		menuItemDesenharRetangulo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Constantes.DESENHAR_RETANGULO_PADRAO = menuItemDesenharRetangulo.isSelected();
 				repaint();
 			}
 		});
@@ -344,9 +359,7 @@ public class Painel extends JPanel {
 					Instancia filho = new Instancia(objeto.getComentario());
 					objeto.adicionar(filho);
 					objeto.setComentario(null);
-					organizar();
-					tamanhoPainel();
-					repaint();
+					reorganizar();
 				}
 			}
 		});
@@ -369,9 +382,7 @@ public class Painel extends JPanel {
 					novoPai.adicionar(objeto);
 
 					pai.adicionar(novoPai, indice);
-					organizar();
-					tamanhoPainel();
-					repaint();
+					reorganizar();
 				}
 			}
 		});
@@ -385,7 +396,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				if (!objeto.isVazio()) {
+				if (!objeto.estaVazio()) {
 					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_contem_filhos"),
 							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 
@@ -398,35 +409,34 @@ public class Painel extends JPanel {
 				pai.setComentario(objeto.getDescricao());
 				pai.setDesenharComentario(true);
 				pai.excluir(objeto);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
 		menuItemMargemInferior.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto == null) {
-					return;
-				}
-
-				String valor = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(), objeto.margemInferior);
-
-				if (valor == null || valor.trim().length() == 0) {
-					return;
-				}
-
-				try {
-					objeto.margemInferior = Integer.parseInt(valor);
-					organizar();
-					tamanhoPainel();
-					repaint();
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(Painel.this, ex.getMessage());
-				}
+				// Instancia objeto = procurar();
+				//
+				// if (objeto == null) {
+				// return;
+				// }
+				//
+				// String valor = JOptionPane.showInputDialog(Painel.this,
+				// objeto.getDescricao(), objeto.margemInferior);
+				//
+				// if (valor == null || valor.trim().length() == 0) {
+				// return;
+				// }
+				//
+				// try {
+				// objeto.margemInferior = Integer.parseInt(valor);
+				// organizar();
+				// tamanhoPainel();
+				// repaint();
+				// } catch (Exception ex) {
+				// JOptionPane.showMessageDialog(Painel.this, ex.getMessage());
+				// }
 			}
 		});
 
@@ -439,14 +449,10 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
-						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+				int resp = showConfirmDialog();
 
-				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
-					objeto.getPai().excluirAcima(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (JOptionPane.OK_OPTION == resp && objeto.excluirAcima()) {
+					reorganizar();
 				}
 			}
 		});
@@ -460,14 +466,10 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
-						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+				int resp = showConfirmDialog();
 
-				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
-					objeto.getPai().excluirAbaixo(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (JOptionPane.OK_OPTION == resp && objeto.excluirAbaixo()) {
+					reorganizar();
 				}
 			}
 		});
@@ -481,14 +483,10 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
-						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+				int resp = showConfirmDialog();
 
-				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
-					objeto.getPai().excluirOutros(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (JOptionPane.OK_OPTION == resp && objeto.excluirOutros()) {
+					reorganizar();
 				}
 			}
 		});
@@ -502,14 +500,12 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
-						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+				int resp = showConfirmDialog();
 
 				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
-					objeto.getPai().excluir(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+					if (objeto.getPai().excluir(objeto)) {
+						reorganizar();
+					}
 				}
 			}
 		});
@@ -523,14 +519,11 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
-						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+				int resp = showConfirmDialog();
 
 				if (JOptionPane.OK_OPTION == resp) {
 					objeto.limpar();
-					organizar();
-					tamanhoPainel();
-					repaint();
+					reorganizar();
 				}
 			}
 		});
@@ -544,14 +537,10 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"),
-						Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+				int resp = showConfirmDialog();
 
-				if (JOptionPane.OK_OPTION == resp) {
-					objeto.sairDaHierarquia();
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (JOptionPane.OK_OPTION == resp && objeto.sairDaHierarquia()) {
+					reorganizar();
 				}
 			}
 		});
@@ -597,11 +586,8 @@ public class Painel extends JPanel {
 
 				copiado = objeto.clonar();
 
-				if (objeto.getPai() != null) {
-					objeto.getPai().excluir(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
+					reorganizar();
 				}
 			}
 		});
@@ -619,11 +605,8 @@ public class Painel extends JPanel {
 				copiado = objeto.clonar();
 				copiado.limpar();
 
-				if (objeto.getPai() != null) {
-					objeto.getPai().excluir(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
+					reorganizar();
 				}
 			}
 		});
@@ -638,9 +621,7 @@ public class Painel extends JPanel {
 				}
 
 				objeto.adicionar(copiado.clonar());
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -660,9 +641,7 @@ public class Painel extends JPanel {
 				novoPai.adicionar(objeto);
 
 				pai.adicionar(novoPai, indice);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -683,9 +662,7 @@ public class Painel extends JPanel {
 				ponta.adicionar(objeto);
 
 				pai.adicionar(novoPai, indice);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -698,11 +675,8 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				if (objeto.getPai() != null) {
-					objeto.getPai().primeiro(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (objeto.primeiro()) {
+					reorganizar();
 				}
 			}
 		});
@@ -716,11 +690,8 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				if (objeto.getPai() != null) {
-					objeto.getPai().subir(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (objeto.subir()) {
+					reorganizar();
 				}
 			}
 		});
@@ -734,11 +705,8 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				if (objeto.getPai() != null) {
-					objeto.getPai().descer(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (objeto.descer()) {
+					reorganizar();
 				}
 			}
 		});
@@ -752,11 +720,8 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				if (objeto.getPai() != null) {
-					objeto.getPai().ultimo(objeto);
-					organizar();
-					tamanhoPainel();
-					repaint();
+				if (objeto.ultimo()) {
+					reorganizar();
 				}
 			}
 		});
@@ -764,96 +729,56 @@ public class Painel extends JPanel {
 		menuItemVermelho.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(new Color(255, 50, 50));
-					repaint();
-				}
+				setCor(procurar(), new Color(255, 50, 50));
 			}
 		});
 
 		menuItemVerde.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(new Color(0, 150, 0));
-					repaint();
-				}
+				setCor(procurar(), new Color(0, 150, 0));
 			}
 		});
 
 		menuItemLaranja.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(new Color(255, 170, 70));
-					repaint();
-				}
+				setCor(procurar(), new Color(255, 170, 70));
 			}
 		});
 
 		menuItemAmarelo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(new Color(240, 210, 100));
-					repaint();
-				}
+				setCor(procurar(), new Color(240, 210, 100));
 			}
 		});
 
 		menuItemAzul.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(new Color(80, 80, 255));
-					repaint();
-				}
+				setCor(procurar(), new Color(80, 80, 255));
 			}
 		});
 
 		menuItemPreto.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(new Color(78, 78, 78));
-					repaint();
-				}
+				setCor(procurar(), new Color(78, 78, 78));
 			}
 		});
 
 		menuItemCinza.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(new Color(180, 180, 180));
-					repaint();
-				}
+				setCor(procurar(), new Color(180, 180, 180));
 			}
 		});
 
 		menuItemPadrao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Instancia objeto = procurar();
-
-				if (objeto != null) {
-					objeto.setCor(null);
-					repaint();
-				}
+				setCor(procurar(), null);
 			}
 		});
 
@@ -873,9 +798,7 @@ public class Painel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				raiz.minMaxTodos(true);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -883,9 +806,7 @@ public class Painel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				raiz.minMaxTodos(false);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -899,9 +820,7 @@ public class Painel extends JPanel {
 				}
 
 				objeto.minMaxTodos(true);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -915,9 +834,7 @@ public class Painel extends JPanel {
 				}
 
 				objeto.minMaxTodos(false);
-				organizar();
-				tamanhoPainel();
-				repaint();
+				reorganizar();
 			}
 		});
 
@@ -926,19 +843,22 @@ public class Painel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				int i = fileChooser.showSaveDialog(Painel.this);
+
 				if (i == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
+
 					if (file != null) {
-						BufferedImage bi = new BufferedImage(Dimensao.larguraTotal + margemLarguraImagem,
-								Dimensao.alturaTotal + margemAlturaImagem, BufferedImage.TYPE_INT_ARGB);
+						BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+
 						Graphics2D g2 = bi.createGraphics();
 						g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 						g2.setColor(Color.WHITE);
-						g2.fillRect(0, 0, Dimensao.larguraTotal + margemLarguraImagem,
-								Dimensao.alturaTotal + margemAlturaImagem);
+						g2.fillRect(0, 0, getWidth(), getHeight());
 						g2.setColor(Color.BLACK);
 						g2.setFont(getFont());
+
 						raiz.desenhar(g2);
+
 						try {
 							ImageIO.write(bi, "png", file);
 						} catch (IOException e1) {
@@ -951,11 +871,18 @@ public class Painel extends JPanel {
 
 	}
 
-	public void setArquivo(String arq) {
-		arquivo = Arquivo.semSufixo(arq);
+	private void setCor(Instancia i, Color cor) {
+		if (i != null) {
+			i.setCor(cor);
+			repaint();
+		}
+	}
 
-		if (arquivo != null && arquivo.trim().length() > 0) {
-			arquivo += Arquivo.SUFIXO;
+	public void setArquivo(String arq) {
+		arquivo = ArquivoUtil.semSufixo(arq);
+
+		if (!Util.estaVazio(arquivo)) {
+			arquivo += ArquivoUtil.SUFIXO;
 			abrirArquivo();
 		} else {
 			arquivo = null;
@@ -967,13 +894,14 @@ public class Painel extends JPanel {
 			File file = new File(arquivo);
 
 			if (!file.exists()) {
-				Arquivo.salvarArquivo(new Instancia(file.getName()), file);
+				JOptionPane.showMessageDialog(null, "Inexistente!");
+				return;
+				// ArquivoUtil.salvarArquivo(new Instancia(file.getName()),
+				// file);
 			}
 
-			raiz = Arquivo.lerArquivo(file);
-			organizar();
-			tamanhoPainel();
-			repaint();
+			raiz = ArquivoUtil.lerArquivo(file);
+			reorganizar();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
@@ -981,8 +909,8 @@ public class Painel extends JPanel {
 
 	public void salvarArquivo(String alternativo) {
 		if (alternativo != null && alternativo.trim().length() > 0) {
-			arquivo = Arquivo.semSufixo(alternativo);
-			arquivo += Arquivo.SUFIXO;
+			arquivo = ArquivoUtil.semSufixo(alternativo);
+			arquivo += ArquivoUtil.SUFIXO;
 		}
 
 		if (arquivo == null || raiz == null) {
@@ -990,19 +918,22 @@ public class Painel extends JPanel {
 		}
 
 		try {
-			Arquivo.salvarArquivo(raiz, new File(arquivo));
+			ArquivoUtil.salvarArquivo(raiz, new File(arquivo));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
 
 	private Instancia procurar() {
-		return raiz.procurar(local.getX(), local.getY());
+		return raiz.procurar(localizacao.getX(), localizacao.getY());
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		if (!raiz.processado) {
+			return;
+		}
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		raiz.desenhar((Graphics2D) g);
 	}
@@ -1032,39 +963,16 @@ public class Painel extends JPanel {
 			br.close();
 			raiz.limpar();
 			processar(sb.toString());
-			organizar();
-			tamanhoPainel();
-			repaint();
+			reorganizar();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		}
 	}
 
 	private void processar(String sql) throws Exception {
-		if (sql.trim().length() == 0) {
+		if (Util.estaVazio(sql)) {
 			return;
 		}
-
-		Class.forName(Config.get("driver"));
-		Connection conn = DriverManager.getConnection(Config.get("url"), Config.get("usuario"), Config.get("senha"));
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		ResultSetMetaData meta = rs.getMetaData();
-
-		int colunas = meta.getColumnCount();
-
-		while (rs.next()) {
-			String[] grafo = new String[colunas];
-
-			for (int i = 0; i < colunas; i++) {
-				grafo[i] = rs.getString(i + 1);
-			}
-
-			raiz.importar(grafo);
-		}
-
-		rs.close();
-		ps.close();
-		conn.close();
+		SQLUtil.importar(raiz, sql);
 	}
 }

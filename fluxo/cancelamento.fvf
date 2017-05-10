@@ -1,96 +1,100 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <instancia nome="Menu Cancelamento" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="cancelamento.pesquisar()">
-	<instancia nome="app.routes.js" margemInferior="3" cor="-994716" minimizado="true">
-		<instancia nome="cancelamento" margemInferior="3" cor="-4934476" minimizado="true">
-			<instancia nome="&lt;div ui-view&gt;&lt;/div&gt;" margemInferior="3" cor="-16738816" minimizado="true"/>
-			<instancia nome="CancelamentoController" margemInferior="3" cor="-11513601" minimizado="true"/>
-		</instancia>
-		<instancia nome="cancelamento.pesquisar" margemInferior="3" cor="-4934476" minimizado="true">
-			<instancia nome="app/pages/cancelamento/pesquisar-cancelamento.view.html" margemInferior="3" cor="-16738816" minimizado="true"/>
-			<instancia nome="PesquisaCancelamentoController" margemInferior="3" cor="-11513601" minimizado="true">
-				<instancia nome="init()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.listarCancelamentos()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.exibirRequerentesComCertificados" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.pesquisar()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.excluir()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.detalhar()" margemInferior="3" cor="-994716" minimizado="true"/>
+	<instancia nome="app.routes.js" margemInferior="3" cor="-994716" esquerdo="true" minimizado="false">
+		<instancia nome="app.routes.js" margemInferior="3" cor="-994716" minimizado="false">
+			<instancia nome="cancelamento" margemInferior="3" cor="-4934476" minimizado="false">
+				<instancia nome="&lt;div ui-view&gt;&lt;/div&gt;" margemInferior="3" cor="-16738816" minimizado="false"/>
+				<instancia nome="CancelamentoController" margemInferior="3" cor="-11513601" minimizado="false"/>
 			</instancia>
-		</instancia>
-		<instancia nome="cancelamento.solicitarCancelamento" margemInferior="3" cor="-4934476" minimizado="true">
-			<instancia nome="app/pages/cancelamento/solicitar-cancelamento.view.html" margemInferior="3" cor="-16738816" minimizado="true"/>
-			<instancia nome="SolicitarCancelamentoController" margemInferior="3" cor="-11513601" minimizado="true">
-				<instancia nome="init()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.voltar()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.pesquisar()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.selecionarCertificado()" margemInferior="3" minimizado="true"/>
+			<instancia nome="cancelamento.pesquisar" margemInferior="3" minimizado="true">
+				<instancia nome="app/pages/cancelamento/pesquisar-cancelamento.view.html" margemInferior="3" cor="-16738816" minimizado="true"/>
+				<instancia nome="PesquisaCancelamentoController" margemInferior="3" cor="-11513601" minimizado="false">
+					<instancia nome="init()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.listarCancelamentos()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.exibirRequerentesComCertificados" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.pesquisar()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.excluir()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.detalhar()" margemInferior="3" cor="-994716" minimizado="false"/>
+				</instancia>
 			</instancia>
-		</instancia>
-		<instancia nome="cancelamento.cadastro" margemInferior="3" cor="-4934476" minimizado="true">
-			<instancia nome="app/pages/cancelamento/incluir-cancelamento.view.html" margemInferior="3" cor="-16738816" minimizado="true"/>
-			<instancia nome="IncluirCancelamentoController" margemInferior="3" cor="-11513601" minimizado="true">
-				<instancia nome="init()" margemInferior="3" minimizado="true"/>
-				<instancia nome="vm.criarCertificadoCancelamento()" margemInferior="3" minimizado="true"/>
+			<instancia nome="cancelamento.solicitarCancelamento" margemInferior="3" cor="-4934476" minimizado="true">
+				<instancia nome="app/pages/cancelamento/solicitar-cancelamento.view.html" margemInferior="3" cor="-16738816" minimizado="false"/>
+				<instancia nome="SolicitarCancelamentoController" margemInferior="3" cor="-11513601" minimizado="false">
+					<instancia nome="init()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.voltar()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.pesquisar()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.selecionarCertificado()" margemInferior="3" minimizado="false"/>
+				</instancia>
 			</instancia>
-		</instancia>
-		<instancia nome="cancelamento.gerar" margemInferior="3" cor="-4934476" minimizado="true">
-			<instancia nome="app/pages/cancelamento/gerar-cancelamento.view.html" margemInferior="3" cor="-52686" minimizado="true" desenharComentario="true" comentario="inexistente"/>
-			<instancia nome="GerarCancelamentoController" margemInferior="3" cor="-52686" minimizado="true" desenharComentario="true" comentario="inexistente"/>
-		</instancia>
-		<instancia nome="cancelamento.finalizar" margemInferior="3" cor="-4934476" minimizado="true">
-			<instancia nome="app/pages/cancelamento/finalizar-cancelamento.view.html" margemInferior="3" cor="-52686" minimizado="true" desenharComentario="true" comentario="inexistente!"/>
-			<instancia nome="FinalizarRequerimentoCadastral" margemInferior="3" cor="-52686" minimizado="true" desenharComentario="true" comentario="inexistente!"/>
+			<instancia nome="cancelamento.cadastro" margemInferior="3" cor="-4934476" minimizado="false">
+				<instancia nome="app/pages/cancelamento/incluir-cancelamento.view.html" margemInferior="3" cor="-16738816" minimizado="false"/>
+				<instancia nome="IncluirCancelamentoController" margemInferior="3" cor="-11513601" minimizado="false">
+					<instancia nome="init()" margemInferior="3" minimizado="false"/>
+					<instancia nome="vm.criarCertificadoCancelamento()" margemInferior="3" minimizado="false"/>
+				</instancia>
+			</instancia>
+			<instancia nome="cancelamento.gerar" margemInferior="3" cor="-4934476" minimizado="false">
+				<instancia nome="app/pages/cancelamento/gerar-cancelamento.view.html" margemInferior="3" cor="-52686" minimizado="false" desenharComentario="true" comentario="inexistente"/>
+				<instancia nome="GerarCancelamentoController" margemInferior="3" cor="-52686" minimizado="false" desenharComentario="true" comentario="inexistente"/>
+			</instancia>
+			<instancia nome="cancelamento.finalizar" margemInferior="3" cor="-4934476" minimizado="false">
+				<instancia nome="app/pages/cancelamento/finalizar-cancelamento.view.html" margemInferior="3" cor="-52686" minimizado="false" desenharComentario="true" comentario="inexistente!"/>
+				<instancia nome="FinalizarRequerimentoCadastral" margemInferior="3" cor="-52686" minimizado="false" desenharComentario="true" comentario="inexistente!"/>
+			</instancia>
 		</instancia>
 	</instancia>
-	<instancia nome="Página Cancelamento" margemInferior="3" cor="-11645362" desenharComentario="true" comentario="pesquisar-cancelamento.view.html">
-		<instancia nome="Botão Pesquisar Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.pesquisar(vm.dto)">
-			<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.pesquisar()"/>
-		</instancia>
-		<instancia nome="Listagem de Requerimentos" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.excluir(item)">
-			<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.excluir()"/>
-		</instancia>
-		<instancia nome="Listagem de Requerimentos" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.detalhar(item)">
-			<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.cadastro', {requerimento: requerimento, estado: 'SALVO'});"/>
-		</instancia>
-		<instancia nome="Botão Solicitar Cancelamento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.exibirRequerentesComCertificados();">
-			<instancia nome="PesquisarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.solicitarCancelamento');">
-				<instancia nome="Página Lista de Requerentes" margemInferior="0" cor="-11645362" desenharComentario="true" comentario="solicitar-cancelamento.view.html">
-					<instancia nome="Botão Voltar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.voltar()">
-						<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.pesquisar');"/>
-					</instancia>
-					<instancia nome="Pesquisar requerente" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.pesquisar(vm.dto.cpfCnpj)">
-						<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.pesquisar()"/>
-					</instancia>
-					<instancia nome="Listagem de requerentes" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.selecionarCertificado(item)">
-						<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.cadastro', {requerente: dadosRequerente});">
-							<instancia nome="Exibir (Dados Requerente / Motivo do Cancelamento / Certificados)" margemInferior="0" cor="-11645362" desenharComentario="true" comentario="incluir-cancelamento.view.html">
-								<instancia nome="ESTADO NOVO" margemInferior="3">
-									<instancia nome="Botão Salvar" margemInferior="0" cor="-16738816" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
-										<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
-											<instancia nome="alterar para estado NOVO" margemInferior="0" desenharComentario="true"/>
+	<instancia nome="app.routes.js" margemInferior="3" cor="-994716">
+		<instancia nome="Página Cancelamento" margemInferior="3" cor="-11645362" desenharComentario="true" comentario="pesquisar-cancelamento.view.html">
+			<instancia nome="Botão Pesquisar Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.pesquisar(vm.dto)" minimizado="true">
+				<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.pesquisar()"/>
+			</instancia>
+			<instancia nome="Listagem de Requerimentos" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.excluir(item)">
+				<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.excluir()"/>
+			</instancia>
+			<instancia nome="Listagem de Requerimentos" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.detalhar(item)">
+				<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.cadastro', {requerimento: requerimento, estado: 'SALVO'});"/>
+			</instancia>
+			<instancia nome="Botão Solicitar Cancelamento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.exibirRequerentesComCertificados();">
+				<instancia nome="PesquisarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.solicitarCancelamento');">
+					<instancia nome="Página Lista de Requerentes" margemInferior="0" cor="-11645362" desenharComentario="true" comentario="solicitar-cancelamento.view.html">
+						<instancia nome="Botão Voltar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.voltar()">
+							<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.pesquisar');"/>
+						</instancia>
+						<instancia nome="Pesquisar requerente" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.pesquisar(vm.dto.cpfCnpj)">
+							<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.pesquisar()"/>
+						</instancia>
+						<instancia nome="Listagem de requerentes" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.selecionarCertificado(item)">
+							<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.cadastro', {requerente: dadosRequerente});">
+								<instancia nome="Exibir (Dados Requerente / Motivo do Cancelamento / Certificados)" margemInferior="0" cor="-11645362" desenharComentario="true" comentario="incluir-cancelamento.view.html">
+									<instancia nome="ESTADO NOVO" margemInferior="3">
+										<instancia nome="Botão Salvar" margemInferior="0" cor="-16738816" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
+											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
+												<instancia nome="alterar para estado NOVO" margemInferior="0" desenharComentario="true"/>
+											</instancia>
 										</instancia>
 									</instancia>
-								</instancia>
-								<instancia nome="ESTADO SALVO" margemInferior="3">
-									<instancia nome="Botão Emitir Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
-										<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
-											<instancia nome="callback" margemInferior="0" cor="-4934476" desenharComentario="true" comentario="exibirAssinaturas"/>
+									<instancia nome="ESTADO SALVO" margemInferior="3">
+										<instancia nome="Botão Emitir Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
+											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
+												<instancia nome="callback" margemInferior="0" cor="-4934476" desenharComentario="true" comentario="exibirAssinaturas"/>
+											</instancia>
 										</instancia>
-									</instancia>
-									<instancia nome="Botão Finalizar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="confirm.open()">
-										<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.concluir();">
-											<instancia nome="RequerimentoService.concluir(vm.requerimento.id)" margemInferior="0" cor="-16738816"/>
+										<instancia nome="Botão Finalizar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="confirm.open()">
+											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.concluir();">
+												<instancia nome="RequerimentoService.concluir(vm.requerimento.id)" margemInferior="0" cor="-16738816"/>
+											</instancia>
 										</instancia>
-									</instancia>
-									<instancia nome="Botão Anexar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
-										<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
-											<instancia nome="vm.abrirModalAnexo()" margemInferior="0" cor="-4934476" desenharComentario="true" comentario="exibirAssinaturas"/>
+										<instancia nome="Botão Anexar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
+											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
+												<instancia nome="vm.abrirModalAnexo()" margemInferior="0" cor="-4934476" desenharComentario="true" comentario="exibirAssinaturas"/>
+											</instancia>
 										</instancia>
-									</instancia>
-									<instancia nome="Botão Anexo II" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII">
-										<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
-											<instancia nome="Botão Anexo II" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.imprimirAnexoII">
-												<instancia nome="printer.print('app/pages/cancelamento/cancelamento-anexo.tpl.html', params);" margemInferior="0" cor="-16738816"/>
+										<instancia nome="Botão Anexo II" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII">
+											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
+												<instancia nome="Botão Anexo II" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.imprimirAnexoII">
+													<instancia nome="printer.print('app/pages/cancelamento/cancelamento-anexo.tpl.html', params);" margemInferior="0" cor="-16738816"/>
+												</instancia>
 											</instancia>
 										</instancia>
 									</instancia>

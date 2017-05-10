@@ -1,4 +1,4 @@
-package br.com.florencio.fluxo;
+package br.com.florencio.fluxo.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import br.com.florencio.fluxo.Instancia;
+import br.com.florencio.fluxo.util.Strings;
 
 public class DialogoComentario extends JDialog {
 	private static final long serialVersionUID = 1L;

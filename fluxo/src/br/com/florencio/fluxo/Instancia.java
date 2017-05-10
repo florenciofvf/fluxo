@@ -3,37 +3,54 @@ package br.com.florencio.fluxo;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import br.com.florencio.fluxo.util.Constantes;
+import br.com.florencio.fluxo.util.Dimensao;
+import br.com.florencio.fluxo.util.Localizacao;
+import br.com.florencio.fluxo.util.Util;
 
 public class Instancia {
-	private boolean desenharComentario;
-	private List<Instancia> filhos;
-	private boolean minimizado;
-	private Dimensao dimensao;
-	private List<Linha> linhas;
-	private String comentario;
-	private String descricao;
-	private Instancia pai;
-	int margemInferior;
-	private Local local;
-	private Color cor;
+	Localizacao localizacaoAparencia;
+	InstanciaAparencia aparencia;
+	boolean desenharComentario;
+	Dimensao dimensaoAparencia;
+	boolean iconeMinMaxClicado;
+	Localizacao localizacao;
+	List<Instancia> filhos;
+	List<Linha> linhas;
+	boolean minimizado;
+	String observacao;
+	String comentario;
+	Dimensao dimensao;
+	String descricao;
+	boolean esquerdo;
+	boolean braco;
+	Instancia pai;
+	byte local;
+	Color cor;
 
 	public Instancia(String descricao) {
-		this.descricao = Arquivo.semSufixo(descricao);
+		this(descricao, false);
+	}
+
+	public Instancia(String descricao, boolean esquerdo) {
+		aparencia = new InstanciaAparencia();
 		filhos = new ArrayList<>();
 		linhas = new ArrayList<>();
-		dimensao = new Dimensao();
-		local = new Local();
+		this.esquerdo = esquerdo;
+		setDescricao(descricao);
 	}
 
 	public Instancia clonar() {
 		Instancia obj = new Instancia(descricao);
 		obj.desenharComentario = desenharComentario;
-		obj.margemInferior = margemInferior;
+		obj.observacao = observacao;
 		obj.comentario = comentario;
 		obj.minimizado = minimizado;
+		obj.esquerdo = esquerdo;
 		obj.cor = cor;
 
 		for (Instancia i : filhos) {
@@ -59,6 +76,7 @@ public class Instancia {
 		}
 
 		i.pai = this;
+		i.esquerdo = esquerdo;
 
 		if (indice == -1) {
 			filhos.add(i);
@@ -71,9 +89,19 @@ public class Instancia {
 		adicionar(i, -1);
 	}
 
-	public void sairDaHierarquia() {
+	public boolean excluir(Instancia i) {
+		if (i.pai != this) {
+			return false;
+		}
+
+		i.pai = null;
+		filhos.remove(i);
+		return true;
+	}
+
+	public boolean sairDaHierarquia() {
 		if (pai == null) {
-			return;
+			return false;
 		}
 
 		List<Instancia> lista = new ArrayList<>();
@@ -94,118 +122,110 @@ public class Instancia {
 		}
 
 		pai.excluir(this);
+		return true;
 	}
 
-	public void controlarMargemInferior() {
-		if (pai != null && pai.getTamanho() < 2) {
-			if (margemInferior == Dimensao.MARGEM_INFERIOR) {
-				margemInferior = 0;
-			}
+	public boolean primeiro() {
+		if (pai == null) {
+			return false;
 		}
 
-		if (filhos.size() > 1) {
-			for (Instancia obj : filhos) {
-				if (obj.margemInferior == 0) {
-					obj.margemInferior = Dimensao.MARGEM_INFERIOR;
-				}
-			}
-		}
-
-		for (Instancia obj : filhos) {
-			obj.controlarMargemInferior();
-		}
-	}
-
-	public void primeiro(Instancia i) {
-		if (i == null || i.pai != this) {
-			return;
-		}
-
-		int pos = filhos.indexOf(i);
+		List<Instancia> filhos = pai.getFilhos();
+		int pos = filhos.indexOf(this);
 
 		if (pos > 0) {
 			filhos.remove(pos);
-			filhos.add(0, i);
+			filhos.add(0, this);
+			return true;
 		}
+
+		return false;
 	}
 
-	public void subir(Instancia i) {
-		if (i == null || i.pai != this) {
-			return;
+	public boolean subir() {
+		if (pai == null) {
+			return false;
 		}
 
-		int pos = filhos.indexOf(i);
+		List<Instancia> filhos = pai.getFilhos();
+		int pos = filhos.indexOf(this);
 
 		if (pos > 0) {
 			Instancia objAnterior = filhos.get(pos - 1);
 			filhos.set(pos, objAnterior);
-			filhos.set(pos - 1, i);
+			filhos.set(pos - 1, this);
+			return true;
 		}
+
+		return false;
 	}
 
-	public void descer(Instancia i) {
-		if (i == null || i.pai != this) {
-			return;
+	public boolean descer() {
+		if (pai == null) {
+			return false;
 		}
 
-		int pos = filhos.indexOf(i);
+		List<Instancia> filhos = pai.getFilhos();
+		int pos = filhos.indexOf(this);
 
 		if (pos < filhos.size() - 1) {
 			Instancia objPosterior = filhos.get(pos + 1);
 			filhos.set(pos, objPosterior);
-			filhos.set(pos + 1, i);
+			filhos.set(pos + 1, this);
+			return true;
 		}
+
+		return false;
 	}
 
-	public void ultimo(Instancia i) {
-		if (i == null || i.pai != this) {
-			return;
+	public boolean ultimo() {
+		if (pai == null) {
+			return false;
 		}
 
-		int pos = filhos.indexOf(i);
+		List<Instancia> filhos = pai.getFilhos();
+		int pos = filhos.indexOf(this);
 
 		if (pos < filhos.size() - 1) {
 			filhos.remove(pos);
-			filhos.add(i);
+			filhos.add(this);
+			return true;
 		}
+
+		return false;
 	}
 
-	public void excluir(Instancia i) {
-		if (i.pai != this) {
-			return;
+	public boolean excluirOutros() {
+		if (pai == null) {
+			return false;
 		}
 
-		i.pai = null;
-		filhos.remove(i);
-	}
-
-	public void excluirOutros(Instancia i) {
-		if (i.pai != this) {
-			return;
-		}
-
+		List<Instancia> filhos = pai.getFilhos();
 		List<Instancia> lista = new ArrayList<>();
 
 		for (Instancia obj : filhos) {
-			if (obj != i) {
+			if (obj != this) {
 				lista.add(obj);
 			}
 		}
 
 		for (Instancia obj : lista) {
-			excluir(obj);
+			pai.excluir(obj);
 		}
+
+		return !lista.isEmpty();
 	}
 
-	public void excluirAcima(Instancia i) {
-		if (i.pai != this) {
-			return;
+	public boolean excluirAcima() {
+		if (pai == null) {
+			return false;
 		}
 
+		List<Instancia> filhos = pai.getFilhos();
 		List<Instancia> lista = new ArrayList<>();
 
 		for (Instancia obj : filhos) {
-			if (obj != i) {
+			if (obj != this) {
 				lista.add(obj);
 			} else {
 				break;
@@ -213,21 +233,24 @@ public class Instancia {
 		}
 
 		for (Instancia obj : lista) {
-			excluir(obj);
+			pai.excluir(obj);
 		}
+
+		return !lista.isEmpty();
 	}
 
-	public void excluirAbaixo(Instancia i) {
-		if (i.pai != this) {
-			return;
+	public boolean excluirAbaixo() {
+		if (pai == null) {
+			return false;
 		}
 
+		List<Instancia> filhos = pai.getFilhos();
 		List<Instancia> lista = new ArrayList<>();
 
 		boolean ativado = false;
 
 		for (Instancia obj : filhos) {
-			if (obj == i) {
+			if (obj == this) {
 				ativado = true;
 			} else if (ativado) {
 				lista.add(obj);
@@ -235,8 +258,10 @@ public class Instancia {
 		}
 
 		for (Instancia obj : lista) {
-			excluir(obj);
+			pai.excluir(obj);
 		}
+
+		return !lista.isEmpty();
 	}
 
 	public void limpar() {
@@ -263,7 +288,7 @@ public class Instancia {
 	}
 
 	public Instancia getFilho(String descricao) {
-		if (descricao == null || descricao.trim().length() == 0) {
+		if (Util.estaVazio(descricao)) {
 			return null;
 		}
 
@@ -276,36 +301,11 @@ public class Instancia {
 		return null;
 	}
 
-	public void importar(String[] grafo) {
-		if (grafo == null) {
-			return;
-		}
-
-		Instancia sel = this;
-
-		for (int i = 0; i < grafo.length; i++) {
-			String string = grafo[i];
-
-			if (string == null || string.trim().length() == 0) {
-				break;
-			}
-
-			Instancia obj = sel.getFilho(string);
-
-			if (obj == null) {
-				obj = new Instancia(string);
-				sel.adicionar(obj);
-			}
-
-			sel = obj;
-		}
-	}
-
 	public int getTamanho() {
 		return filhos.size();
 	}
 
-	public boolean isVazio() {
+	public boolean estaVazio() {
 		return filhos.isEmpty();
 	}
 
@@ -321,265 +321,241 @@ public class Instancia {
 		return dimensao;
 	}
 
-	public Local getLocal() {
-		return local;
+	public Localizacao getLocalizacao() {
+		return localizacao;
 	}
 
-	public void desenhar(Graphics2D g2) {
-		final boolean contemComentario = getComentario().length() > 0;
-		final int largura = dimensao.largura - Dimensao.TAMANHO_ICONE;
-		final byte margemSuperior = (byte) (desenharComentario && contemComentario ? 6 : 2);
-		final byte margemInferior = (byte) (margemSuperior * 2);
-		final byte auxMargemFonte = 2;
-		final byte auxComentario = 3;
-		final byte margemFonte = 17;
-		final byte auxIcone = 3;
-		final byte raio = 8;
-
-		if (cor != null) {
-			Color c = g2.getColor();
-
-			g2.setColor(cor);
-			g2.fillRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
-
-			g2.setColor(Color.BLACK);
-			g2.drawRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
-
-			if (contemComentario) {
-				if (desenharComentario) {
-					g2.drawString(comentario, local.x + auxMargemFonte,
-							local.y + Dimensao.ALTURA_PADRAO + auxComentario);
-				} else {
-					g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO,
-							Dimensao.TAMANHO_ICONE_COMENTARIO);
-				}
-			}
-
-			if (filhos.size() > 0) {
-				g2.setColor(cor);
-				g2.fillOval(local.x + largura, local.y + Dimensao.MARGEM_ICONE, Dimensao.TAMANHO_ICONE,
-						Dimensao.TAMANHO_ICONE);
-				g2.setColor(Color.BLACK);
-				g2.drawOval(local.x + largura, local.y + Dimensao.MARGEM_ICONE, Dimensao.TAMANHO_ICONE,
-						Dimensao.TAMANHO_ICONE);
-
-				g2.setColor(Color.BLACK);
-				if (minimizado) {
-					g2.drawLine(local.x + largura + Dimensao.METADE_ICONE, local.y + Dimensao.MARGEM_ICONE + auxIcone,
-							local.x + largura + Dimensao.METADE_ICONE,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.TAMANHO_ICONE - auxIcone);
-					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
-				} else {
-					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
-				}
-			}
-
-			g2.setColor(Color.WHITE);
-			g2.drawString(descricao, local.x + auxMargemFonte, local.y + margemFonte);
-
-			if (!minimizado) {
-				g2.setColor(cor);
-				for (Instancia i : filhos) {
-					i.desenhar(g2);
-				}
-
-				g2.setColor(cor);
-				for (Linha l : linhas) {
-					l.desenhar(g2);
-				}
-			}
-
-			g2.setColor(c);
-		} else {
-			g2.drawRoundRect(local.x, local.y + margemSuperior, largura, dimensao.altura - margemInferior, raio, raio);
-
-			if (contemComentario) {
-				if (desenharComentario) {
-					g2.drawString(comentario, local.x + auxMargemFonte,
-							local.y + Dimensao.ALTURA_PADRAO + auxComentario);
-				} else {
-					g2.fillOval(local.x, local.y + margemSuperior, Dimensao.TAMANHO_ICONE_COMENTARIO,
-							Dimensao.TAMANHO_ICONE_COMENTARIO);
-				}
-			}
-
-			if (filhos.size() > 0) {
-				g2.drawOval(local.x + largura, local.y + Dimensao.MARGEM_ICONE, Dimensao.TAMANHO_ICONE,
-						Dimensao.TAMANHO_ICONE);
-				if (minimizado) {
-					g2.drawLine(local.x + largura + Dimensao.METADE_ICONE, local.y + Dimensao.MARGEM_ICONE + auxIcone,
-							local.x + largura + Dimensao.METADE_ICONE,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.TAMANHO_ICONE - auxIcone);
-					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
-				} else {
-					g2.drawLine(local.x + largura + auxIcone, local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE,
-							local.x + largura + Dimensao.TAMANHO_ICONE - auxIcone,
-							local.y + Dimensao.MARGEM_ICONE + Dimensao.METADE_ICONE);
-				}
-			}
-
-			g2.drawString(descricao, local.x + auxMargemFonte, local.y + margemFonte);
-
-			if (!minimizado) {
-				for (Instancia i : filhos) {
-					i.desenhar(g2);
-				}
-
-				for (Linha l : linhas) {
-					l.desenhar(g2);
-				}
-			}
-		}
-	}
-
-	public boolean clicadoNoIcone(int x, int y) {
-		int X = local.x + dimensao.largura - Dimensao.TAMANHO_ICONE;
-		int Y = local.y + Dimensao.MARGEM_ICONE;
-		return (x >= X && x <= X + Dimensao.TAMANHO_ICONE) && (y >= Y && y <= Y + Dimensao.TAMANHO_ICONE);
-	}
-
-	boolean duploClickValido(int x) {
-		return x < local.x + dimensao.largura - Dimensao.TAMANHO_ICONE;
-	}
-
-	public void organizar(FontMetrics metrics) {
-		Dimensao.larguraTotal = 0;
-		Dimensao.alturaTotal = 0;
-		inicializar();
-		calcularAltura();
-		Dimensao.alturaTotal = dimensao.altura;
-		calcularLargura(metrics);
-		calcularX();
-		calcularY(local.y);
-		centralizarY();
-		afastar(0);
-		calcularLarguraTotal();
-		criarLinhas();
-	}
-
-	private void inicializar() {
+	void inicializar() {
+		localizacaoAparencia = null;
 		linhas = new ArrayList<>();
-		dimensao = new Dimensao();
-		local = new Local();
+		dimensaoAparencia = null;
+		localizacao = null;
+		dimensao = null;
 
 		for (Instancia i : filhos) {
 			i.inicializar();
 		}
 	}
 
-	public int calcularAltura() {
-		int total = 0;
-
+	void definirDimensaoAltura() {
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				total += i.calcularAltura();
+				i.definirDimensaoAltura();
 			}
 		}
 
-		dimensao.altura = total;
-
-		if (dimensao.altura == 0) {
-			dimensao.altura = Dimensao.ALTURA_PADRAO;
-		}
-
-		dimensao.altura += margemInferior;
-
-		return dimensao.altura;
-	}
-
-	public void calcularLargura(FontMetrics metrics) {
-		int larguraComentario = metrics.stringWidth(getComentario()) + 3 + Dimensao.TAMANHO_ICONE;
-		dimensao.largura = metrics.stringWidth(descricao) + 3 + Dimensao.TAMANHO_ICONE;
-
-		if (desenharComentario) {
-			dimensao.largura = Math.max(dimensao.largura, larguraComentario);
-		}
+		int altura = 0;
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				i.calcularLargura(metrics);
+				altura += i.dimensao.getAltura();
 			}
 		}
-	}
 
-	public void calcularX() {
-		local.x = pai == null ? 0 : pai.local.x + pai.dimensao.largura;
-
-		if (!minimizado) {
-			for (Instancia i : filhos) {
-				i.calcularX();
-			}
+		if (altura == 0) {
+			altura = Constantes.RETANGULO_ALTURA_PADRAO;
 		}
+
+		dimensao = new Dimensao(0, altura);
 	}
 
-	public void calcularY(int yPai) {
+	void definirDimensaoLargura(FontMetrics metrics) {
+		int larguraObservacao = metrics.stringWidth(getObservacao());
+		int larguraComentario = metrics.stringWidth(getComentario());
+		int larguraDescricao = metrics.stringWidth(getDescricao());
+
+		int largura = larguraObservacao;
+
+		if (larguraComentario > largura) {
+			largura = larguraComentario;
+		}
+
+		if (larguraDescricao > largura) {
+			largura = larguraDescricao;
+		}
+
+		if (!estaVazio()) {
+			largura += Constantes.LARGURA_MIN_MAX;
+		}
+
+		dimensao = new Dimensao(largura + 4, dimensao.getAltura());
+		dimensaoAparencia = new Dimensao(largura + 4, Constantes.APARENCIA_ALTURA_PADRAO);
+
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				i.local.y = yPai;
-				yPai += i.dimensao.altura;
-				i.calcularY(i.local.y);
+				i.definirDimensaoLargura(metrics);
 			}
 		}
 	}
 
-	public void centralizarY() {
-		local.y += (dimensao.altura - margemInferior - Dimensao.ALTURA_PADRAO) / 2;
-		local.y += local.yTop;
-		dimensao.altura = Dimensao.ALTURA_PADRAO;
+	void definirLocalizacaoX() {
+		int x = pai.localizacao.getX() + pai.dimensao.getLargura();
+		localizacao = new Localizacao(x, 0);
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				i.centralizarY();
+				i.definirLocalizacaoX();
 			}
 		}
 	}
 
-	private void afastar(int acumulado) {
-		int totalAcumulado = acumulado + Dimensao.MARGEM_DIREITA;
-		local.x += totalAcumulado;
-
+	void definirLocalizacaoY(int acumulo) {
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				i.afastar(totalAcumulado);
+				i.setLocalizacao(i.localizacao.getX(), acumulo);
+				acumulo += i.dimensao.getAltura();
+				i.definirLocalizacaoY(i.localizacao.getY());
 			}
 		}
 	}
 
-	private void calcularLarguraTotal() {
-		if (local.x + dimensao.largura > Dimensao.larguraTotal) {
-			Dimensao.larguraTotal = local.x + dimensao.largura;
-		}
+	void definirLocalizacaoAfastamentoHorizontal() {
+		int x = pai.localizacao.getX() + pai.dimensao.getLargura() + Constantes.LARGURA_AFASTAMENTO;
+		setLocalizacao(x, localizacao.getY());
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				i.calcularLarguraTotal();
+				i.definirLocalizacaoAfastamentoHorizontal();
 			}
 		}
 	}
 
-	private void criarLinhas() {
-		int x1 = local.x + dimensao.largura;
-		int y1 = local.y + dimensao.altura / 2;
+	public void calcularLarguraTotal(AtomicInteger integer) {
+		if (localizacao.getX() + dimensao.getLargura() > integer.get()) {
+			integer.set(localizacao.getX() + dimensao.getLargura());
+		}
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				int x2 = i.local.x;
-				int y2 = i.local.y + i.dimensao.altura / 2;
-
-				linhas.add(new Linha(x1 + 1, y1, x2 - 1, y2));
-				i.criarLinhas();
+				i.calcularLarguraTotal(integer);
 			}
+		}
+	}
+
+	public void calcularAlturaTotal(AtomicInteger integer) {
+		if (localizacao.getY() + dimensao.getAltura() > integer.get()) {
+			integer.set(localizacao.getY() + dimensao.getAltura());
+		}
+
+		if (!minimizado) {
+			for (Instancia i : filhos) {
+				i.calcularAlturaTotal(integer);
+			}
+		}
+	}
+
+	void inverterLocalizacaoX() {
+		setLocalizacao((localizacao.getX() + dimensao.getLargura()) * -1, localizacao.getY());
+		setLocalizacaoAparencia((localizacaoAparencia.getX() + dimensaoAparencia.getLargura()) * -1,
+				localizacaoAparencia.getY());
+
+		if (!minimizado) {
+			for (Instancia i : filhos) {
+				i.inverterLocalizacaoX();
+			}
+		}
+	}
+
+	void somarLocalizacaoX(int valor) {
+		setLocalizacao(localizacao.getX() + valor, localizacao.getY());
+		setLocalizacaoAparencia(localizacaoAparencia.getX() + valor, localizacaoAparencia.getY());
+
+		if (!minimizado) {
+			for (Instancia i : filhos) {
+				i.somarLocalizacaoX(valor);
+			}
+		}
+	}
+
+	void somarLocalizacaoY(int valor) {
+		setLocalizacao(localizacao.getX(), localizacao.getY() + valor);
+		setLocalizacaoAparencia(localizacaoAparencia.getX(), localizacaoAparencia.getY() + valor);
+
+		if (!minimizado) {
+			for (Instancia i : filhos) {
+				i.somarLocalizacaoY(valor);
+			}
+		}
+	}
+
+	void setLocalizacao(int x, int y) {
+		localizacao = new Localizacao(x, y);
+	}
+
+	void setLocalizacaoAparencia(int x, int y) {
+		localizacaoAparencia = new Localizacao(x, y);
+	}
+
+	void definirLocalizacaoAparenciaVertical(byte local) {
+		// local = (byte) new Random().nextInt(3);
+		this.local = local;
+
+		if (braco) {
+			local = pai.local;
+		}
+
+		if (Constantes.APARENCIA_ACIMA == local) {
+			localizacaoAparencia = new Localizacao(localizacao.getX(), localizacao.getY());
+
+		} else if (Constantes.APARENCIA_MEIO == local) {
+
+			int y = (dimensao.getAltura() - dimensaoAparencia.getAltura()) / 2;
+			localizacaoAparencia = new Localizacao(localizacao.getX(), localizacao.getY() + y);
+
+		} else if (Constantes.APARENCIA_ABAIXO == local) {
+
+			localizacaoAparencia = new Localizacao(localizacao.getX(),
+					(localizacao.getY() + dimensao.getAltura()) - dimensaoAparencia.getAltura());
+
+		} else {
+			throw new RuntimeException();
+		}
+
+		if (!minimizado) {
+			for (Instancia i : filhos) {
+				i.definirLocalizacaoAparenciaVertical(local);
+			}
+		}
+	}
+
+	void criarLinhas() {
+		if (esquerdo) {
+
+			int x1 = localizacaoAparencia.getX();
+			int y1 = localizacaoAparencia.getY() + dimensaoAparencia.getAltura() / 2;
+
+			if (!minimizado) {
+				for (Instancia i : filhos) {
+					int x2 = i.localizacaoAparencia.getX() + i.dimensaoAparencia.getLargura();
+					int y2 = i.localizacaoAparencia.getY() + i.dimensaoAparencia.getAltura() / 2;
+
+					linhas.add(new Linha(x1 - 1, y1, x2 + 1, y2, true));
+					i.criarLinhas();
+				}
+			}
+
+		} else {
+
+			int x1 = localizacaoAparencia.getX() + dimensaoAparencia.getLargura();
+			int y1 = localizacaoAparencia.getY() + dimensaoAparencia.getAltura() / 2;
+
+			if (!minimizado) {
+				for (Instancia i : filhos) {
+					int x2 = i.localizacaoAparencia.getX();
+					int y2 = i.localizacaoAparencia.getY() + i.dimensaoAparencia.getAltura() / 2;
+
+					linhas.add(new Linha(x1 + 1, y1, x2 - 1, y2));
+					i.criarLinhas();
+				}
+			}
+
 		}
 	}
 
 	public Instancia procurar(int x, int y) {
-		if (x >= local.x && y >= local.y && x <= local.x + dimensao.largura && y <= local.y + dimensao.altura) {
+		if (x >= localizacaoAparencia.getX() && x <= localizacaoAparencia.getX() + dimensaoAparencia.getLargura()
+				&& y >= localizacaoAparencia.getY()
+				&& y <= localizacaoAparencia.getY() + dimensaoAparencia.getAltura()) {
 			return this;
 		}
 
@@ -596,27 +572,58 @@ public class Instancia {
 		return null;
 	}
 
+	public boolean clicadoNoIcone(int x, int y) {
+		if (estaVazio()) {
+			return false;
+		}
+
+		int X = localizacaoAparencia.getX();
+		int Y = localizacaoAparencia.getY();
+
+		if (esquerdo) {
+			return (x >= X && x <= X + Constantes.LARGURA_MIN_MAX) && (y >= Y + Constantes.MARGEM_MIN_MAX
+					&& y <= Y + Constantes.MARGEM_MIN_MAX + Constantes.LARGURA_MIN_MAX);
+		} else {
+			int L = dimensaoAparencia.getLargura();
+			X += L - Constantes.LARGURA_MIN_MAX;
+			Y += Constantes.MARGEM_MIN_MAX;
+
+			return (x >= X && x <= X + Constantes.LARGURA_MIN_MAX) && (y >= Y && y <= Y + Constantes.LARGURA_MIN_MAX);
+		}
+	}
+
+	public boolean duploClickValido(int x) {
+		if (estaVazio()) {
+			return true;
+		}
+
+		int X = localizacaoAparencia.getX();
+		return esquerdo ? x < X + Constantes.LARGURA_MIN_MAX : x < X + dimensaoAparencia.getLargura() - Constantes.LARGURA_MIN_MAX; 
+	}
+	
+	public void desenhar(Graphics2D g2) {
+		aparencia.desenhar(this, g2);
+
+		if (!minimizado) {
+			for (Linha l : linhas) {
+				l.desenhar(g2);
+			}
+
+			for (Instancia i : filhos) {
+				i.desenhar(g2);
+			}
+		}
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}
 
-	public void imprimir(PrintWriter pw) {
-		imprimir("", pw);
-	}
-
-	public void imprimir(String tab, PrintWriter pw) {
-		tab += pai != null ? "\t" : "";
-
-		Arquivo.inicioTag(tab, this, pw);
-
-		for (Instancia i : filhos) {
-			i.imprimir(tab, pw);
+	public void setDescricao(String descricao) {
+		if (Util.estaVazio(descricao)) {
+			descricao = ":)";
 		}
 
-		Arquivo.finalTag(tab, this, pw);
-	}
-
-	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 
@@ -652,7 +659,7 @@ public class Instancia {
 		this.minimizado = minimizado;
 	}
 
-	public void inverterIcone() {
+	public void inverterMinMax() {
 		minimizado = !minimizado;
 	}
 
@@ -668,6 +675,18 @@ public class Instancia {
 		this.comentario = comentario;
 	}
 
+	public String getObservacao() {
+		if (observacao == null) {
+			observacao = "";
+		}
+
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
 	public boolean isDesenharComentario() {
 		return desenharComentario;
 	}
@@ -676,15 +695,19 @@ public class Instancia {
 		this.desenharComentario = desenharComentario;
 	}
 
-	public int getMargemInferior() {
-		return margemInferior;
-	}
-
 	public Instancia getPonta() {
-		if (isVazio()) {
+		if (estaVazio()) {
 			return this;
 		}
 
 		return getFilho(getTamanho() - 1).getPonta();
+	}
+
+	public boolean isEsquerdo() {
+		return esquerdo;
+	}
+
+	public void setEsquerdo(boolean esquerdo) {
+		this.esquerdo = esquerdo;
 	}
 }

@@ -1,10 +1,12 @@
-package br.com.florencio.fluxo;
+package br.com.florencio.fluxo.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -19,19 +21,23 @@ import javax.swing.KeyStroke;
 
 import com.sun.glass.events.KeyEvent;
 
+import br.com.florencio.fluxo.InstanciaRaiz;
+import br.com.florencio.fluxo.util.ArquivoUtil;
+import br.com.florencio.fluxo.util.Strings;
+
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JMenuItem menuItemSalvarComoArquivo = new JMenuItem(Strings.get("label_salvar_como"));
 	private JMenuItem menuItemSalvarArquivo = new JMenuItem(Strings.get("label_salvar"));
 	private JMenuItem menuItemAbrirArquivo = new JMenuItem(Strings.get("label_abrir"));
 	private JMenu menuArquivo = new JMenu(Strings.get("label_arquivo"));
-	private JTextField textFieldArquivo = new JTextField();
+	private JTextField textFieldArquivo = new JTextField("C:\\Users\\fvfilho\\Desktop\\fluxo\\cancelamento");
 	private JTextField textFieldSQL = new JTextField();
 	private JMenuBar menuBarra = new JMenuBar();
 	private boolean COM_PAINEL_SQL = false;
 	private Painel painel;
 
-	public Formulario(Instancia raiz) {
+	public Formulario(InstanciaRaiz raiz) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		painel = new Painel(raiz);
 		montarMenu();
@@ -114,6 +120,13 @@ public class Formulario extends JFrame {
 				painel.salvarArquivo(textFieldArquivo.getText());
 			}
 		});
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				painel.reorganizar();
+			}
+		});
 	}
 
 	protected void abrirArquivo() {
@@ -124,7 +137,7 @@ public class Formulario extends JFrame {
 			File file = fileChooser.getSelectedFile();
 
 			if (file != null) {
-				textFieldArquivo.setText(Arquivo.semSufixo(file.getAbsolutePath()));
+				textFieldArquivo.setText(ArquivoUtil.semSufixo(file.getAbsolutePath()));
 				painel.setArquivo(file.getAbsolutePath());
 			}
 		}
