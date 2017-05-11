@@ -33,7 +33,7 @@ public class InstanciaAparencia {
 		}
 
 		if (Constantes.DESENHAR_RETANGULO_PADRAO) {
-			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), l, i.dimensao.getAltura());
+			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
 		}
 
 		if (i.cor != null) {
