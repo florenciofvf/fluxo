@@ -18,7 +18,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		int l = i.dimensaoAparencia.getLargura();
 		int a = i.dimensaoAparencia.getAltura();
 		final int raioRaiz = (int)(l * .80);
-		int m = l / 2 - 8;
+		int m = l / 2 - 10;
 
 		if (Constantes.DESENHAR_RETANGULO_PADRAO) {
 			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
