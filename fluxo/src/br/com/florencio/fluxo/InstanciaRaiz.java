@@ -10,9 +10,9 @@ import br.com.florencio.fluxo.util.Constantes;
 import br.com.florencio.fluxo.util.Dimensao;
 
 public class InstanciaRaiz extends Instancia {
-	private Instancia raizEsquerda;
-	private Instancia raizDireita;
 	public boolean processado;
+	Instancia raizEsquerda;
+	Instancia raizDireita;
 
 	public InstanciaRaiz(String descricao) {
 		super(descricao);
@@ -166,6 +166,7 @@ public class InstanciaRaiz extends Instancia {
 		raizDireita.definirDimensaoLargura(metrics);
 
 		int largura = dimensao.getLargura();
+		largura -= Constantes.LARGURA_MIN_MAX;
 
 		if (!raizEsquerda.estaVazio()) {
 			largura += Constantes.LARGURA_MIN_MAX;
@@ -319,6 +320,12 @@ public class InstanciaRaiz extends Instancia {
 		raizDireita.setComentario(comentario);
 	}
 
+	public void setDesenharComentario(boolean desenharComentario) {
+		this.desenharComentario = desenharComentario;
+		raizEsquerda.setDesenharComentario(desenharComentario);
+		raizDireita.setDesenharComentario(desenharComentario);
+	}
+	
 	@Override
 	public Instancia getPonta() {
 		throw new IllegalStateException();

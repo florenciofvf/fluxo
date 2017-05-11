@@ -615,6 +615,14 @@ public class Instancia {
 		}
 	}
 
+	public void desenhar2(Graphics2D g2) {
+		aparencia.desenhar(this, g2);
+	}
+	
+	public void desenharIcone(Graphics2D g2) {
+		aparencia.desenharIcone(this, g2);
+	}
+	
 	public String getDescricao() {
 		return descricao;
 	}

@@ -22,8 +22,6 @@ public class InstanciaAparencia {
 		int y = i.localizacaoAparencia.getY();
 		int l = i.dimensaoAparencia.getLargura();
 		int a = i.dimensaoAparencia.getAltura();
-		final byte auxIcone = 2;
-		final byte auxIcone2 = 4;
 
 		if (naoEstaVazio) {
 			l -= Constantes.LARGURA_MIN_MAX;
@@ -41,51 +39,10 @@ public class InstanciaAparencia {
 			g2.setColor(Color.BLACK);
 			g2.drawRoundRect(x, y, l, a, raio, raio);
 			g2.setColor(i.cor);
-
-			if (naoEstaVazio) {
-				if (i.esquerdo) {
-					g2.fillOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
-					g2.setColor(Color.BLACK);
-					g2.drawOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
-					if (i.minimizado) {
-						g2.drawRect(x - Constantes.LARGURA_MIN_MAX + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-						g2.drawRect(x - Constantes.LARGURA_MIN_MAX + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
-					} else {
-						g2.drawRect(x - Constantes.LARGURA_MIN_MAX + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-					}
-				} else {
-					g2.fillOval(x + l, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
-					g2.setColor(Color.BLACK);
-					g2.drawOval(x + l, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
-					if (i.minimizado) {
-						g2.drawRect(x + l + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-						g2.drawRect(x + l + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
-					} else {
-						g2.drawRect(x + l + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-					}
-				}
-			}
+			desenharIcone(i, g2);
 		} else {
 			g2.drawRoundRect(x, y, l, a, raio, raio);
-			if (naoEstaVazio) {
-				if (i.esquerdo) {
-					g2.drawOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
-					if (i.minimizado) {
-						g2.drawRect(x - Constantes.LARGURA_MIN_MAX + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-						g2.drawRect(x - Constantes.LARGURA_MIN_MAX + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
-					} else {
-						g2.drawRect(x - Constantes.LARGURA_MIN_MAX + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-					}
-				} else {
-					g2.drawOval(x + l, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
-					if (i.minimizado) {
-						g2.drawRect(x + l + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-						g2.drawRect(x + l + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
-					} else {
-						g2.drawRect(x + l + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
-					}
-				}
-			}
+			desenharIcone(i, g2);
 		}
 
 		if (i.cor != null) {
@@ -102,6 +59,93 @@ public class InstanciaAparencia {
 			} else {
 				g2.fillOval(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 			}
+		}
+	}
+
+	public void desenharIcone(Instancia i, Graphics2D g2) {
+		final boolean naoEstaVazio = !i.estaVazio();
+
+		g2.setColor(i.cor);
+
+		int x = i.localizacaoAparencia.getX();
+		int y = i.localizacaoAparencia.getY();
+		int l = i.dimensaoAparencia.getLargura();
+		final byte auxIcone = 2;
+		final byte auxIcone2 = 4;
+
+		if (naoEstaVazio) {
+			l -= Constantes.LARGURA_MIN_MAX;
+			if (i.esquerdo) {
+				x += Constantes.LARGURA_MIN_MAX;
+			}
+		}
+
+		if (i.cor != null) {
+			if (naoEstaVazio) {
+				if (i.esquerdo) {
+					iconeLadoEsquerdo(g2, x, y, true);
+					if (i.minimizado) {
+						sinalMaisLadoEsquerdo(g2, x, y, auxIcone, auxIcone2, true);
+					} else {
+						sinalMaisLadoEsquerdo(g2, x, y, auxIcone, auxIcone2, false);
+					}
+				} else {
+					iconeLadoDireito(g2, x, y, l, true);
+					if (i.minimizado) {
+						sinalMaisLadoDireito(g2, x, y, l, auxIcone, auxIcone2, true);
+					} else {
+						sinalMaisLadoDireito(g2, x, y, l, auxIcone, auxIcone2, false);
+					}
+				}
+			}
+		} else {
+			if (naoEstaVazio) {
+				if (i.esquerdo) {
+					iconeLadoEsquerdo(g2, x, y, false);
+					if (i.minimizado) {
+						sinalMaisLadoEsquerdo(g2, x, y, auxIcone, auxIcone2, true);
+					} else {
+						sinalMaisLadoEsquerdo(g2, x, y, auxIcone, auxIcone2, false);
+					}
+				} else {
+					iconeLadoDireito(g2, x, y, l, false);
+					if (i.minimizado) {
+						sinalMaisLadoDireito(g2, x, y, l, auxIcone, auxIcone2, true);
+					} else {
+						sinalMaisLadoDireito(g2, x, y, l, auxIcone, auxIcone2, false);
+					}
+				}
+			}
+		}
+	}
+
+	protected void iconeLadoDireito(Graphics2D g2, int x, int y, int l, final boolean colorido) {
+		if (colorido) {
+			g2.fillOval(x + l, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
+			g2.setColor(Color.BLACK);
+		}
+		g2.drawOval(x + l, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
+	}
+
+	protected void iconeLadoEsquerdo(Graphics2D g2, int x, int y, final boolean colorido) {
+		if (colorido) {
+			g2.fillOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
+			g2.setColor(Color.BLACK);
+		}
+		g2.drawOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
+	}
+
+	protected void sinalMaisLadoDireito(Graphics2D g2, int x, int y, int l, final byte auxIcone, final byte auxIcone2, final boolean vertical) {
+		g2.drawRect(x + l + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
+		if (vertical) {
+			g2.drawRect(x + l + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
+		}
+	}
+
+	protected void sinalMaisLadoEsquerdo(Graphics2D g2, int x, int y, final byte auxIcone, final byte auxIcone2, final boolean vertical) {
+		g2.drawRect(x - Constantes.LARGURA_MIN_MAX + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
+		if (vertical) {
+			g2.drawRect(x - Constantes.LARGURA_MIN_MAX + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
 		}
 	}
 
