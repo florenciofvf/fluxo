@@ -168,8 +168,11 @@ public class InstanciaRaiz extends Instancia {
 		raizDireita.definirDimensaoLargura(metrics);
 
 		int largura = dimensao.getLargura();
-		largura -= Constantes.LARGURA_MIN_MAX;
-
+		
+		if (!estaVazio()) {
+			largura -= Constantes.LARGURA_MIN_MAX;
+		}
+		
 		if (!raizEsquerda.estaVazio()) {
 			largura += Constantes.LARGURA_MIN_MAX;
 		}

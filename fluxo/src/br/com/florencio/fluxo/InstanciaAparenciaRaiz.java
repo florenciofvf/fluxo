@@ -17,17 +17,19 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		int y = i.localizacaoAparencia.getY();
 		int l = i.dimensaoAparencia.getLargura();
 		int a = i.dimensaoAparencia.getAltura();
+		final int raioRaiz = (int)(l * .80);
 		int m = l / 2 - 8;
 
 		if (Constantes.DESENHAR_RETANGULO_PADRAO) {
 			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
 		}
 
-		g2.drawOval(x, y - m, l, l);
 
 		InstanciaRaiz raiz = (InstanciaRaiz) i;
 
 		if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
+			g2.drawRoundRect(x, y - m, l, l, raioRaiz, raioRaiz);
+			
 			if (i.cor != null) {
 				g2.fillRoundRect(x, y, l, a, raio, raio);
 				g2.setColor(Color.BLACK);
@@ -53,6 +55,8 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 				}
 			}
 		} else if (!raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
+			g2.drawRoundRect(x + Constantes.LARGURA_MIN_MAX, y - m, l - Constantes.LARGURA_MIN_MAX, l, raioRaiz, raioRaiz);
+
 			boolean braco = raiz.raizEsquerda.braco;
 			raiz.raizEsquerda.setDesenharComentario(i.desenharComentario);
 			raiz.raizEsquerda.setComentario(i.comentario);
@@ -60,6 +64,8 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			raiz.raizEsquerda.desenhar2(g2);
 			raiz.raizEsquerda.braco = braco;
 		} else if (raiz.raizEsquerda.estaVazio() && !raiz.raizDireita.estaVazio()) {
+			g2.drawRoundRect(x, y - m, l - Constantes.LARGURA_MIN_MAX, l, raioRaiz, raioRaiz);
+			
 			boolean braco = raiz.raizDireita.braco;
 			raiz.raizDireita.setDesenharComentario(i.desenharComentario);
 			raiz.raizDireita.setComentario(i.comentario);
@@ -67,6 +73,8 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			raiz.raizDireita.desenhar2(g2);
 			raiz.raizDireita.braco = braco;
 		} else {
+			g2.drawRoundRect(x + Constantes.LARGURA_MIN_MAX, y - m, l - Constantes.LARGURA_MIN_MAX * 2, l, raioRaiz, raioRaiz);
+
 			l -= Constantes.LARGURA_MIN_MAX * 2;
 			x += Constantes.LARGURA_MIN_MAX;
 
