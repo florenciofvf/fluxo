@@ -10,6 +10,8 @@ import br.com.florencio.fluxo.util.Constantes;
 import br.com.florencio.fluxo.util.Dimensao;
 
 public class InstanciaRaiz extends Instancia {
+	private boolean clicadoNoIconeEsquerdo;
+	private boolean clicadoNoIconeDireito;
 	public boolean processado;
 	Instancia raizEsquerda;
 	Instancia raizDireita;
@@ -262,16 +264,16 @@ public class InstanciaRaiz extends Instancia {
 
 	@Override
 	public boolean clicadoNoIcone(int x, int y) {
-		// TODO Auto-generated method stub
-		throw new IllegalStateException();
+		clicadoNoIconeEsquerdo = raizEsquerda.clicadoNoIcone(x, y);
+		clicadoNoIconeDireito = raizDireita.clicadoNoIcone(x, y);
+		return clicadoNoIconeEsquerdo ^ clicadoNoIconeDireito;
 	}
-	
+
 	@Override
-	public boolean duploClickValido(int x) {
-		// TODO Auto-generated method stub
-		throw new IllegalStateException();
+	public boolean clicadoAreaIcone(int x, int y) {
+		return raizEsquerda.clicadoAreaIcone(x, y) ^ raizDireita.clicadoAreaIcone(x, y);
 	}
-	
+
 	@Override
 	public void desenhar(Graphics2D g2) {
 		aparencia.desenhar(this, g2);
@@ -314,6 +316,18 @@ public class InstanciaRaiz extends Instancia {
 	}
 
 	@Override
+	public void inverterMinMax() {
+		super.inverterMinMax();
+		if (clicadoNoIconeEsquerdo) {
+			raizEsquerda.inverterMinMax();
+		}
+
+		if (clicadoNoIconeDireito) {
+			raizDireita.inverterMinMax();
+		}
+	}
+
+	@Override
 	public void setComentario(String comentario) {
 		super.setComentario(comentario);
 		raizEsquerda.setComentario(comentario);
@@ -325,7 +339,7 @@ public class InstanciaRaiz extends Instancia {
 		raizEsquerda.setDesenharComentario(desenharComentario);
 		raizDireita.setDesenharComentario(desenharComentario);
 	}
-	
+
 	@Override
 	public Instancia getPonta() {
 		throw new IllegalStateException();

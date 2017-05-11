@@ -236,12 +236,11 @@ public class Painel extends JPanel {
 						return;
 					}
 
-					if (!objeto.duploClickValido(e.getX())) {
+					if (objeto.clicadoAreaIcone(e.getX(), e.getY())) {
 						return;
 					}
 
-					String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(),
-							objeto.getDescricao());
+					String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(), objeto.getDescricao());
 
 					if (Util.estaVazio(descricao)) {
 						return;

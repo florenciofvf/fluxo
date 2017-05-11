@@ -592,15 +592,23 @@ public class Instancia {
 		}
 	}
 
-	public boolean duploClickValido(int x) {
+	public boolean clicadoAreaIcone(int x, int y) {
 		if (estaVazio()) {
-			return true;
+			return false;
 		}
 
 		int X = localizacaoAparencia.getX();
-		return esquerdo ? x < X + Constantes.LARGURA_MIN_MAX : x < X + dimensaoAparencia.getLargura() - Constantes.LARGURA_MIN_MAX; 
+		int Y = localizacaoAparencia.getY();
+		int A = dimensaoAparencia.getAltura();
+
+		if (!esquerdo) {
+			int L = dimensaoAparencia.getLargura();
+			X += L - Constantes.LARGURA_MIN_MAX;
+		}
+
+		return (x >= X && x <= X + Constantes.LARGURA_MIN_MAX) && (y >= Y && y <= Y + A);
 	}
-	
+
 	public void desenhar(Graphics2D g2) {
 		aparencia.desenhar(this, g2);
 
@@ -618,11 +626,11 @@ public class Instancia {
 	public void desenhar2(Graphics2D g2) {
 		aparencia.desenhar(this, g2);
 	}
-	
+
 	public void desenharIcone(Graphics2D g2) {
 		aparencia.desenharIcone(this, g2);
 	}
-	
+
 	public String getDescricao() {
 		return descricao;
 	}
