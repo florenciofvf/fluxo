@@ -293,7 +293,16 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				objeto.adicionar(new Instancia(descricao));
+				if (objeto instanceof InstanciaRaiz) {
+					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
+							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+					boolean direito = JOptionPane.OK_OPTION == resp;
+
+					Instancia instancia = new Instancia(descricao, !direito);
+					((InstanciaRaiz) objeto).adicionarInstancia(instancia);
+				} else {
+					objeto.adicionar(new Instancia(descricao));
+				}
 				reorganizar();
 			}
 		});

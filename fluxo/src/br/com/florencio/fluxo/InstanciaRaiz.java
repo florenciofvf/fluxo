@@ -42,6 +42,14 @@ public class InstanciaRaiz extends Instancia {
 		i.cor = cor;
 	}
 
+	public void adicionarInstancia(Instancia i) {
+		if (i.esquerdo) {
+			raizEsquerda.adicionar(i);
+		} else {
+			raizDireita.adicionar(i);
+		}
+	}
+
 	@Override
 	public boolean excluir(Instancia i) {
 		throw new IllegalStateException();

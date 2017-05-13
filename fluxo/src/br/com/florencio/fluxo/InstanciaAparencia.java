@@ -13,8 +13,8 @@ public class InstanciaAparencia {
 		final byte raio = 8;
 
 		g2.setColor(i.pai.cor);
-		
-		if(i.cor != null) {
+
+		if (i.cor != null) {
 			g2.setColor(i.cor);
 		}
 
