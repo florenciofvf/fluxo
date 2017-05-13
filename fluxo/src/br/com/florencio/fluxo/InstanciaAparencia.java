@@ -12,7 +12,11 @@ public class InstanciaAparencia {
 		final boolean naoEstaVazio = !i.estaVazio();
 		final byte raio = 8;
 
-		g2.setColor(i.cor);
+		g2.setColor(i.pai.cor);
+		
+		if(i.cor != null) {
+			g2.setColor(i.cor);
+		}
 
 		if (i.braco) {
 			return;
