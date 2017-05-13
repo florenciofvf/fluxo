@@ -278,7 +278,7 @@ public class InstanciaRaiz extends Instancia {
 	}
 
 	@Override
-	public void desenhar(Graphics2D g2) {
+	public synchronized void desenhar(Graphics2D g2) {
 		aparencia.desenhar(this, g2);
 		raizEsquerda.desenhar(g2);
 		raizDireita.desenhar(g2);

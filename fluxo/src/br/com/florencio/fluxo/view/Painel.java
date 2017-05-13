@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.imageio.ImageIO;
@@ -172,7 +173,7 @@ public class Painel extends JPanel {
 		popupPainel.add(menuItemGerarImagem);
 	}
 
-	public void reorganizar() {
+	public synchronized void reorganizar() {
 		raiz.processar(getFontMetrics(getFont()));
 
 		AtomicInteger largura = new AtomicInteger(0);
@@ -256,8 +257,19 @@ public class Painel extends JPanel {
 					}
 
 					if (objeto.clicadoNoIcone(e.getX(), e.getY())) {
-						objeto.inverterMinMax();
-						reorganizar();
+						//objeto.inverterMinMax();
+						//reorganizar();
+						
+						if(objeto.isMinimizado()) {
+							objeto.minMaxTodos(true);
+							animar(objeto, true);
+						} else {
+							//objeto.minMaxTodos(true);
+							//animar(objeto, false);
+
+							objeto.minMaxTodos(true);
+							reorganizar();
+						}
 					}
 				}
 			}
@@ -870,6 +882,30 @@ public class Painel extends JPanel {
 
 	}
 
+	private void animar(Instancia i, boolean maximizar) {
+		if(maximizar) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					AtomicBoolean atom = new AtomicBoolean();
+					i.podeMaximizar(atom);
+					
+					while(atom.get()) {
+						reorganizar();
+						try {
+							Thread.sleep(300);
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+						atom.set(false);
+						i.podeMaximizar(atom);
+					}
+				}
+			}).start();
+		}
+	}
+	
 	private void setCor(Instancia i, Color cor) {
 		if (i != null) {
 			i.setCor(cor);

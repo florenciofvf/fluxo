@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.florencio.fluxo.util.Constantes;
@@ -664,6 +665,24 @@ public class Instancia {
 
 		for (Instancia i : filhos) {
 			i.minMaxTodos(b);
+		}
+	}
+	
+	public void podeMaximizar(AtomicBoolean atom) {
+		if(minimizado) {
+			minimizado = false;
+			atom.set(true);
+			return;
+		}
+
+		for (Instancia i : filhos) {
+			if(i.minimizado) {
+				i.minimizado = false;
+				atom.set(true);
+				return;
+			}		
+			
+			i.podeMaximizar(atom);
 		}
 	}
 
