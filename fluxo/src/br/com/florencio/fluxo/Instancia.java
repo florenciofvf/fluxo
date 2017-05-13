@@ -573,6 +573,10 @@ public class Instancia {
 		return null;
 	}
 
+	public Instancia getClicadoNoIcone() {
+		return this;
+	}
+	
 	public boolean clicadoNoIcone(int x, int y) {
 		if (estaVazio()) {
 			return false;

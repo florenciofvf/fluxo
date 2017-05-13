@@ -15,7 +15,7 @@ public class InstanciaRaiz extends Instancia {
 	public boolean processado;
 	Instancia raizEsquerda;
 	Instancia raizDireita;
-	
+
 	public InstanciaRaiz(String descricao) {
 		super(descricao);
 		aparencia = new InstanciaAparenciaRaiz();
@@ -168,11 +168,11 @@ public class InstanciaRaiz extends Instancia {
 		raizDireita.definirDimensaoLargura(metrics);
 
 		int largura = dimensao.getLargura();
-		
+
 		if (!estaVazio()) {
 			largura -= Constantes.LARGURA_MIN_MAX;
 		}
-		
+
 		if (!raizEsquerda.estaVazio()) {
 			largura += Constantes.LARGURA_MIN_MAX;
 		}
@@ -217,10 +217,10 @@ public class InstanciaRaiz extends Instancia {
 		raizEsquerda.calcularLarguraTotal(esquerda);
 		raizDireita.calcularLarguraTotal(direita);
 
-//		esquerda.addAndGet((raizEsquerda.dimensao.getLargura() * 2) * -1);
-//		direita.addAndGet((raizDireita.dimensao.getLargura() * 2) * -1);
+		// esquerda.addAndGet((raizEsquerda.dimensao.getLargura() * 2) * -1);
+		// direita.addAndGet((raizDireita.dimensao.getLargura() * 2) * -1);
 
-		integer.set(/*dimensao.getLargura() + */esquerda.get() + direita.get());
+		integer.set(/* dimensao.getLargura() + */esquerda.get() + direita.get());
 	}
 
 	@Override
@@ -263,6 +263,18 @@ public class InstanciaRaiz extends Instancia {
 		i = raizDireita.procurar(x, y);
 
 		return i;
+	}
+
+	public Instancia getClicadoNoIcone() {
+		if (clicadoNoIconeEsquerdo) {
+			return raizEsquerda;
+		}
+
+		if (clicadoNoIconeDireito) {
+			return raizDireita;
+		}
+
+		return null;
 	}
 
 	@Override

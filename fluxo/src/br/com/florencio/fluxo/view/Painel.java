@@ -266,6 +266,7 @@ public class Painel extends JPanel {
 
 					if (objeto.clicadoNoIcone(e.getX(), e.getY())) {
 						animando = true;
+						objeto = objeto.getClicadoNoIcone();
 						if (objeto.isMinimizado()) {
 							objeto.minMaxTodos(true);
 							animar(objeto, true, 100);
