@@ -15,7 +15,7 @@ public class InstanciaRaiz extends Instancia {
 	public boolean processado;
 	Instancia raizEsquerda;
 	Instancia raizDireita;
-
+	
 	public InstanciaRaiz(String descricao) {
 		super(descricao);
 		aparencia = new InstanciaAparenciaRaiz();
@@ -217,10 +217,10 @@ public class InstanciaRaiz extends Instancia {
 		raizEsquerda.calcularLarguraTotal(esquerda);
 		raizDireita.calcularLarguraTotal(direita);
 
-		esquerda.addAndGet((raizEsquerda.dimensao.getLargura() * 2) * -1);
-		direita.addAndGet((raizDireita.dimensao.getLargura() * 2) * -1);
+//		esquerda.addAndGet((raizEsquerda.dimensao.getLargura() * 2) * -1);
+//		direita.addAndGet((raizDireita.dimensao.getLargura() * 2) * -1);
 
-		integer.set(dimensao.getLargura() + esquerda.get() + direita.get());
+		integer.set(/*dimensao.getLargura() + */esquerda.get() + direita.get());
 	}
 
 	@Override

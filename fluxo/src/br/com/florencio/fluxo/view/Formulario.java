@@ -31,15 +31,16 @@ public class Formulario extends JFrame {
 	private JMenuItem menuItemSalvarArquivo = new JMenuItem(Strings.get("label_salvar"));
 	private JMenuItem menuItemAbrirArquivo = new JMenuItem(Strings.get("label_abrir"));
 	private JMenu menuArquivo = new JMenu(Strings.get("label_arquivo"));
-	private JTextField textFieldArquivo = new JTextField();
+	private JTextField textFieldArquivo = new JTextField("C:\\Users\\fvfilho\\Desktop\\fluxo\\cancelamento");
 	private JTextField textFieldSQL = new JTextField();
+	private JScrollPane scroll = new JScrollPane();
 	private JMenuBar menuBarra = new JMenuBar();
 	private boolean COM_PAINEL_SQL = false;
 	private Painel painel;
 
 	public Formulario(InstanciaRaiz raiz) {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		painel = new Painel(raiz);
+		painel = new Painel(this, raiz);
 		montarMenu();
 		montarLayout();
 		registrarEventos();
@@ -57,8 +58,9 @@ public class Formulario extends JFrame {
 
 	private void montarLayout() {
 		setLayout(new BorderLayout());
+		scroll.getViewport().add(painel);
 		add(BorderLayout.NORTH, textFieldArquivo);
-		add(BorderLayout.CENTER, new JScrollPane(painel));
+		add(BorderLayout.CENTER, scroll);
 		if (COM_PAINEL_SQL) {
 			add(BorderLayout.SOUTH, textFieldSQL);
 		}
@@ -141,5 +143,9 @@ public class Formulario extends JFrame {
 				painel.setArquivo(file.getAbsolutePath());
 			}
 		}
+	}
+	
+	void maxScroll(int valor) {
+		scroll.getHorizontalScrollBar().setValue(valor);
 	}
 }

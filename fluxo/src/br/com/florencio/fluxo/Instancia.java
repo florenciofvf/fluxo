@@ -686,6 +686,28 @@ public class Instancia {
 		}
 	}
 
+	public void podeMinimizar(AtomicBoolean atom) {
+		if(atom.get() || filhos.isEmpty()) {
+			return;
+		}
+
+		for (Instancia i : filhos) {
+			i.podeMinimizar(atom);
+			if(atom.get()) {
+				return;
+			}
+		}
+
+		if(atom.get()) {
+			return;
+		}
+		
+		if(!minimizado) {
+			minimizado = true;
+			atom.set(true);
+		}
+	}
+	
 	public boolean isMinimizado() {
 		return minimizado;
 	}

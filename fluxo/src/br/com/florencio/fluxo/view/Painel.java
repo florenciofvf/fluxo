@@ -84,11 +84,14 @@ public class Painel extends JPanel {
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
 	private Localizacao localizacao;
+	private Formulario formulario;
 	private InstanciaRaiz raiz;
 	private Instancia copiado;
+	private boolean animando;
 	private String arquivo;
 
-	public Painel(InstanciaRaiz raiz) {
+	public Painel(Formulario formulario, InstanciaRaiz raiz) {
+		this.formulario = formulario;
 		this.raiz = raiz;
 		montarPopups();
 		registrarEventos();
@@ -230,6 +233,10 @@ public class Painel extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (animando) {
+					return;
+				}
+
 				if (e.getClickCount() == 2 && raiz != null) {
 					Instancia objeto = raiz.procurar(e.getX(), e.getY());
 
@@ -241,7 +248,8 @@ public class Painel extends JPanel {
 						return;
 					}
 
-					String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(), objeto.getDescricao());
+					String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(),
+							objeto.getDescricao());
 
 					if (Util.estaVazio(descricao)) {
 						return;
@@ -257,18 +265,12 @@ public class Painel extends JPanel {
 					}
 
 					if (objeto.clicadoNoIcone(e.getX(), e.getY())) {
-						//objeto.inverterMinMax();
-						//reorganizar();
-						
-						if(objeto.isMinimizado()) {
+						animando = true;
+						if (objeto.isMinimizado()) {
 							objeto.minMaxTodos(true);
-							animar(objeto, true);
+							animar(objeto, true, 100);
 						} else {
-							//objeto.minMaxTodos(true);
-							//animar(objeto, false);
-
-							objeto.minMaxTodos(true);
-							reorganizar();
+							animar(objeto, false, 100);
 						}
 					}
 				}
@@ -882,30 +884,56 @@ public class Painel extends JPanel {
 
 	}
 
-	private void animar(Instancia i, boolean maximizar) {
-		if(maximizar) {
+	private void animar(Instancia i, boolean maximizar, int velocidade) {
+		if (maximizar) {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					AtomicBoolean atom = new AtomicBoolean();
 					i.podeMaximizar(atom);
-					
-					while(atom.get()) {
+
+					while (atom.get()) {
 						reorganizar();
+						formulario.maxScroll(Painel.this.getWidth());
 						try {
-							Thread.sleep(300);
-						} catch(Exception e) {
+							Thread.sleep(velocidade);
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						
+
 						atom.set(false);
 						i.podeMaximizar(atom);
 					}
+
+					animando = false;
+				}
+			}).start();
+		} else {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					AtomicBoolean atom = new AtomicBoolean();
+					i.podeMinimizar(atom);
+
+					while (atom.get()) {
+						reorganizar();
+						formulario.maxScroll(0);
+						try {
+							Thread.sleep(velocidade);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						atom.set(false);
+						i.podeMinimizar(atom);
+					}
+
+					animando = false;
 				}
 			}).start();
 		}
 	}
-	
+
 	private void setCor(Instancia i, Color cor) {
 		if (i != null) {
 			i.setCor(cor);
