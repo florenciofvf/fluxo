@@ -895,7 +895,7 @@ public class Painel extends JPanel {
 
 					while (atom.get()) {
 						reorganizar();
-						if(i.isEsquerdo()) {
+						if (i.isEsquerdo()) {
 							formulario.maxScroll(0);
 						} else {
 							formulario.maxScroll(Painel.this.getWidth());

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <instancia nome="Menu Cancelamento" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="cancelamento.pesquisar()">
-	<instancia nome="app.routes.js" margemInferior="3" cor="-994716" esquerdo="true" minimizado="false">
+	<instancia nome="app.routes.js" margemInferior="3" cor="-994716" esquerdo="true" minimizado="true">
 		<instancia nome="app.routes.js" margemInferior="3" cor="-994716" minimizado="true">
 			<instancia nome="cancelamento" margemInferior="3" cor="-4934476" minimizado="false">
 				<instancia nome="&lt;div ui-view&gt;&lt;/div&gt;" margemInferior="3" cor="-16738816" minimizado="false"/>
@@ -44,9 +44,9 @@
 			</instancia>
 		</instancia>
 	</instancia>
-	<instancia nome="app.routes.js" margemInferior="3" cor="-994716">
-		<instancia nome="Pï¿½gina Cancelamento" margemInferior="3" cor="-11645362" desenharComentario="true" comentario="pesquisar-cancelamento.view.html">
-			<instancia nome="Botï¿½o Pesquisar Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.pesquisar(vm.dto)" minimizado="true">
+	<instancia nome="app.routes.js" margemInferior="3" cor="-994716" minimizado="true">
+		<instancia nome="Página Cancelamento" margemInferior="3" cor="-11645362" desenharComentario="true" comentario="pesquisar-cancelamento.view.html" minimizado="true">
+			<instancia nome="Botão Pesquisar Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.pesquisar(vm.dto)" minimizado="true">
 				<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.pesquisar()"/>
 			</instancia>
 			<instancia nome="Listagem de Requerimentos" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.excluir(item)">
@@ -55,10 +55,10 @@
 			<instancia nome="Listagem de Requerimentos" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.detalhar(item)">
 				<instancia nome="PesquisaCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.cadastro', {requerimento: requerimento, estado: 'SALVO'});"/>
 			</instancia>
-			<instancia nome="Botï¿½o Solicitar Cancelamento" minimizado="true" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.exibirRequerentesComCertificados();">
+			<instancia nome="Botão Solicitar Cancelamento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.exibirRequerentesComCertificados();">
 				<instancia nome="PesquisarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.solicitarCancelamento');">
-					<instancia nome="Pï¿½gina Lista de Requerentes" margemInferior="0" cor="-11645362" desenharComentario="true" comentario="solicitar-cancelamento.view.html">
-						<instancia nome="Botï¿½o Voltar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.voltar()">
+					<instancia nome="Página Lista de Requerentes" margemInferior="0" cor="-11645362" desenharComentario="true" comentario="solicitar-cancelamento.view.html">
+						<instancia nome="Botão Voltar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.voltar()">
 							<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.pesquisar');"/>
 						</instancia>
 						<instancia nome="Pesquisar requerente" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.pesquisar(vm.dto.cpfCnpj)">
@@ -68,31 +68,31 @@
 							<instancia nome="SolicitarCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="$state.go('cancelamento.cadastro', {requerente: dadosRequerente});">
 								<instancia nome="Exibir (Dados Requerente / Motivo do Cancelamento / Certificados)" margemInferior="0" cor="-11645362" desenharComentario="true" comentario="incluir-cancelamento.view.html">
 									<instancia nome="ESTADO NOVO" margemInferior="3">
-										<instancia nome="Botï¿½o Salvar" margemInferior="0" cor="-16738816" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
+										<instancia nome="Botão Salvar" margemInferior="0" cor="-16738816" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
 											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
 												<instancia nome="alterar para estado NOVO" margemInferior="0" desenharComentario="true"/>
 											</instancia>
 										</instancia>
 									</instancia>
 									<instancia nome="ESTADO SALVO" margemInferior="3">
-										<instancia nome="Botï¿½o Emitir Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
+										<instancia nome="Botão Emitir Requerimento" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
 											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
 												<instancia nome="callback" margemInferior="0" cor="-4934476" desenharComentario="true" comentario="exibirAssinaturas"/>
 											</instancia>
 										</instancia>
-										<instancia nome="Botï¿½o Finalizar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="confirm.open()">
+										<instancia nome="Botão Finalizar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="confirm.open()">
 											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.concluir();">
 												<instancia nome="RequerimentoService.concluir(vm.requerimento.id)" margemInferior="0" cor="-16738816"/>
 											</instancia>
 										</instancia>
-										<instancia nome="Botï¿½o Anexar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
+										<instancia nome="Botão Anexar" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII();">
 											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
 												<instancia nome="vm.abrirModalAnexo()" margemInferior="0" cor="-4934476" desenharComentario="true" comentario="exibirAssinaturas"/>
 											</instancia>
 										</instancia>
-										<instancia nome="Botï¿½o Anexo II" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII">
+										<instancia nome="Botão Anexo II" margemInferior="3" cor="-16738816" desenharComentario="true" comentario="vm.imprimirAnexoII">
 											<instancia nome="IncluirCancelamentoController" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.criarCertificadoCancelamento()">
-												<instancia nome="Botï¿½o Anexo II" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.imprimirAnexoII">
+												<instancia nome="Botão Anexo II" margemInferior="0" cor="-11513601" desenharComentario="true" comentario="vm.imprimirAnexoII">
 													<instancia nome="printer.print('app/pages/cancelamento/cancelamento-anexo.tpl.html', params);" margemInferior="0" cor="-16738816"/>
 												</instancia>
 											</instancia>

@@ -217,10 +217,7 @@ public class InstanciaRaiz extends Instancia {
 		raizEsquerda.calcularLarguraTotal(esquerda);
 		raizDireita.calcularLarguraTotal(direita);
 
-		// esquerda.addAndGet((raizEsquerda.dimensao.getLargura() * 2) * -1);
-		// direita.addAndGet((raizDireita.dimensao.getLargura() * 2) * -1);
-
-		integer.set(/* dimensao.getLargura() + */esquerda.get() + direita.get());
+		integer.set(esquerda.get() + direita.get());
 	}
 
 	@Override

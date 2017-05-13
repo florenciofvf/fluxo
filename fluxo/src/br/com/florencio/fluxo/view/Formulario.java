@@ -144,7 +144,7 @@ public class Formulario extends JFrame {
 			}
 		}
 	}
-	
+
 	void maxScroll(int valor) {
 		scroll.getHorizontalScrollBar().setValue(valor);
 	}

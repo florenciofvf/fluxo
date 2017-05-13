@@ -129,23 +129,31 @@ public class InstanciaAparencia {
 
 	protected void iconeLadoEsquerdo(Graphics2D g2, int x, int y, final boolean colorido) {
 		if (colorido) {
-			g2.fillOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
+			g2.fillOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX,
+					Constantes.LARGURA_MIN_MAX);
 			g2.setColor(Color.BLACK);
 		}
-		g2.drawOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
+		g2.drawOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX,
+				Constantes.LARGURA_MIN_MAX);
 	}
 
-	protected void sinalMaisLadoDireito(Graphics2D g2, int x, int y, int l, final byte auxIcone, final byte auxIcone2, final boolean vertical) {
-		g2.drawRect(x + l + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
+	protected void sinalMaisLadoDireito(Graphics2D g2, int x, int y, int l, final byte auxIcone, final byte auxIcone2,
+			final boolean vertical) {
+		g2.drawRect(x + l + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2,
+				0);
 		if (vertical) {
-			g2.drawRect(x + l + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
+			g2.drawRect(x + l + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0,
+					Constantes.LARGURA_MIN_MAX - auxIcone2);
 		}
 	}
 
-	protected void sinalMaisLadoEsquerdo(Graphics2D g2, int x, int y, final byte auxIcone, final byte auxIcone2, final boolean vertical) {
-		g2.drawRect(x - Constantes.LARGURA_MIN_MAX + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA, Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
+	protected void sinalMaisLadoEsquerdo(Graphics2D g2, int x, int y, final byte auxIcone, final byte auxIcone2,
+			final boolean vertical) {
+		g2.drawRect(x - Constantes.LARGURA_MIN_MAX + auxIcone, y + Constantes.METADE_APARENCIA_ALTURA,
+				Constantes.LARGURA_MIN_MAX - auxIcone2, 0);
 		if (vertical) {
-			g2.drawRect(x - Constantes.LARGURA_MIN_MAX + Constantes.METADE_MIN_MAX, y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
+			g2.drawRect(x - Constantes.LARGURA_MIN_MAX + Constantes.METADE_MIN_MAX,
+					y + Constantes.MARGEM_MIN_MAX + auxIcone, 0, Constantes.LARGURA_MIN_MAX - auxIcone2);
 		}
 	}
 

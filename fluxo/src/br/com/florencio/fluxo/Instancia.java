@@ -576,7 +576,7 @@ public class Instancia {
 	public Instancia getClicadoNoIcone() {
 		return this;
 	}
-	
+
 	public boolean clicadoNoIcone(int x, int y) {
 		if (estaVazio()) {
 			return false;
@@ -671,47 +671,47 @@ public class Instancia {
 			i.minMaxTodos(b);
 		}
 	}
-	
+
 	public void podeMaximizar(AtomicBoolean atom) {
-		if(minimizado) {
+		if (minimizado) {
 			minimizado = false;
 			atom.set(true);
 			return;
 		}
 
 		for (Instancia i : filhos) {
-			if(i.minimizado) {
+			if (i.minimizado) {
 				i.minimizado = false;
 				atom.set(true);
 				return;
-			}		
-			
+			}
+
 			i.podeMaximizar(atom);
 		}
 	}
 
 	public void podeMinimizar(AtomicBoolean atom) {
-		if(atom.get() || filhos.isEmpty()) {
+		if (atom.get() || filhos.isEmpty()) {
 			return;
 		}
 
 		for (Instancia i : filhos) {
 			i.podeMinimizar(atom);
-			if(atom.get()) {
+			if (atom.get()) {
 				return;
 			}
 		}
 
-		if(atom.get()) {
+		if (atom.get()) {
 			return;
 		}
-		
-		if(!minimizado) {
+
+		if (!minimizado) {
 			minimizado = true;
 			atom.set(true);
 		}
 	}
-	
+
 	public boolean isMinimizado() {
 		return minimizado;
 	}
