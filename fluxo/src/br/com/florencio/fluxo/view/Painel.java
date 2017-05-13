@@ -325,7 +325,7 @@ public class Painel extends JPanel {
 				Instancia pai = objeto.getPai();
 				int indice = pai.getIndice(objeto);
 
-				Instancia novoPai = new Instancia(descricao);
+				Instancia novoPai = new Instancia(descricao, pai.isEsquerdo());
 				novoPai.adicionar(objeto);
 
 				pai.adicionar(novoPai, indice);
