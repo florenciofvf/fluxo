@@ -84,6 +84,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemAzul = new JMenuItem(Strings.get("label_azul"));
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
+	private final FilaEvento filaEvento;
 	private Localizacao localizacao;
 	private Instancia selecionado;
 	private Formulario formulario;
@@ -93,6 +94,7 @@ public class Painel extends JPanel {
 	private String arquivo;
 
 	public Painel(Formulario formulario, InstanciaRaiz raiz) {
+		filaEvento = new FilaEvento();
 		this.formulario = formulario;
 		this.raiz = raiz;
 		montarPopups();
@@ -179,19 +181,24 @@ public class Painel extends JPanel {
 	}
 
 	public void reorganizar() {
-		raiz.processar(getFontMetrics(getFont()));
+		filaEvento.adicionar(new Acao("reorganizar") {
+			@Override
+			public void executar() {
+				raiz.processar(getFontMetrics(getFont()));
 
-		AtomicInteger largura = new AtomicInteger(0);
-		AtomicInteger altura = new AtomicInteger(0);
+				AtomicInteger largura = new AtomicInteger(0);
+				AtomicInteger altura = new AtomicInteger(0);
 
-		raiz.calcularLarguraTotal(largura);
-		raiz.calcularAlturaTotal(altura);
+				raiz.calcularLarguraTotal(largura);
+				raiz.calcularAlturaTotal(altura);
 
-		Dimension d = new Dimension(largura.get(), altura.get());
-		setPreferredSize(d);
-		setMinimumSize(d);
+				Dimension d = new Dimension(largura.get(), altura.get());
+				setPreferredSize(d);
+				setMinimumSize(d);
 
-		SwingUtilities.updateComponentTreeUI(getParent());
+				SwingUtilities.updateComponentTreeUI(getParent());
+			}
+		});
 	}
 
 	private int showConfirmDialog(Instancia objeto) {
@@ -207,14 +214,19 @@ public class Painel extends JPanel {
 		addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				if (selecionado != null) {
-					selecionado.selecionado = false;
-				}
-				selecionado = raiz.procurar(e.getX(), e.getY());
-				if (selecionado != null) {
-					selecionado.selecionado = true;
-				}
-				repaint();
+				filaEvento.adicionar(new Acao("mouseMoved") {
+					@Override
+					public void executar() {
+						if (selecionado != null) {
+							selecionado.selecionado = false;
+						}
+						selecionado = raiz.procurar(e.getX(), e.getY());
+						if (selecionado != null) {
+							selecionado.selecionado = true;
+						}
+						repaint();
+					}
+				});
 			}
 		});
 
@@ -1073,8 +1085,15 @@ public class Painel extends JPanel {
 		if (!raiz.processado) {
 			return;
 		}
+		
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		raiz.desenhar((Graphics2D) g);
+		
+		filaEvento.adicionar(new Acao("desenhar") {
+			@Override
+			public void executar() {
+				raiz.desenhar((Graphics2D) g);
+			}
+		});
 	}
 
 	public String getArquivo() {
