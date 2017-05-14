@@ -16,19 +16,19 @@ import br.com.florencio.fluxo.util.Localizacao;
 import br.com.florencio.fluxo.util.Util;
 
 public class Instancia {
-	Localizacao localizacaoAparencia;
+	final Localizacao localizacaoAparencia = new Localizacao(0, 0);
+	final Dimensao dimensaoAparencia = new Dimensao(0, 0);
+	final Localizacao localizacao = new Localizacao(0, 0);
+	final Dimensao dimensao = new Dimensao(0, 0);
 	InstanciaAparencia aparencia;
 	boolean desenharComentario;
-	Dimensao dimensaoAparencia;
 	boolean iconeMinMaxClicado;
 	public boolean selecionado;
-	Localizacao localizacao;
 	List<Instancia> filhos;
 	List<Linha> linhas;
 	boolean minimizado;
 	String observacao;
 	String comentario;
-	Dimensao dimensao;
 	String descricao;
 	boolean esquerdo;
 	boolean braco;
@@ -338,11 +338,7 @@ public class Instancia {
 	}
 
 	void inicializar() {
-		localizacaoAparencia = null;
 		linhas = new ArrayList<>();
-		dimensaoAparencia = null;
-		localizacao = null;
-		dimensao = null;
 
 		for (Instancia i : filhos) {
 			i.inicializar();
@@ -368,7 +364,7 @@ public class Instancia {
 			altura = Constantes.RETANGULO_ALTURA_PADRAO;
 		}
 
-		dimensao = new Dimensao(0, altura);
+		dimensao.setLarguraAltura(0, altura);
 	}
 
 	void definirDimensaoLargura(FontMetrics metrics) {
@@ -390,8 +386,8 @@ public class Instancia {
 			largura += Constantes.LARGURA_MIN_MAX;
 		}
 
-		dimensao = new Dimensao(largura + 4, dimensao.getAltura());
-		dimensaoAparencia = new Dimensao(largura + 4, Constantes.APARENCIA_ALTURA_PADRAO);
+		dimensao.setLarguraAltura(largura + 4, dimensao.getAltura());
+		dimensaoAparencia.setLarguraAltura(largura + 4, Constantes.APARENCIA_ALTURA_PADRAO);
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
@@ -402,7 +398,7 @@ public class Instancia {
 
 	void definirLocalizacaoX() {
 		int x = pai.localizacao.getX() + pai.dimensao.getLargura();
-		localizacao = new Localizacao(x, 0);
+		localizacao.setXY(x, 0);
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
@@ -491,11 +487,11 @@ public class Instancia {
 	}
 
 	void setLocalizacao(int x, int y) {
-		localizacao = new Localizacao(x, y);
+		localizacao.setXY(x, y);
 	}
 
 	void setLocalizacaoAparencia(int x, int y) {
-		localizacaoAparencia = new Localizacao(x, y);
+		localizacaoAparencia.setXY(x, y);
 	}
 
 	void definirLocalizacaoAparenciaVertical(byte local) {
@@ -507,16 +503,16 @@ public class Instancia {
 		}
 
 		if (Constantes.APARENCIA_ACIMA == local) {
-			localizacaoAparencia = new Localizacao(localizacao.getX(), localizacao.getY());
+			localizacaoAparencia.setXY(localizacao.getX(), localizacao.getY());
 
 		} else if (Constantes.APARENCIA_MEIO == local) {
 
 			int y = (dimensao.getAltura() - dimensaoAparencia.getAltura()) / 2;
-			localizacaoAparencia = new Localizacao(localizacao.getX(), localizacao.getY() + y);
+			localizacaoAparencia.setXY(localizacao.getX(), localizacao.getY() + y);
 
 		} else if (Constantes.APARENCIA_ABAIXO == local) {
 
-			localizacaoAparencia = new Localizacao(localizacao.getX(),
+			localizacaoAparencia.setXY(localizacao.getX(),
 					(localizacao.getY() + dimensao.getAltura()) - dimensaoAparencia.getAltura());
 
 		} else {

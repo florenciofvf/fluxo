@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import br.com.florencio.fluxo.util.Constantes;
-import br.com.florencio.fluxo.util.Dimensao;
 
 public class InstanciaRaiz extends Instancia {
 	private boolean clicadoNoIconeEsquerdo;
@@ -166,7 +165,7 @@ public class InstanciaRaiz extends Instancia {
 		raizEsquerda.definirDimensaoAltura();
 		raizDireita.definirDimensaoAltura();
 
-		dimensao = new Dimensao(0, Math.max(raizEsquerda.dimensao.getAltura(), raizDireita.dimensao.getAltura()));
+		dimensao.setLarguraAltura(0, Math.max(raizEsquerda.dimensao.getAltura(), raizDireita.dimensao.getAltura()));
 	}
 
 	@Override
@@ -189,14 +188,12 @@ public class InstanciaRaiz extends Instancia {
 			largura += Constantes.LARGURA_MIN_MAX;
 		}
 
-		dimensao = new Dimensao(largura, dimensao.getAltura());
-		dimensaoAparencia = new Dimensao(largura, Constantes.APARENCIA_ALTURA_PADRAO);
-
-		raizEsquerda.dimensao = new Dimensao(largura, raizEsquerda.dimensao.getAltura());
-		raizEsquerda.dimensaoAparencia = new Dimensao(largura, Constantes.APARENCIA_ALTURA_PADRAO);
-
-		raizDireita.dimensao = new Dimensao(largura, raizDireita.dimensao.getAltura());
-		raizDireita.dimensaoAparencia = new Dimensao(largura, Constantes.APARENCIA_ALTURA_PADRAO);
+		dimensao.setLarguraAltura(largura, dimensao.getAltura());
+		dimensaoAparencia.setLarguraAltura(largura, Constantes.APARENCIA_ALTURA_PADRAO);
+		raizEsquerda.dimensao.setLarguraAltura(largura, raizEsquerda.dimensao.getAltura());
+		raizEsquerda.dimensaoAparencia.setLarguraAltura(largura, Constantes.APARENCIA_ALTURA_PADRAO);
+		raizDireita.dimensao.setLarguraAltura(largura, raizDireita.dimensao.getAltura());
+		raizDireita.dimensaoAparencia.setLarguraAltura(largura, Constantes.APARENCIA_ALTURA_PADRAO);
 	}
 
 	@Override

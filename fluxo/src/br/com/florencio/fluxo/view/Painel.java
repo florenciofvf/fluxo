@@ -1070,12 +1070,13 @@ public class Painel extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
 		if (!raiz.processado) {
 			return;
 		}
-		
+
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		raiz.desenhar((Graphics2D) g);
 	}
 
