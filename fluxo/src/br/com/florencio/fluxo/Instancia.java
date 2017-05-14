@@ -3,11 +3,13 @@ package br.com.florencio.fluxo;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import br.com.florencio.fluxo.util.ArquivoUtil;
 import br.com.florencio.fluxo.util.Constantes;
 import br.com.florencio.fluxo.util.Dimensao;
 import br.com.florencio.fluxo.util.Localizacao;
@@ -780,4 +782,15 @@ public class Instancia {
 	public void setEsquerdo(boolean esquerdo) {
 		this.esquerdo = esquerdo;
 	}
+
+	public void imprimir(String tab, PrintWriter pw, boolean salvarLado) {
+		ArquivoUtil.inicioTag(tab, this, pw, salvarLado);
+
+		for (Instancia i : filhos) {
+			i.imprimir(tab + "\t", pw, false);
+		}
+
+		ArquivoUtil.finalTag(tab, this, pw);
+	}
+
 }

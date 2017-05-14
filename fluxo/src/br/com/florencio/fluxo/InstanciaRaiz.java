@@ -364,4 +364,12 @@ public class InstanciaRaiz extends Instancia {
 	public Instancia getPonta() {
 		throw new IllegalStateException();
 	}
+
+	public Instancia getRaizEsquerda() {
+		return raizEsquerda;
+	}
+
+	public Instancia getRaizDireita() {
+		return raizDireita;
+	}
 }

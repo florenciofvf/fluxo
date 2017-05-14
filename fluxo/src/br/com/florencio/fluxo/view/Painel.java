@@ -1047,12 +1047,12 @@ public class Painel extends JPanel {
 	}
 
 	public void salvarArquivo(String alternativo) {
-		if (alternativo != null && alternativo.trim().length() > 0) {
+		if (!Util.estaVazio(alternativo)) {
 			arquivo = ArquivoUtil.semSufixo(alternativo);
 			arquivo += ArquivoUtil.SUFIXO;
 		}
 
-		if (arquivo == null || raiz == null) {
+		if (Util.estaVazio(arquivo) || raiz == null) {
 			return;
 		}
 

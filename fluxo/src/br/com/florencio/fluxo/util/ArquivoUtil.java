@@ -17,10 +17,26 @@ import br.com.florencio.fluxo.InstanciaRaiz;
 public class ArquivoUtil {
 	public static final String SUFIXO = ".fvf";
 
-	public static void salvarArquivo(Instancia raiz, File file) throws Exception {
-		PrintWriter pw = new PrintWriter(file, "iso-8859-1");
+	private static String citar(String s) {
+		return "\"" + s + "\"";
+	}
+
+	private static void gravarPrologo(PrintWriter pw) {
+		pw.println("<?xml version=" + citar("1.0") + " encoding=" + citar(Constantes.CODIFICACAO) + "?>");
+		pw.println();
+	}
+
+	public static void salvarArquivo(InstanciaRaiz raiz, File file) throws Exception {
+		PrintWriter pw = new PrintWriter(file, Constantes.CODIFICACAO);
 		gravarPrologo(pw);
-		// raiz.imprimir(pw);
+		inicioTag("", raiz, pw, false);
+		if (!raiz.getRaizEsquerda().estaVazio()) {
+			raiz.getRaizEsquerda().imprimir("\t", pw, true);
+		}
+		if (!raiz.getRaizDireita().estaVazio()) {
+			raiz.getRaizDireita().imprimir("\t", pw, true);
+		}
+		finalTag("", raiz, pw);
 		pw.close();
 	}
 
@@ -45,47 +61,40 @@ public class ArquivoUtil {
 		return m.raiz;
 	}
 
-	private static String citar(String s) {
-		return "\"" + s + "\"";
-	}
+	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado) {
+		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
-	private static void gravarPrologo(PrintWriter pw) {
-		pw.println("<?xml version=" + citar("1.0") + " encoding=" + citar("iso-8859-1") + "?>");
-		pw.println();
-	}
+		if (salvarLado) {
+			pw.print(" esquerdo=" + citar("" + i.isEsquerdo()));
+		}
 
-	public static void inicioTag(String tab, Instancia i, PrintWriter pw) {
-		// pw.print(tab + "<instancia nome=" + citar(get(i.getDescricao())) + "
-		// margemInferior="
-		// + citar("" + i.margemInferior));
-		//
-		// if (i.getCor() != null) {
-		// pw.print(" cor=" + citar("" + i.getCor().getRGB()));
-		// }
-		//
-		// if (i.isMinimizado()) {
-		// pw.print(" minimizado=" + citar("true"));
-		// }
-		//
-		// if (i.isDesenharComentario()) {
-		// pw.print(" desenharComentario=" + citar("true"));
-		// }
-		//
-		// if (i.getComentario().length() > 0) {
-		// pw.print(" comentario=" + citar(get(i.getComentario())));
-		// }
-		//
-		// if (i.isVazio()) {
-		// pw.println("/>");
-		// } else {
-		// pw.println(">");
-		// }
+		if (i.getCor() != null) {
+			pw.print(" cor=" + citar("" + i.getCor().getRGB()));
+		}
+
+		if (i.isMinimizado()) {
+			pw.print(" minimizado=" + citar("true"));
+		}
+
+		if (i.isDesenharComentario()) {
+			pw.print(" desenharComentario=" + citar("true"));
+		}
+
+		if (i.getComentario().length() > 0) {
+			pw.print(" comentario=" + citar(Util.escaparString(i.getComentario())));
+		}
+
+		if (i.estaVazio()) {
+			pw.println("/>");
+		} else {
+			pw.println(">");
+		}
 	}
 
 	public static void finalTag(String tab, Instancia i, PrintWriter pw) {
-		// if (!i.isVazio()) {
-		// pw.println(tab + "</instancia>");
-		// }
+		if (!i.estaVazio()) {
+			pw.println(tab + "</instancia>");
+		}
 	}
 
 	private static class Manipulador extends DefaultHandler {
@@ -132,21 +141,5 @@ public class ArquivoUtil {
 		public void endElement(String uri, String localName, String qName) throws SAXException {
 			sel = sel.getPai();
 		}
-	}
-
-	public void imprimir(PrintWriter pw) {
-		imprimir("", pw);
-	}
-
-	public void imprimir(String tab, PrintWriter pw) {
-		// tab += pai != null ? "\t" : "";
-		//
-		// ArquivoUtil.inicioTag(tab, this, pw);
-		//
-		// for (Instancia i : filhos) {
-		// i.imprimir(tab, pw);
-		// }
-		//
-		// ArquivoUtil.finalTag(tab, this, pw);
 	}
 }

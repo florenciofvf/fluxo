@@ -5,6 +5,7 @@ public class Constantes {
 	private Constantes() {
 	}
 
+	public static final String CODIFICACAO = "iso-8859-1";
 	public static final byte TAMANHO_SINAL_ICONE_COMENTARIO = 5;
 	public static boolean DESENHAR_RETANGULO_PADRAO = false;
 	public static final byte RETANGULO_ALTURA_PADRAO = 32;
