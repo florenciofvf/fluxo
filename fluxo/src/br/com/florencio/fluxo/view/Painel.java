@@ -178,7 +178,7 @@ public class Painel extends JPanel {
 		popupPainel.add(menuItemGerarImagem);
 	}
 
-	public synchronized void reorganizar() {
+	public void reorganizar() {
 		raiz.processar(getFontMetrics(getFont()));
 
 		AtomicInteger largura = new AtomicInteger(0);

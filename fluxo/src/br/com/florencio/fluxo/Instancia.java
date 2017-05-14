@@ -564,7 +564,7 @@ public class Instancia {
 		}
 	}
 
-	public synchronized Instancia procurar(int x, int y) {
+	public Instancia procurar(int x, int y) {
 		if (x >= localizacaoAparencia.getX() && x <= localizacaoAparencia.getX() + dimensaoAparencia.getLargura()
 				&& y >= localizacaoAparencia.getY()
 				&& y <= localizacaoAparencia.getY() + dimensaoAparencia.getAltura()) {
