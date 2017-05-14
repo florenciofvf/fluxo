@@ -131,8 +131,8 @@ public class Painel extends JPanel {
 		menuColar.add(menuItemColarPaiPonta);
 		popup.add(menuColar);
 
-		popup.addSeparator();
-		popup.add(menuItemMargemInferior);
+//		popup.addSeparator();
+//		popup.add(menuItemMargemInferior);
 
 		popup.addSeparator();
 		popup.add(menuItemMinimizarTodos2);
@@ -192,7 +192,11 @@ public class Painel extends JPanel {
 		SwingUtilities.updateComponentTreeUI(getParent());
 	}
 
-	private int showConfirmDialog() {
+	private int showConfirmDialog(Instancia objeto) {
+		if (objeto instanceof InstanciaRaiz) {
+			return JOptionPane.NO_OPTION;
+		}
+		
 		return JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"), Strings.get("label_atencao"),
 				JOptionPane.YES_NO_OPTION);
 	}
@@ -303,6 +307,7 @@ public class Painel extends JPanel {
 				} else {
 					objeto.adicionar(new Instancia(descricao));
 				}
+				
 				reorganizar();
 			}
 		});
@@ -379,8 +384,19 @@ public class Painel extends JPanel {
 				}
 
 				if (objeto.getComentario().length() > 0) {
-					Instancia filho = new Instancia(objeto.getComentario());
-					objeto.adicionar(filho);
+					
+					if (objeto instanceof InstanciaRaiz) {
+						int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
+								Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+						boolean direito = JOptionPane.OK_OPTION == resp;
+
+						Instancia filho = new Instancia(objeto.getComentario(), !direito);
+						((InstanciaRaiz) objeto).adicionarInstancia(filho);
+					} else {
+						Instancia filho = new Instancia(objeto.getComentario());
+						objeto.adicionar(filho);
+					}
+					
 					objeto.setComentario(null);
 					reorganizar();
 				}
@@ -400,11 +416,12 @@ public class Painel extends JPanel {
 					Instancia pai = objeto.getPai();
 					int indice = pai.getIndice(objeto);
 
-					Instancia novoPai = new Instancia(objeto.getComentario());
-					objeto.setComentario(null);
+					Instancia novoPai = new Instancia(objeto.getComentario(), pai.isEsquerdo());
 					novoPai.adicionar(objeto);
 
 					pai.adicionar(novoPai, indice);
+
+					objeto.setComentario(null);
 					reorganizar();
 				}
 			}
@@ -472,7 +489,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = showConfirmDialog();
+				int resp = showConfirmDialog(objeto);
 
 				if (JOptionPane.OK_OPTION == resp && objeto.excluirAcima()) {
 					reorganizar();
@@ -489,7 +506,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = showConfirmDialog();
+				int resp = showConfirmDialog(objeto);
 
 				if (JOptionPane.OK_OPTION == resp && objeto.excluirAbaixo()) {
 					reorganizar();
@@ -506,7 +523,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = showConfirmDialog();
+				int resp = showConfirmDialog(objeto);
 
 				if (JOptionPane.OK_OPTION == resp && objeto.excluirOutros()) {
 					reorganizar();
@@ -523,7 +540,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = showConfirmDialog();
+				int resp = showConfirmDialog(objeto);
 
 				if (JOptionPane.OK_OPTION == resp && objeto.getPai() != null) {
 					if (objeto.getPai().excluir(objeto)) {
@@ -542,7 +559,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = showConfirmDialog();
+				int resp = showConfirmDialog(null);
 
 				if (JOptionPane.OK_OPTION == resp) {
 					objeto.limpar();
@@ -560,7 +577,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				int resp = showConfirmDialog();
+				int resp = showConfirmDialog(objeto);
 
 				if (JOptionPane.OK_OPTION == resp && objeto.sairDaHierarquia()) {
 					reorganizar();
@@ -578,7 +595,11 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				copiado = objeto.clonar();
+				try {
+					copiado = objeto.clonar();
+				} catch(Exception ex) {
+					mensagem("msg_objeto_nao_copiado");
+				}
 			}
 		});
 
@@ -592,8 +613,12 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				copiado = objeto.clonar();
-				copiado.limpar();
+				try {
+					copiado = objeto.clonar();
+					copiado.limpar();
+				} catch(Exception ex) {
+					mensagem("msg_objeto_nao_copiado");
+				}
 			}
 		});
 
@@ -607,10 +632,13 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				copiado = objeto.clonar();
-
-				if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
-					reorganizar();
+				try {
+					copiado = objeto.clonar();
+					if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
+						reorganizar();
+					}
+				} catch(Exception ex) {
+					mensagem("msg_objeto_nao_recortado");
 				}
 			}
 		});
@@ -625,11 +653,14 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				copiado = objeto.clonar();
-				copiado.limpar();
-
-				if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
-					reorganizar();
+				try {
+					copiado = objeto.clonar();
+					copiado.limpar();
+					if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
+						reorganizar();
+					}
+				} catch(Exception ex) {
+					mensagem("msg_objeto_nao_recortado");
 				}
 			}
 		});
@@ -643,7 +674,21 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				objeto.adicionar(copiado.clonar());
+				Instancia instancia = copiado.clonar();
+				
+				if (objeto instanceof InstanciaRaiz) {
+					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
+							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
+					boolean direito = JOptionPane.OK_OPTION == resp;
+
+					instancia.setEsquerdo(!direito);
+					((InstanciaRaiz) objeto).adicionarInstancia(instancia);
+					instancia.replicarLado();
+				} else {
+					objeto.adicionar(instancia);
+					instancia.replicarLado();
+				}
+				
 				reorganizar();
 			}
 		});
@@ -664,6 +709,7 @@ public class Painel extends JPanel {
 				novoPai.adicionar(objeto);
 
 				pai.adicionar(novoPai, indice);
+				pai.replicarLado();
 				reorganizar();
 			}
 		});
@@ -685,6 +731,7 @@ public class Painel extends JPanel {
 				ponta.adicionar(objeto);
 
 				pai.adicionar(novoPai, indice);
+				pai.replicarLado();
 				reorganizar();
 			}
 		});
@@ -891,7 +938,6 @@ public class Painel extends JPanel {
 				}
 			}
 		});
-
 	}
 
 	private void animar(Instancia i, boolean maximizar, int velocidade) {
@@ -1051,5 +1097,9 @@ public class Painel extends JPanel {
 			return;
 		}
 		SQLUtil.importar(raiz, sql);
+	}
+	
+	private void mensagem(String chave) {
+		JOptionPane.showMessageDialog(Painel.this, Strings.get(chave));
 	}
 }

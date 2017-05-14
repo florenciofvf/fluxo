@@ -99,6 +99,14 @@ public class Instancia {
 		filhos.remove(i);
 		return true;
 	}
+	
+	public void replicarLado() {
+		esquerdo = pai.esquerdo;
+		
+		for (Instancia i : filhos) {
+			i.replicarLado();
+		}
+	}
 
 	public boolean sairDaHierarquia() {
 		if (pai == null) {

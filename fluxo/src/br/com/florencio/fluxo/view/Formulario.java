@@ -31,7 +31,7 @@ public class Formulario extends JFrame {
 	private JMenuItem menuItemSalvarArquivo = new JMenuItem(Strings.get("label_salvar"));
 	private JMenuItem menuItemAbrirArquivo = new JMenuItem(Strings.get("label_abrir"));
 	private JMenu menuArquivo = new JMenu(Strings.get("label_arquivo"));
-	private JTextField textFieldArquivo = new JTextField("C:\\Users\\fvfilho\\Desktop\\fluxo\\cancelamento");
+	private JTextField textFieldArquivo = new JTextField("cancelamento");
 	private JTextField textFieldSQL = new JTextField();
 	private JScrollPane scroll = new JScrollPane();
 	private JMenuBar menuBarra = new JMenuBar();
