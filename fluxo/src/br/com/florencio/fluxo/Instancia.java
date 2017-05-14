@@ -19,6 +19,7 @@ public class Instancia {
 	boolean desenharComentario;
 	Dimensao dimensaoAparencia;
 	boolean iconeMinMaxClicado;
+	public boolean selecionado;
 	Localizacao localizacao;
 	List<Instancia> filhos;
 	List<Linha> linhas;
@@ -99,10 +100,10 @@ public class Instancia {
 		filhos.remove(i);
 		return true;
 	}
-	
+
 	public void replicarLado() {
 		esquerdo = pai.esquerdo;
-		
+
 		for (Instancia i : filhos) {
 			i.replicarLado();
 		}
@@ -561,7 +562,7 @@ public class Instancia {
 		}
 	}
 
-	public Instancia procurar(int x, int y) {
+	public synchronized Instancia procurar(int x, int y) {
 		if (x >= localizacaoAparencia.getX() && x <= localizacaoAparencia.getX() + dimensaoAparencia.getLargura()
 				&& y >= localizacaoAparencia.getY()
 				&& y <= localizacaoAparencia.getY() + dimensaoAparencia.getAltura()) {

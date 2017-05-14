@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -84,6 +85,7 @@ public class Painel extends JPanel {
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
 	private Localizacao localizacao;
+	private Instancia selecionado;
 	private Formulario formulario;
 	private InstanciaRaiz raiz;
 	private Instancia copiado;
@@ -131,8 +133,8 @@ public class Painel extends JPanel {
 		menuColar.add(menuItemColarPaiPonta);
 		popup.add(menuColar);
 
-//		popup.addSeparator();
-//		popup.add(menuItemMargemInferior);
+		// popup.addSeparator();
+		// popup.add(menuItemMargemInferior);
 
 		popup.addSeparator();
 		popup.add(menuItemMinimizarTodos2);
@@ -196,12 +198,26 @@ public class Painel extends JPanel {
 		if (objeto instanceof InstanciaRaiz) {
 			return JOptionPane.NO_OPTION;
 		}
-		
+
 		return JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"), Strings.get("label_atencao"),
 				JOptionPane.YES_NO_OPTION);
 	}
 
 	private void registrarEventos() {
+		addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				if (selecionado != null) {
+					selecionado.selecionado = false;
+				}
+				selecionado = raiz.procurar(e.getX(), e.getY());
+				if (selecionado != null) {
+					selecionado.selecionado = true;
+				}
+				repaint();
+			}
+		});
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -307,7 +323,7 @@ public class Painel extends JPanel {
 				} else {
 					objeto.adicionar(new Instancia(descricao));
 				}
-				
+
 				reorganizar();
 			}
 		});
@@ -384,7 +400,7 @@ public class Painel extends JPanel {
 				}
 
 				if (objeto.getComentario().length() > 0) {
-					
+
 					if (objeto instanceof InstanciaRaiz) {
 						int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
 								Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
@@ -396,7 +412,7 @@ public class Painel extends JPanel {
 						Instancia filho = new Instancia(objeto.getComentario());
 						objeto.adicionar(filho);
 					}
-					
+
 					objeto.setComentario(null);
 					reorganizar();
 				}
@@ -597,7 +613,7 @@ public class Painel extends JPanel {
 
 				try {
 					copiado = objeto.clonar();
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					mensagem("msg_objeto_nao_copiado");
 				}
 			}
@@ -616,7 +632,7 @@ public class Painel extends JPanel {
 				try {
 					copiado = objeto.clonar();
 					copiado.limpar();
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					mensagem("msg_objeto_nao_copiado");
 				}
 			}
@@ -637,7 +653,7 @@ public class Painel extends JPanel {
 					if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
 						reorganizar();
 					}
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					mensagem("msg_objeto_nao_recortado");
 				}
 			}
@@ -659,7 +675,7 @@ public class Painel extends JPanel {
 					if (objeto.getPai() != null && objeto.getPai().excluir(objeto)) {
 						reorganizar();
 					}
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					mensagem("msg_objeto_nao_recortado");
 				}
 			}
@@ -675,7 +691,7 @@ public class Painel extends JPanel {
 				}
 
 				Instancia instancia = copiado.clonar();
-				
+
 				if (objeto instanceof InstanciaRaiz) {
 					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
 							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
@@ -688,7 +704,7 @@ public class Painel extends JPanel {
 					objeto.adicionar(instancia);
 					instancia.replicarLado();
 				}
-				
+
 				reorganizar();
 			}
 		});
@@ -1098,7 +1114,7 @@ public class Painel extends JPanel {
 		}
 		SQLUtil.importar(raiz, sql);
 	}
-	
+
 	private void mensagem(String chave) {
 		JOptionPane.showMessageDialog(Painel.this, Strings.get(chave));
 	}
