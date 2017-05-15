@@ -993,7 +993,7 @@ public class Painel extends JPanel {
 
 					while (atom.get()) {
 						reorganizar();
-						formulario.maxScroll(0);
+						formulario.maxScroll(i.getLocalizacao().getX());
 						try {
 							Thread.sleep(velocidade);
 						} catch (Exception e) {
