@@ -31,7 +31,7 @@ public class Formulario extends JFrame {
 	private JMenuItem menuItemSalvarArquivo = new JMenuItem(Strings.get("label_salvar"));
 	private JMenuItem menuItemAbrirArquivo = new JMenuItem(Strings.get("label_abrir"));
 	private JMenu menuArquivo = new JMenu(Strings.get("label_arquivo"));
-	private JTextField textFieldArquivo = new JTextField("cancelamento");
+	private JTextField textFieldArquivo = new JTextField();
 	private JTextField textFieldSQL = new JTextField();
 	private JScrollPane scroll = new JScrollPane();
 	private JMenuBar menuBarra = new JMenuBar();
@@ -66,12 +66,18 @@ public class Formulario extends JFrame {
 		}
 	}
 
+	public void setArquivo(String string) {
+		textFieldArquivo.setText(ArquivoUtil.semSufixo(string));
+		painel.setArquivo(textFieldArquivo.getText());
+	}
+
 	private void registrarEventos() {
 		textFieldArquivo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(java.awt.event.KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_A && e.isControlDown()) {
-					abrirArquivo();
+					// abrirArquivo();
+					new DialogoArquivo(Formulario.this);
 				} else if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
 					painel.salvarArquivo(textFieldArquivo.getText());
 				}

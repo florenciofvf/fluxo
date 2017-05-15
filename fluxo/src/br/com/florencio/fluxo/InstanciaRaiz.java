@@ -219,8 +219,11 @@ public class InstanciaRaiz extends Instancia {
 		AtomicInteger esquerda = new AtomicInteger(0);
 		AtomicInteger direita = new AtomicInteger(0);
 
-		// raizEsquerda.calcularLarguraTotal(esquerda);
-		raizDireita.calcularLarguraTotal(direita);
+		if (!raizDireita.estaVazio()) {
+			raizDireita.calcularLarguraTotal(direita);
+		} else {
+			raizEsquerda.calcularLarguraTotal(esquerda);
+		}
 
 		integer.set(esquerda.get() + direita.get() + Constantes.LARGURA_AFASTAMENTO);
 	}
