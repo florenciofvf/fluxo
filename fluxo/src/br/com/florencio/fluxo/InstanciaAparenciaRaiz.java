@@ -20,8 +20,13 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		final int raioRaiz = (int) (l * .80);
 		int m = l / 2 - 10;
 
-		if (i.selecionado || Constantes.DESENHAR_RETANGULO_PADRAO) {
+		if (Constantes.DESENHAR_RETANGULO_PADRAO) {
 			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
+		}
+
+		if (i.selecionado) {
+			g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX,
+					l, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
 		}
 
 		InstanciaRaiz raiz = (InstanciaRaiz) i;

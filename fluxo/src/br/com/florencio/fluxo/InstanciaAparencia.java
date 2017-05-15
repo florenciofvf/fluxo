@@ -34,8 +34,13 @@ public class InstanciaAparencia {
 			}
 		}
 
-		if (i.selecionado || Constantes.DESENHAR_RETANGULO_PADRAO) {
+		if (Constantes.DESENHAR_RETANGULO_PADRAO) {
 			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
+		}
+
+		if (i.selecionado) {
+			g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
+					l + Constantes.LARGURA_MIN_MAX * 2, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
 		}
 
 		if (i.cor != null) {
