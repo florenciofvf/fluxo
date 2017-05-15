@@ -1101,7 +1101,6 @@ public class Painel extends JPanel {
 			}
 
 			br.close();
-			raiz.limpar();
 			processar(sb.toString());
 			reorganizar();
 		} catch (Exception e) {
