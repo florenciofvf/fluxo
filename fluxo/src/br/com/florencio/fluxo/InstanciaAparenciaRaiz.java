@@ -129,8 +129,5 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			raiz.raizEsquerda.desenharIcone(g2);
 			raiz.raizDireita.desenharIcone(g2);
 		}
-
-		g2.setColor(i.cor);
 	}
-
 }
