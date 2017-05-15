@@ -24,6 +24,7 @@ import com.sun.glass.events.KeyEvent;
 import br.com.florencio.fluxo.InstanciaRaiz;
 import br.com.florencio.fluxo.util.ArquivoUtil;
 import br.com.florencio.fluxo.util.Strings;
+import br.com.florencio.fluxo.util.Util;
 
 public class Formulario extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -120,7 +121,7 @@ public class Formulario extends JFrame {
 				String descricao = JOptionPane.showInputDialog(Formulario.this, textFieldArquivo.getText(),
 						textFieldArquivo.getText());
 
-				if (descricao == null || descricao.trim().length() == 0) {
+				if (Util.estaVazio(descricao)) {
 					return;
 				}
 

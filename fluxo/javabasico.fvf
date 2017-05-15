@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="Java Básico" margemInferior="0">
-	<instancia nome="1" margemInferior="3" cor="-11513601">
-		<instancia nome="JDK" margemInferior="0" cor="-21946">
-			<instancia nome="bin" margemInferior="3"/>
-			<instancia nome="tools" margemInferior="3"/>
-			<instancia nome="jre" margemInferior="3" cor="-52686"/>
+<instancia nome="Java Básico">
+	<instancia nome="Java Básico" esquerdo="true">
+		<instancia nome="eclipse" cor="-21946">
+			<instancia nome="views">
+				<instancia nome="package explorer"/>
+				<instancia nome="console"/>
+				<instancia nome="navigator"/>
+			</instancia>
+			<instancia nome="perspective">
+				<instancia nome="Java"/>
+				<instancia nome="Java EE"/>
+			</instancia>
+			<instancia nome="Exemplo" cor="-16738816">
+				<instancia nome="main" cor="-11513601">
+					<instancia nome="System.out.println(&quot;Ola mundo!&quot;);"/>
+				</instancia>
+			</instancia>
 		</instancia>
 	</instancia>
-	<instancia nome="2" margemInferior="3" cor="-11513601" comentario="Segunda aula">
-		<instancia nome="eclipse" margemInferior="0" cor="-21946">
-			<instancia nome="views" margemInferior="3">
-				<instancia nome="package explorer" margemInferior="3"/>
-				<instancia nome="console" margemInferior="3"/>
-				<instancia nome="navigator" margemInferior="3"/>
+	<instancia nome="Java Básico" esquerdo="false">
+		<instancia nome="eclipse" cor="-21946">
+			<instancia nome="views">
+				<instancia nome="package explorer"/>
+				<instancia nome="console"/>
+				<instancia nome="navigator"/>
 			</instancia>
-			<instancia nome="perspective" margemInferior="3">
-				<instancia nome="Java" margemInferior="3"/>
-				<instancia nome="Java EE" margemInferior="3"/>
+			<instancia nome="perspective">
+				<instancia nome="Java"/>
+				<instancia nome="Java EE"/>
 			</instancia>
-			<instancia nome="Exemplo" margemInferior="3" cor="-16738816">
-				<instancia nome="main" margemInferior="0" cor="-11513601">
-					<instancia nome="System.out.println(&quot;Ola mundo!&quot;);" margemInferior="0"/>
+			<instancia nome="Exemplo" cor="-16738816">
+				<instancia nome="main" cor="-11513601">
+					<instancia nome="System.out.println(&quot;Ola mundo!&quot;);"/>
 				</instancia>
 			</instancia>
 		</instancia>
