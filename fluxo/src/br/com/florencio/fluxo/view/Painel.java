@@ -201,7 +201,7 @@ public class Painel extends JPanel {
 			return JOptionPane.NO_OPTION;
 		}
 
-		return JOptionPane.showConfirmDialog(Painel.this, Strings.get("label_confirma"), Strings.get("label_atencao"),
+		return JOptionPane.showConfirmDialog(formulario, Strings.get("label_confirma"), Strings.get("label_atencao"),
 				JOptionPane.YES_NO_OPTION);
 	}
 
@@ -270,7 +270,7 @@ public class Painel extends JPanel {
 						return;
 					}
 
-					String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(),
+					String descricao = JOptionPane.showInputDialog(formulario, objeto.getDescricao(),
 							objeto.getDescricao());
 
 					if (Util.estaVazio(descricao)) {
@@ -309,14 +309,14 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao());
+				String descricao = JOptionPane.showInputDialog(formulario, objeto.getDescricao());
 
 				if (Util.estaVazio(descricao)) {
 					return;
 				}
 
 				if (objeto instanceof InstanciaRaiz) {
-					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
+					int resp = JOptionPane.showConfirmDialog(formulario, Strings.get("msg_lado_direito"),
 							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 					boolean direito = JOptionPane.OK_OPTION == resp;
 
@@ -339,7 +339,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				String descricao = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao());
+				String descricao = JOptionPane.showInputDialog(formulario, objeto.getDescricao());
 
 				if (Util.estaVazio(descricao)) {
 					return;
@@ -404,7 +404,7 @@ public class Painel extends JPanel {
 				if (objeto.getComentario().length() > 0) {
 
 					if (objeto instanceof InstanciaRaiz) {
-						int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
+						int resp = JOptionPane.showConfirmDialog(formulario, Strings.get("msg_lado_direito"),
 								Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 						boolean direito = JOptionPane.OK_OPTION == resp;
 
@@ -455,7 +455,7 @@ public class Painel extends JPanel {
 				}
 
 				if (!objeto.estaVazio()) {
-					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_contem_filhos"),
+					int resp = JOptionPane.showConfirmDialog(formulario, Strings.get("msg_contem_filhos"),
 							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 
 					if (JOptionPane.OK_OPTION != resp) {
@@ -480,7 +480,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				String valor = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(),
+				String valor = JOptionPane.showInputDialog(formulario, objeto.getDescricao(),
 						objeto.getAlturaComplementar());
 
 				if (Util.estaVazio(valor)) {
@@ -491,7 +491,7 @@ public class Painel extends JPanel {
 					objeto.setAlturaComplementar(Integer.parseInt(valor));
 					reorganizar();
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(Painel.this, ex.getMessage());
+					JOptionPane.showMessageDialog(formulario, ex.getMessage());
 				}
 			}
 		});
@@ -693,7 +693,7 @@ public class Painel extends JPanel {
 				Instancia instancia = copiado.clonar();
 
 				if (objeto instanceof InstanciaRaiz) {
-					int resp = JOptionPane.showConfirmDialog(Painel.this, Strings.get("msg_lado_direito"),
+					int resp = JOptionPane.showConfirmDialog(formulario, Strings.get("msg_lado_direito"),
 							Strings.get("label_atencao"), JOptionPane.YES_NO_OPTION);
 					boolean direito = JOptionPane.OK_OPTION == resp;
 
@@ -928,7 +928,7 @@ public class Painel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
-				int i = fileChooser.showSaveDialog(Painel.this);
+				int i = fileChooser.showSaveDialog(formulario);
 
 				if (i == JFileChooser.APPROVE_OPTION) {
 					File file = fileChooser.getSelectedFile();
@@ -948,7 +948,7 @@ public class Painel extends JPanel {
 						try {
 							ImageIO.write(bi, "png", file);
 						} catch (IOException e1) {
-							JOptionPane.showMessageDialog(Painel.this, e1.getMessage());
+							JOptionPane.showMessageDialog(formulario, e1.getMessage());
 						}
 					}
 				}
@@ -1033,14 +1033,14 @@ public class Painel extends JPanel {
 			File file = new File(arquivo);
 
 			if (!file.exists()) {
-				JOptionPane.showMessageDialog(null, "Inexistente!");
+				JOptionPane.showMessageDialog(formulario, "Inexistente!");
 				return;
 			}
 
 			raiz = ArquivoUtil.lerArquivo(file);
 			reorganizar();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
+			JOptionPane.showMessageDialog(formulario, e.getMessage());
 		}
 	}
 
@@ -1057,7 +1057,7 @@ public class Painel extends JPanel {
 		try {
 			ArquivoUtil.salvarArquivo(raiz, new File(arquivo));
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
+			JOptionPane.showMessageDialog(formulario, e.getMessage());
 		}
 	}
 
@@ -1104,7 +1104,7 @@ public class Painel extends JPanel {
 			processar(sb.toString());
 			reorganizar();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
+			JOptionPane.showMessageDialog(formulario, e.getMessage());
 		}
 	}
 
@@ -1116,6 +1116,6 @@ public class Painel extends JPanel {
 	}
 
 	private void mensagem(String chave) {
-		JOptionPane.showMessageDialog(Painel.this, Strings.get(chave));
+		JOptionPane.showMessageDialog(formulario, Strings.get(chave));
 	}
 }
