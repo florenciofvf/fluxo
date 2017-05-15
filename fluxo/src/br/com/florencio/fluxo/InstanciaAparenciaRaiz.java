@@ -24,11 +24,27 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
 		}
 
-		if (i.selecionado) {
-			g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX, l, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
-		}
-
 		InstanciaRaiz raiz = (InstanciaRaiz) i;
+
+		if (i.selecionado) {
+			if (raiz.raizEsquerda.estaVazio() ^ raiz.raizDireita.estaVazio()) {
+				if (raiz.raizEsquerda.estaVazio()) {
+					g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
+							l + Constantes.LARGURA_MIN_MAX, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
+				} else {
+					g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX, l + Constantes.LARGURA_MIN_MAX,
+							a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
+				}
+			} else {
+				if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
+					g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
+							l + Constantes.LARGURA_MIN_MAX * 2, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
+				} else {
+					g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX, l, a + Constantes.LARGURA_MIN_MAX * 2, raio,
+							raio);
+				}
+			}
+		}
 
 		if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
 			g2.drawRoundRect(x, y - m, l, l, raioRaiz, raioRaiz);

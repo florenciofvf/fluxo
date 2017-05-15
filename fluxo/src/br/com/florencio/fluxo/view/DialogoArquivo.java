@@ -3,6 +3,8 @@ package br.com.florencio.fluxo.view;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -86,6 +88,20 @@ public class DialogoArquivo extends JDialog {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
+			}
+		});
+
+		listagem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int pos = listagem.locationToIndex(e.getPoint());
+				if (pos != -1) {
+					String string = listagem.getModel().getElementAt(pos);
+					if (!Util.estaVazio(string)) {
+						formulario.setArquivo(string);
+					}
+				}
+				dispose();
 			}
 		});
 	}
