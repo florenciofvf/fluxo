@@ -296,8 +296,11 @@ public class InstanciaRaiz extends Instancia {
 
 	@Override
 	public void desenhar(Graphics2D g2) {
+		g2.setColor(cor);
 		aparencia.desenhar(this, g2);
+		raizEsquerda.setCor(cor);
 		raizEsquerda.desenhar(g2);
+		raizDireita.setCor(cor);
 		raizDireita.desenhar(g2);
 	}
 

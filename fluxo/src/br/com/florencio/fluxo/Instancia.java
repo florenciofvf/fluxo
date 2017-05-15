@@ -624,14 +624,17 @@ public class Instancia {
 	}
 
 	public void desenhar(Graphics2D g2) {
+		g2.setColor(cor);
 		aparencia.desenhar(this, g2);
 
 		if (!minimizado) {
 			for (Linha l : linhas) {
+				g2.setColor(cor);
 				l.desenhar(g2);
 			}
 
 			for (Instancia i : filhos) {
+				g2.setColor(cor);
 				i.desenhar(g2);
 			}
 		}

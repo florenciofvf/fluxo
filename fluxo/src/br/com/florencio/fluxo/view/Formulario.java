@@ -77,7 +77,6 @@ public class Formulario extends JFrame {
 			@Override
 			public void keyPressed(java.awt.event.KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_A && e.isControlDown()) {
-					// abrirArquivo();
 					new DialogoArquivo(Formulario.this);
 				} else if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
 					painel.salvarArquivo(textFieldArquivo.getText());

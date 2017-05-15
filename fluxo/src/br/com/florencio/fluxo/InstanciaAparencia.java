@@ -12,8 +12,6 @@ public class InstanciaAparencia {
 		final boolean naoEstaVazio = !i.estaVazio();
 		final byte raio = 8;
 
-		g2.setColor(i.pai.cor);
-
 		if (i.cor != null) {
 			g2.setColor(i.cor);
 		}
@@ -68,6 +66,10 @@ public class InstanciaAparencia {
 			} else {
 				g2.fillOval(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 			}
+		}
+		
+		if (i.cor != null) {
+			g2.setColor(i.cor);
 		}
 	}
 
