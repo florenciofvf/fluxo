@@ -29,7 +29,7 @@ public class ArquivoUtil {
 	public static void salvarArquivo(InstanciaRaiz raiz, File file) throws Exception {
 		PrintWriter pw = new PrintWriter(file, Constantes.CODIFICACAO);
 		gravarPrologo(pw);
-		inicioTag("", raiz, pw, false);
+		inicioTag("", raiz, pw, false, true);
 		if (!raiz.getRaizEsquerda().estaVazio()) {
 			raiz.getRaizEsquerda().imprimir("\t", pw, true);
 		}
@@ -62,10 +62,19 @@ public class ArquivoUtil {
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado) {
+		inicioTag(tab, i, pw, salvarLado, false);
+	}
+
+	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado,
+			boolean salvarAlturaPadrao) {
 		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
 		if (salvarLado) {
 			pw.print(" esquerdo=" + citar("" + i.isEsquerdo()));
+		}
+
+		if (salvarAlturaPadrao) {
+			pw.print(" alturaPadrao=" + citar("" + Constantes.RETANGULO_ALTURA_PADRAO));
 		}
 
 		if (i.getCor() != null) {
@@ -133,6 +142,14 @@ public class ArquivoUtil {
 			instancia.setComentario(comentario);
 
 			if (raiz == null) {
+				String alturaPadrao = attributes.getValue("alturaPadrao");
+				
+				if (!Util.estaVazio(alturaPadrao)) {
+					Constantes.RETANGULO_ALTURA_PADRAO = Integer.parseInt(alturaPadrao);
+				} else {
+					Constantes.RETANGULO_ALTURA_PADRAO = Constantes.ALTURA_PADRAO_RETANGULO;
+				}
+
 				raiz = new InstanciaRaiz(instancia.getDescricao());
 				raiz.setDesenharComentario(instancia.isDesenharComentario());
 				raiz.setComentario(instancia.getComentario());
