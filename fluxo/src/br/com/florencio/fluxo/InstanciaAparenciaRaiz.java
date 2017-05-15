@@ -70,6 +70,9 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 				if (i.desenharComentario) {
 					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
 				} else {
+					if (i.cor != null) {
+						g2.setColor(Color.BLACK);
+					}
 					g2.fillOval(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 				}

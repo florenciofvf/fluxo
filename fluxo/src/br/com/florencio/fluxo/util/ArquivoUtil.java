@@ -143,7 +143,7 @@ public class ArquivoUtil {
 
 			if (raiz == null) {
 				String alturaPadrao = attributes.getValue("alturaPadrao");
-				
+
 				if (!Util.estaVazio(alturaPadrao)) {
 					Constantes.RETANGULO_ALTURA_PADRAO = Integer.parseInt(alturaPadrao);
 				} else {
