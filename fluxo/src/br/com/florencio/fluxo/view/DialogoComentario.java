@@ -24,7 +24,7 @@ public class DialogoComentario extends JDialog {
 	private JLabel labelTitulo = new JLabel();
 	private Instancia instancia;
 
-	public DialogoComentario(Instancia obj) {
+	public DialogoComentario(Formulario formulario, Instancia obj) {
 		setTitle(obj.getDescricao());
 		setAlwaysOnTop(true);
 		instancia = obj;
@@ -32,7 +32,7 @@ public class DialogoComentario extends JDialog {
 		registrarEventos();
 		setModal(true);
 		setSize(300, 300);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(formulario);
 		setVisible(true);
 	}
 

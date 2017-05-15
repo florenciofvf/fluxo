@@ -27,7 +27,7 @@ public class DialogoArquivo extends JDialog {
 		registrarEventos();
 		setModal(true);
 		setSize(300, 300);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(formulario);
 		listagem.requestFocus();
 		setVisible(true);
 	}

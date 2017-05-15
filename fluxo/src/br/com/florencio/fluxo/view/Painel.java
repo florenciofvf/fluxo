@@ -365,7 +365,7 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				new DialogoComentario(objeto);
+				new DialogoComentario(formulario, objeto);
 				reorganizar();
 			}
 		});
