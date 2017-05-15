@@ -133,8 +133,10 @@ public class Painel extends JPanel {
 		menuColar.add(menuItemColarPaiPonta);
 		popup.add(menuColar);
 
-		// popup.addSeparator();
-		// popup.add(menuItemMargemInferior);
+		popup.addSeparator();
+		JMenu menuAltura = new JMenu(Strings.get("label_altura"));
+		menuAltura.add(menuItemMargemInferior);
+		popup.add(menuAltura);
 
 		popup.addSeparator();
 		popup.add(menuItemMinimizarTodos2);
@@ -472,27 +474,25 @@ public class Painel extends JPanel {
 		menuItemMargemInferior.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Instancia objeto = procurar();
-				//
-				// if (objeto == null) {
-				// return;
-				// }
-				//
-				// String valor = JOptionPane.showInputDialog(Painel.this,
-				// objeto.getDescricao(), objeto.margemInferior);
-				//
-				// if (valor == null || valor.trim().length() == 0) {
-				// return;
-				// }
-				//
-				// try {
-				// objeto.margemInferior = Integer.parseInt(valor);
-				// organizar();
-				// tamanhoPainel();
-				// repaint();
-				// } catch (Exception ex) {
-				// JOptionPane.showMessageDialog(Painel.this, ex.getMessage());
-				// }
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				String valor = JOptionPane.showInputDialog(Painel.this, objeto.getDescricao(),
+						objeto.getAlturaComplementar());
+
+				if (Util.estaVazio(valor)) {
+					return;
+				}
+
+				try {
+					objeto.setAlturaComplementar(Integer.parseInt(valor));
+					reorganizar();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(Painel.this, ex.getMessage());
+				}
 			}
 		});
 
@@ -1070,7 +1070,7 @@ public class Painel extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		
+
 		if (!raiz.processado) {
 			return;
 		}

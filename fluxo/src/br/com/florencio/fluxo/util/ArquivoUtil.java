@@ -76,6 +76,10 @@ public class ArquivoUtil {
 			pw.print(" minimizado=" + citar("true"));
 		}
 
+		if (i.getAlturaComplementar() != 0) {
+			pw.print(" alturaComplementar=" + citar("" + i.getAlturaComplementar()));
+		}
+
 		if (i.isDesenharComentario()) {
 			pw.print(" desenharComentario=" + citar("true"));
 		}
@@ -118,6 +122,11 @@ public class ArquivoUtil {
 			String cor = attributes.getValue("cor");
 			if (!Util.estaVazio(cor)) {
 				instancia.setCor(new Color(Integer.parseInt(cor)));
+			}
+
+			String alturaComplementar = attributes.getValue("alturaComplementar");
+			if (!Util.estaVazio(alturaComplementar)) {
+				instancia.setAlturaComplementar(Integer.parseInt(alturaComplementar));
 			}
 
 			String comentario = attributes.getValue("comentario");

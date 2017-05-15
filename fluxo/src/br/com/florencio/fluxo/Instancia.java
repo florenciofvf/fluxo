@@ -24,6 +24,7 @@ public class Instancia {
 	boolean desenharComentario;
 	boolean iconeMinMaxClicado;
 	public boolean selecionado;
+	int alturaComplementar;
 	List<Instancia> filhos;
 	List<Linha> linhas;
 	boolean minimizado;
@@ -363,6 +364,8 @@ public class Instancia {
 		if (altura == 0) {
 			altura = Constantes.RETANGULO_ALTURA_PADRAO;
 		}
+
+		altura += alturaComplementar;
 
 		dimensao.setLarguraAltura(0, altura);
 	}
@@ -789,4 +792,11 @@ public class Instancia {
 		ArquivoUtil.finalTag(tab, this, pw);
 	}
 
+	public int getAlturaComplementar() {
+		return alturaComplementar;
+	}
+
+	public void setAlturaComplementar(int alturaComplementar) {
+		this.alturaComplementar = alturaComplementar;
+	}
 }
