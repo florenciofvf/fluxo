@@ -498,7 +498,6 @@ public class Instancia {
 	}
 
 	void definirLocalizacaoAparenciaVertical(byte local) {
-		// local = (byte) new Random().nextInt(3);
 		this.local = local;
 
 		if (braco) {

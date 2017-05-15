@@ -1035,8 +1035,6 @@ public class Painel extends JPanel {
 			if (!file.exists()) {
 				JOptionPane.showMessageDialog(null, "Inexistente!");
 				return;
-				// ArquivoUtil.salvarArquivo(new Instancia(file.getName()),
-				// file);
 			}
 
 			raiz = ArquivoUtil.lerArquivo(file);
