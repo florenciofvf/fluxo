@@ -219,10 +219,10 @@ public class InstanciaRaiz extends Instancia {
 		AtomicInteger esquerda = new AtomicInteger(0);
 		AtomicInteger direita = new AtomicInteger(0);
 
-		raizEsquerda.calcularLarguraTotal(esquerda);
+		//raizEsquerda.calcularLarguraTotal(esquerda);
 		raizDireita.calcularLarguraTotal(direita);
 
-		integer.set(esquerda.get() + direita.get());
+		integer.set(esquerda.get() + direita.get() + Constantes.LARGURA_AFASTAMENTO);
 	}
 
 	@Override
