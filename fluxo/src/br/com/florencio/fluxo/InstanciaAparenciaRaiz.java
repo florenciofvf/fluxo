@@ -25,8 +25,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		}
 
 		if (i.selecionado) {
-			g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX,
-					l, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
+			g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX, l, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
 		}
 
 		InstanciaRaiz raiz = (InstanciaRaiz) i;
