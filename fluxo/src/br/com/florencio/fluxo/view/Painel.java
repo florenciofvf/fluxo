@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -915,10 +916,23 @@ public class Painel extends JPanel {
 				Instancia objeto = procurar();
 
 				if (objeto != null) {
-					Color cor = JColorChooser.showDialog(formulario, Strings.get("label_selecionar_cor"),
-							objeto.getCor());
-					objeto.setCor(cor);
-					repaint();
+					class OK implements ActionListener {
+						JColorChooser chooser;
+
+						public OK(JColorChooser c) {
+							chooser = c;
+						}
+
+						public void actionPerformed(ActionEvent e) {
+							Color cor = chooser.getColor();
+							objeto.setCor(cor);
+						}
+					}
+					JColorChooser colorChooser = new JColorChooser(
+							objeto.getCor() != null ? objeto.getCor() : Color.ORANGE);
+					JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+							colorChooser, new OK(colorChooser), null);
+					dialog.setVisible(true);
 				}
 			}
 		});
