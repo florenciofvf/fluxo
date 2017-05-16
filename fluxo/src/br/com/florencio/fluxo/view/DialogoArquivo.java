@@ -38,33 +38,36 @@ public class DialogoArquivo extends JDialog {
 		setLayout(new BorderLayout());
 		add(BorderLayout.CENTER, new JScrollPane(listagem));
 
-		File file = new File(".");
-
-		String[] arquivos = file.list(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				name = name.toLowerCase();
-				return name.endsWith(ArquivoUtil.SUFIXO);
-			}
-		});
+		File file = new File(Util.estaVazio(formulario.getArquivo()) ? "." : formulario.getArquivo());
+		File[] arquivos = getArquivos(file);
 
 		List<String> lista = new ArrayList<>();
-
 		if (arquivos != null) {
-			for (String string : arquivos) {
-				lista.add(get(string));
+			for (File f : arquivos) {
+				lista.add(f.getAbsolutePath());
 			}
 		}
 
 		listagem.setListData(lista.toArray(new String[] {}));
 	}
 
-	private String get(String string) {
-		int pos = string.lastIndexOf(File.separator);
-		if (pos == -1) {
-			return string;
+	class Filtro implements FilenameFilter {
+		@Override
+		public boolean accept(File dir, String name) {
+			name = name.toLowerCase();
+			return name.endsWith(ArquivoUtil.SUFIXO);
 		}
-		return string.substring(pos + 1);
+	}
+
+	private File[] getArquivos(File file) {
+		File[] arquivos = null;
+
+		while ((arquivos == null || arquivos.length == 0) && file != null) {
+			arquivos = file.listFiles(new Filtro());
+			file = file.getParentFile();
+		}
+
+		return arquivos;
 	}
 
 	private void registrarEventos() {

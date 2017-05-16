@@ -67,6 +67,10 @@ public class Formulario extends JFrame {
 		}
 	}
 
+	public String getArquivo() {
+		return textFieldArquivo.getText();
+	}
+
 	public void setArquivo(String string) {
 		textFieldArquivo.setText(ArquivoUtil.semSufixo(string));
 		painel.setArquivo(textFieldArquivo.getText());

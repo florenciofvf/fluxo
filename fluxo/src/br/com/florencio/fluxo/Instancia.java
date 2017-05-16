@@ -694,7 +694,8 @@ public class Instancia {
 			return;
 		}
 
-		for (Instancia i : filhos) {
+		for (int j = 0; j < filhos.size(); j++) {
+			Instancia i = filhos.get(j);
 			if (i.minimizado) {
 				i.minimizado = false;
 				atom.set(true);
@@ -710,7 +711,8 @@ public class Instancia {
 			return;
 		}
 
-		for (Instancia i : filhos) {
+		for (int j = filhos.size() - 1; j >= 0; j--) {
+			Instancia i = filhos.get(j);
 			i.podeMinimizar(atom);
 			if (atom.get()) {
 				return;
