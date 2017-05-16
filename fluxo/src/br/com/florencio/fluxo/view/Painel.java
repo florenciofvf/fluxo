@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -61,6 +62,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemExcluirFilhos = new JMenuItem(Strings.get("label_excluir_filhos"));
 	private JMenuItem menuItemExcluirAbaixo = new JMenuItem(Strings.get("label_excluir_abaixo"));
 	private JMenuItem menuItemExcluirOutros = new JMenuItem(Strings.get("label_excluir_outros"));
+	private JMenuItem menuItemSelecionarCor = new JMenuItem(Strings.get("label_selecionar_cor"));
 	private JMenuItem menuItemExcluirAcima = new JMenuItem(Strings.get("label_excluir_acima"));
 	private JMenuItem menuItemAlturaPadao = new JMenuItem(Strings.get("label_altura_padrao"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
@@ -162,6 +164,8 @@ public class Painel extends JPanel {
 		menuCor.add(menuItemPreto);
 		menuCor.add(menuItemPadrao);
 		menuCor.add(menuItemPadraoHierarquia);
+		menuCor.addSeparator();
+		menuCor.add(menuItemSelecionarCor);
 		popup.add(menuCor);
 
 		popup.addSeparator();
@@ -900,6 +904,20 @@ public class Painel extends JPanel {
 
 				if (objeto != null) {
 					objeto.setCorHierarquia(null);
+					repaint();
+				}
+			}
+		});
+
+		menuItemSelecionarCor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto != null) {
+					Color cor = JColorChooser.showDialog(formulario, Strings.get("label_selecionar_cor"),
+							objeto.getCor());
+					objeto.setCor(cor);
 					repaint();
 				}
 			}
