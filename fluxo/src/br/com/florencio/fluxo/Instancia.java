@@ -21,6 +21,7 @@ public class Instancia {
 	final Localizacao localizacao = new Localizacao(0, 0);
 	final Dimensao dimensao = new Dimensao(0, 0);
 	InstanciaAparencia aparencia;
+	boolean desenharObservacao;
 	boolean desenharComentario;
 	boolean iconeMinMaxClicado;
 	public boolean selecionado;
@@ -51,6 +52,7 @@ public class Instancia {
 
 	public Instancia clonar() {
 		Instancia obj = new Instancia(descricao);
+		obj.desenharObservacao = desenharObservacao;
 		obj.desenharComentario = desenharComentario;
 		obj.observacao = observacao;
 		obj.comentario = comentario;
@@ -771,6 +773,14 @@ public class Instancia {
 
 	public void setDesenharComentario(boolean desenharComentario) {
 		this.desenharComentario = desenharComentario;
+	}
+
+	public boolean isDesenharObservacao() {
+		return desenharObservacao;
+	}
+
+	public void setDesenharObservacao(boolean desenharObservacao) {
+		this.desenharObservacao = desenharObservacao;
 	}
 
 	public Instancia getPonta() {
