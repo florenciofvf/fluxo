@@ -28,7 +28,7 @@ public class DialogoArquivo extends JDialog {
 		montarLayout();
 		registrarEventos();
 		setModal(true);
-		setSize(300, 300);
+		pack();
 		setLocationRelativeTo(formulario);
 		listagem.requestFocus();
 		setVisible(true);
@@ -49,7 +49,7 @@ public class DialogoArquivo extends JDialog {
 		}
 
 		listagem.setListData(lista.toArray(new String[] {}));
-		
+		listagem.setVisibleRowCount(listagem.getModel().getSize());
 		listagem.setSelectedValue(formulario.getArquivo() + ArquivoUtil.SUFIXO, true);
 	}
 
