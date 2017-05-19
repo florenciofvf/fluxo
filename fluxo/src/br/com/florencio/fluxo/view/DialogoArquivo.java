@@ -49,6 +49,8 @@ public class DialogoArquivo extends JDialog {
 		}
 
 		listagem.setListData(lista.toArray(new String[] {}));
+		
+		listagem.setSelectedValue(formulario.getArquivo() + ArquivoUtil.SUFIXO, true);
 	}
 
 	class Filtro implements FilenameFilter {
