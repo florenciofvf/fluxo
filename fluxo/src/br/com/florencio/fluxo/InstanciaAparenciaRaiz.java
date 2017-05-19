@@ -67,6 +67,20 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 
 			g2.setColor(i.cor);
 
+			if (contemObservacao) {
+				if (i.desenharObservacao) {
+					g2.drawString(i.observacao, x + 3, y - 2);
+				} else {
+					if (i.cor != null) {
+						g2.setColor(Color.BLACK);
+					}
+					g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
+							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
+				}
+			}
+
+			g2.setColor(i.cor);
+
 			if (contemComentario) {
 				if (i.desenharComentario) {
 					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
@@ -74,21 +88,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 					if (i.cor != null) {
 						g2.setColor(Color.BLACK);
 					}
-					g2.fillOval(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
-							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
-				}
-			}
-
-			g2.setColor(i.cor);
-
-			if (contemObservacao) {
-				if (i.desenharObservacao) {
-					g2.drawString(i.observacao, x + 3, y);
-				} else {
-					if (i.cor != null) {
-						g2.setColor(Color.BLACK);
-					}
-					g2.fillOval(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
+					g2.fillRect(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 				}
 			}
@@ -98,6 +98,8 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 					raioRaiz);
 
 			boolean braco = raiz.raizEsquerda.braco;
+			raiz.raizEsquerda.setDesenharObservacao(i.desenharObservacao);
+			raiz.raizEsquerda.setObservacao(i.observacao);
 			raiz.raizEsquerda.setDesenharComentario(i.desenharComentario);
 			raiz.raizEsquerda.setComentario(i.comentario);
 			raiz.raizEsquerda.braco = false;
@@ -107,6 +109,8 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			g2.drawRoundRect(x, y - m, l - Constantes.LARGURA_MIN_MAX, l, raioRaiz, raioRaiz);
 
 			boolean braco = raiz.raizDireita.braco;
+			raiz.raizDireita.setDesenharObservacao(i.desenharObservacao);
+			raiz.raizDireita.setObservacao(i.observacao);
 			raiz.raizDireita.setDesenharComentario(i.desenharComentario);
 			raiz.raizDireita.setComentario(i.comentario);
 			raiz.raizDireita.braco = false;
@@ -136,22 +140,28 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 
 			g2.setColor(i.cor);
 
-			if (contemComentario) {
-				if (i.desenharComentario) {
-					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
+			if (contemObservacao) {
+				if (i.desenharObservacao) {
+					g2.drawString(i.observacao, x + 3, y - 2);
 				} else {
-					g2.fillOval(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
+					if (i.cor != null) {
+						g2.setColor(Color.BLACK);
+					}
+					g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 				}
 			}
 
 			g2.setColor(i.cor);
 
-			if (contemObservacao) {
-				if (i.desenharObservacao) {
-					g2.drawString(i.observacao, x + 3, y);
+			if (contemComentario) {
+				if (i.desenharComentario) {
+					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
 				} else {
-					g2.fillOval(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
+					if (i.cor != null) {
+						g2.setColor(Color.BLACK);
+					}
+					g2.fillRect(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 				}
 			}

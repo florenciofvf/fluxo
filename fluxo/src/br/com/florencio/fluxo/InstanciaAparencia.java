@@ -59,6 +59,20 @@ public class InstanciaAparencia {
 
 		g2.setColor(i.cor);
 
+		if (contemObservacao) {
+			if (i.desenharObservacao) {
+				g2.drawString(i.observacao, x + 3, y - 2);
+			} else {
+				if (i.cor != null) {
+					g2.setColor(Color.BLACK);
+				}
+				g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
+						Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
+			}
+		}
+
+		g2.setColor(i.cor);
+
 		if (contemComentario) {
 			if (i.desenharComentario) {
 				g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
@@ -66,21 +80,8 @@ public class InstanciaAparencia {
 				if (i.cor != null) {
 					g2.setColor(Color.BLACK);
 				}
-				g2.fillOval(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
+				g2.fillRect(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 						Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
-			}
-		}
-
-		g2.setColor(i.cor);
-
-		if (contemObservacao) {
-			if (i.desenharObservacao) {
-				g2.drawString(i.observacao, x + 3, y);
-			} else {
-				if (i.cor != null) {
-					g2.setColor(Color.BLACK);
-				}
-				g2.fillOval(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 			}
 		}
 	}
