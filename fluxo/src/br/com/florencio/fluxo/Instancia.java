@@ -387,10 +387,10 @@ public class Instancia {
 			largura = larguraDescricao;
 		}
 
-		if(Constantes.USAR_LARGURA_PADRAO) {
+		if (Constantes.USAR_LARGURA_PADRAO) {
 			largura = Constantes.LARGURA_PADRAO;
 		}
-		
+
 		if (!estaVazio()) {
 			largura += Constantes.LARGURA_MIN_MAX;
 		}

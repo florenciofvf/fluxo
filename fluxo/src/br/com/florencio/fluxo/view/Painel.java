@@ -48,9 +48,13 @@ public class Painel extends JPanel {
 			Strings.get("label_desenhar_observacao"));
 	private JCheckBoxMenuItem menuItemDesenharRetangulo = new JCheckBoxMenuItem(
 			Strings.get("label_desenhar_retangulo"));
+	private JMenuItem menuItemComentarioEmObservacao = new JMenuItem(
+			Strings.get("label_transformar_comentario_observacao"));
+	private JMenuItem menuItemObservacaoEmComentario = new JMenuItem(
+			Strings.get("label_transformar_observacao_comentario"));
 	private JMenuItem menuItemComentarioEmFilho = new JMenuItem(Strings.get("label_transformar_comentario_filho"));
-	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
 	private JMenuItem menuItemObservacaoEmFilho = new JMenuItem(Strings.get("label_transformar_observacao_filho"));
+	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
 	private JMenuItem menuItemObservacaoEmPai = new JMenuItem(Strings.get("label_transformar_observacao_pai"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
@@ -183,6 +187,7 @@ public class Painel extends JPanel {
 		menuComentario.add(menuItemComentarioEmFilho);
 		menuComentario.add(menuItemComentarioEmPai);
 		menuComentario.add(menuItemComentarioVirar);
+		menuComentario.add(menuItemComentarioEmObservacao);
 		popup.add(menuComentario);
 
 		popup.addSeparator();
@@ -192,6 +197,7 @@ public class Painel extends JPanel {
 		menuObservacao.add(menuItemObservacaoEmFilho);
 		menuObservacao.add(menuItemObservacaoEmPai);
 		menuObservacao.add(menuItemObservacaoVirar);
+		menuObservacao.add(menuItemObservacaoEmComentario);
 		popup.add(menuObservacao);
 
 		popupPainel.add(menuItemMinimizarTodos);
@@ -476,6 +482,44 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemComentarioEmObservacao.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				if (objeto.getComentario().length() > 0) {
+					objeto.setObservacao(objeto.getComentario());
+					objeto.setDesenharObservacao(objeto.isDesenharComentario());
+					objeto.setDesenharComentario(false);
+					objeto.setComentario(null);
+					reorganizar();
+				}
+			}
+		});
+
+		menuItemObservacaoEmComentario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				if (objeto.getObservacao().length() > 0) {
+					objeto.setComentario(objeto.getObservacao());
+					objeto.setDesenharComentario(objeto.isDesenharObservacao());
+					objeto.setDesenharObservacao(false);
+					objeto.setObservacao(null);
+					reorganizar();
+				}
+			}
+		});
+
 		menuItemObservacaoEmFilho.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -649,7 +693,7 @@ public class Painel extends JPanel {
 				}
 			}
 		});
-		
+
 		menuItemAlturaPadao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
