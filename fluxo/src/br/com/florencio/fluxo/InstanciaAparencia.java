@@ -66,8 +66,7 @@ public class InstanciaAparencia {
 				if (i.cor != null) {
 					g2.setColor(Color.BLACK);
 				}
-				g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
-						Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
+				g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 			}
 		}
 

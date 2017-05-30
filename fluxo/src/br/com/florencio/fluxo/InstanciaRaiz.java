@@ -230,7 +230,7 @@ public class InstanciaRaiz extends Instancia {
 
 	@Override
 	public void calcularAlturaTotal(AtomicInteger integer) {
-		integer.set(dimensao.getAltura());
+		integer.set(dimensao.getAltura() + Constantes.LARGURA_AFASTAMENTO);
 	}
 
 	@Override
