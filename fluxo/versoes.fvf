@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="ANDROID" alturaPadrao="32" cor="-10066177">
+<instancia nome="ANDROID" alturaPadrao="40" larguraPadrao="100" cor="-10066177">
 	<instancia nome="ANDROID" esquerdo="false" cor="-10066177">
 		<instancia nome="VERSÕES">
 			<instancia nome="Cupcake">
@@ -100,9 +100,7 @@
 				<instancia nome="6.0">
 					<instancia nome="23">
 						<instancia nome="NEXUS 5X" desenharComentario="true" comentario="lg"/>
-						<instancia nome="NEXUS 6P">
-							<instancia nome="huawei"/>
-						</instancia>
+						<instancia nome="NEXUS 6P" desenharComentario="true" comentario="huawei"/>
 					</instancia>
 				</instancia>
 			</instancia>

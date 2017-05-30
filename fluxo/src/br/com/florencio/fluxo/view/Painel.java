@@ -70,6 +70,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemExcluirAbaixo = new JMenuItem(Strings.get("label_excluir_abaixo"));
 	private JMenuItem menuItemExcluirOutros = new JMenuItem(Strings.get("label_excluir_outros"));
 	private JMenuItem menuItemSelecionarCor = new JMenuItem(Strings.get("label_selecionar_cor"));
+	private JMenuItem menuItemLarguraPadao = new JMenuItem(Strings.get("label_largura_padrao"));
 	private JMenuItem menuItemExcluirAcima = new JMenuItem(Strings.get("label_excluir_acima"));
 	private JMenuItem menuItemAlturaPadao = new JMenuItem(Strings.get("label_altura_padrao"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
@@ -198,6 +199,7 @@ public class Painel extends JPanel {
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharRetangulo);
 		popupPainel.addSeparator();
+		popupPainel.add(menuItemLarguraPadao);
 		popupPainel.add(menuItemAlturaPadao);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemGerarImagem);
@@ -628,6 +630,26 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemLarguraPadao.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String valor = JOptionPane.showInputDialog(formulario, Strings.get("label_largura_padrao"),
+						Constantes.LARGURA_PADRAO);
+
+				if (Util.estaVazio(valor)) {
+					return;
+				}
+
+				try {
+					Constantes.LARGURA_PADRAO = Integer.parseInt(valor);
+					Constantes.USAR_LARGURA_PADRAO = Constantes.LARGURA_PADRAO > 0;
+					reorganizar();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(formulario, ex.getMessage());
+				}
+			}
+		});
+		
 		menuItemAlturaPadao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

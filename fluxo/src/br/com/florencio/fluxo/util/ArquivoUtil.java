@@ -29,7 +29,7 @@ public class ArquivoUtil {
 	public static void salvarArquivo(InstanciaRaiz raiz, File file) throws Exception {
 		PrintWriter pw = new PrintWriter(file, Constantes.CODIFICACAO);
 		gravarPrologo(pw);
-		inicioTag("", raiz, pw, false, true);
+		inicioTag("", raiz, pw, false, true, true);
 		if (!raiz.getRaizEsquerda().estaVazio()) {
 			raiz.getRaizEsquerda().imprimir("\t", pw, true);
 		}
@@ -62,11 +62,11 @@ public class ArquivoUtil {
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado) {
-		inicioTag(tab, i, pw, salvarLado, false);
+		inicioTag(tab, i, pw, salvarLado, false, false);
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado,
-			boolean salvarAlturaPadrao) {
+			boolean salvarAlturaPadrao, boolean salvarLarguraPadrao) {
 		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
 		if (salvarLado) {
@@ -75,6 +75,10 @@ public class ArquivoUtil {
 
 		if (salvarAlturaPadrao) {
 			pw.print(" alturaPadrao=" + citar("" + Constantes.RETANGULO_ALTURA_PADRAO));
+		}
+
+		if (salvarLarguraPadrao) {
+			pw.print(" larguraPadrao=" + citar("" + Constantes.LARGURA_PADRAO));
 		}
 
 		if (i.getCor() != null) {
@@ -156,6 +160,7 @@ public class ArquivoUtil {
 			instancia.setObservacao(observacao);
 
 			if (raiz == null) {
+				Constantes.LARGURA_PADRAO = 0;
 				String alturaPadrao = attributes.getValue("alturaPadrao");
 
 				if (!Util.estaVazio(alturaPadrao)) {
@@ -163,6 +168,14 @@ public class ArquivoUtil {
 				} else {
 					Constantes.RETANGULO_ALTURA_PADRAO = Constantes.ALTURA_PADRAO_RETANGULO;
 				}
+
+				String larguraPadrao = attributes.getValue("larguraPadrao");
+
+				if (!Util.estaVazio(larguraPadrao)) {
+					Constantes.LARGURA_PADRAO = Integer.parseInt(larguraPadrao);
+				}
+
+				Constantes.USAR_LARGURA_PADRAO = Constantes.LARGURA_PADRAO > 0;
 
 				raiz = new InstanciaRaiz(instancia.getDescricao());
 				raiz.setDesenharComentario(instancia.isDesenharComentario());
