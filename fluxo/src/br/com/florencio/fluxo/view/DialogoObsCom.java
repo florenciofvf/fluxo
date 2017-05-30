@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import br.com.florencio.fluxo.Instancia;
 import br.com.florencio.fluxo.util.Strings;
 
-public class DialogoComentario extends JDialog {
+public class DialogoObsCom extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private JCheckBox checkBoxDesenhar = new JCheckBox(Strings.get("label_desenhar_comentario"));
 	private JButton buttonCancelar = new JButton(Strings.get("label_cancelar"));
@@ -23,9 +23,11 @@ public class DialogoComentario extends JDialog {
 	private JTextArea textArea = new JTextArea();
 	private JLabel labelTitulo = new JLabel();
 	private Instancia instancia;
+	private boolean comentario;
 
-	public DialogoComentario(Formulario formulario, Instancia obj) {
+	public DialogoObsCom(Formulario formulario, Instancia obj, boolean comentario) {
 		setTitle(obj.getDescricao());
+		this.comentario = comentario;
 		setAlwaysOnTop(true);
 		instancia = obj;
 		montarLayout(obj);
@@ -39,16 +41,19 @@ public class DialogoComentario extends JDialog {
 	private void montarLayout(Instancia obj) {
 		setLayout(new BorderLayout());
 
-		labelTitulo.setText(obj.getComentario());
+		labelTitulo.setText(comentario ? obj.getComentario() : obj.getObservacao());
 		add(BorderLayout.NORTH, labelTitulo);
 
 		textArea.setWrapStyleWord(true);
-		textArea.setText(obj.getComentario());
+		textArea.setText(comentario ? obj.getComentario() : obj.getObservacao());
 		add(BorderLayout.CENTER, new JScrollPane(textArea));
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(BorderLayout.WEST, buttonCancelar);
-		checkBoxDesenhar.setSelected(obj.isDesenharComentario());
+		checkBoxDesenhar.setSelected(comentario ? obj.isDesenharComentario() : obj.isDesenharObservacao());
+		if (!comentario) {
+			checkBoxDesenhar.setText(Strings.get("label_desenhar_observacao"));
+		}
 		panel.add(BorderLayout.CENTER, checkBoxDesenhar);
 		panel.add(BorderLayout.EAST, buttonOk);
 
@@ -66,7 +71,11 @@ public class DialogoComentario extends JDialog {
 		buttonOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				instancia.setComentario(textArea.getText());
+				if (comentario) {
+					instancia.setComentario(textArea.getText());
+				} else {
+					instancia.setObservacao(textArea.getText());
+				}
 				dispose();
 			}
 		});
@@ -74,7 +83,11 @@ public class DialogoComentario extends JDialog {
 		checkBoxDesenhar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				instancia.setDesenharComentario(checkBoxDesenhar.isSelected());
+				if (comentario) {
+					instancia.setDesenharComentario(checkBoxDesenhar.isSelected());
+				} else {
+					instancia.setDesenharObservacao(checkBoxDesenhar.isSelected());
+				}
 			}
 		});
 	}

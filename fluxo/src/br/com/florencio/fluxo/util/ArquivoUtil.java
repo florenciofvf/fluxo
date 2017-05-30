@@ -97,6 +97,14 @@ public class ArquivoUtil {
 			pw.print(" comentario=" + citar(Util.escaparString(i.getComentario())));
 		}
 
+		if (i.isDesenharObservacao()) {
+			pw.print(" desenharObservacao=" + citar("true"));
+		}
+
+		if (i.getObservacao().length() > 0) {
+			pw.print(" observacao=" + citar(Util.escaparString(i.getObservacao())));
+		}
+
 		if (i.estaVazio()) {
 			pw.println("/>");
 		} else {
@@ -128,6 +136,9 @@ public class ArquivoUtil {
 			String desenharComentario = attributes.getValue("desenharComentario");
 			instancia.setDesenharComentario(Boolean.parseBoolean(desenharComentario));
 
+			String desenharObservacao = attributes.getValue("desenharObservacao");
+			instancia.setDesenharObservacao(Boolean.parseBoolean(desenharObservacao));
+
 			String cor = attributes.getValue("cor");
 			if (!Util.estaVazio(cor)) {
 				instancia.setCor(new Color(Integer.parseInt(cor)));
@@ -141,6 +152,9 @@ public class ArquivoUtil {
 			String comentario = attributes.getValue("comentario");
 			instancia.setComentario(comentario);
 
+			String observacao = attributes.getValue("observacao");
+			instancia.setObservacao(observacao);
+
 			if (raiz == null) {
 				String alturaPadrao = attributes.getValue("alturaPadrao");
 
@@ -153,6 +167,8 @@ public class ArquivoUtil {
 				raiz = new InstanciaRaiz(instancia.getDescricao());
 				raiz.setDesenharComentario(instancia.isDesenharComentario());
 				raiz.setComentario(instancia.getComentario());
+				raiz.setDesenharObservacao(instancia.isDesenharObservacao());
+				raiz.setObservacao(instancia.getObservacao());
 				raiz.setCor(instancia.getCor());
 
 				sel = raiz;
