@@ -336,10 +336,18 @@ public class Instancia {
 		return dimensao;
 	}
 
+	public Dimensao getDimensaoAparencia() {
+		return dimensaoAparencia;
+	}
+	
 	public Localizacao getLocalizacao() {
 		return localizacao;
 	}
 
+	public Localizacao getLocalizacaoAparencia() {
+		return localizacaoAparencia;
+	}
+	
 	void inicializar() {
 		linhas = new ArrayList<>();
 

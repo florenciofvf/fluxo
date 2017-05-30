@@ -87,7 +87,7 @@ public class InstanciaRaiz extends Instancia {
 	}
 
 	public int getTamanho() {
-		throw new IllegalStateException();
+		return raizEsquerda.getTamanho() + raizDireita.getTamanho();
 	}
 
 	public boolean estaVazio() {

@@ -97,6 +97,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemCinza = new JMenuItem(Strings.get("label_cinza"));
 	private JMenuItem menuItemPreto = new JMenuItem(Strings.get("label_preto"));
 	private JMenuItem menuItemAzul = new JMenuItem(Strings.get("label_azul"));
+	private JMenuItem menuItemInfo = new JMenuItem(Strings.get("label_info"));
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
 	private Localizacao localizacao;
@@ -199,6 +200,8 @@ public class Painel extends JPanel {
 		menuObservacao.add(menuItemObservacaoVirar);
 		menuObservacao.add(menuItemObservacaoEmComentario);
 		popup.add(menuObservacao);
+		popup.addSeparator();
+		popup.add(menuItemInfo);
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
@@ -400,6 +403,19 @@ public class Painel extends JPanel {
 
 				new DialogoObsCom(formulario, objeto, true);
 				reorganizar();
+			}
+		});
+
+		menuItemInfo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				new DialogoInfo(formulario, objeto);
 			}
 		});
 
