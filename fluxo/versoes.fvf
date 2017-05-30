@@ -1,106 +1,113 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="ANDROID" alturaPadrao="40" larguraPadrao="100" cor="-10066177">
-	<instancia nome="ANDROID" esquerdo="false" cor="-10066177">
-		<instancia nome="VERSÕES">
-			<instancia nome="Cupcake">
-				<instancia nome="1.5">
-					<instancia nome="3"/>
-				</instancia>
-			</instancia>
-			<instancia nome="Donut">
-				<instancia nome="1.6">
-					<instancia nome="4"/>
-				</instancia>
-			</instancia>
-			<instancia nome="Eclair">
-				<instancia nome="2.0">
-					<instancia nome="5"/>
-				</instancia>
-				<instancia nome="2.0.1">
-					<instancia nome="6"/>
-				</instancia>
-				<instancia nome="2.1">
-					<instancia nome="7">
-						<instancia nome="NEXUS ONE" desenharComentario="true" comentario="htc"/>
+<instancia nome="SISTEMA ANDROID" alturaPadrao="21" larguraPadrao="100" cor="-11513601">
+	<instancia nome="SISTEMA ANDROID" esquerdo="false" cor="-11513601">
+		<instancia nome="VERSÕES" cor="-16738816">
+			<instancia nome="NOME DO ANDROID" cor="-16777063">
+				<instancia nome="VERSÃO" cor="-11645362">
+					<instancia nome="API LEVEL" cor="-52480">
+						<instancia nome="EQUIPAMENTO" cor="-6750208" alturaComplementar="50"/>
 					</instancia>
 				</instancia>
 			</instancia>
-			<instancia nome="Froyo">
-				<instancia nome="2.2">
-					<instancia nome="8"/>
+			<instancia nome="Cupcake" cor="-11513601">
+				<instancia nome="1.5" cor="-4934476">
+					<instancia nome="3" cor="-21946"/>
 				</instancia>
 			</instancia>
-			<instancia nome="Gingerbread">
-				<instancia nome="2.3">
-					<instancia nome="9">
-						<instancia nome="NEXUS S" desenharComentario="true" comentario="samsung"/>
+			<instancia nome="Donut" cor="-11513601">
+				<instancia nome="1.6" cor="-4934476">
+					<instancia nome="4" cor="-21946"/>
+				</instancia>
+			</instancia>
+			<instancia nome="Eclair" cor="-11513601">
+				<instancia nome="2.0" cor="-4934476">
+					<instancia nome="5" cor="-21946"/>
+				</instancia>
+				<instancia nome="2.0.1" cor="-4934476">
+					<instancia nome="6" cor="-21946"/>
+				</instancia>
+				<instancia nome="2.1" cor="-4934476">
+					<instancia nome="7" cor="-21946">
+						<instancia nome="NEXUS ONE" cor="-16737895" desenharComentario="true" comentario="htc"/>
 					</instancia>
 				</instancia>
-				<instancia nome="2.3.3">
-					<instancia nome="10"/>
+			</instancia>
+			<instancia nome="Froyo" cor="-11513601">
+				<instancia nome="2.2" cor="-4934476">
+					<instancia nome="8" cor="-21946"/>
 				</instancia>
 			</instancia>
-			<instancia nome="Honeycomb">
-				<instancia nome="3.0">
-					<instancia nome="11"/>
-				</instancia>
-				<instancia nome="3.1">
-					<instancia nome="12"/>
-				</instancia>
-				<instancia nome="3.2">
-					<instancia nome="13"/>
-				</instancia>
-			</instancia>
-			<instancia nome="Ice Cream Sandwich">
-				<instancia nome="4.0">
-					<instancia nome="14">
-						<instancia nome="GALAXY NEXUS" desenharComentario="true" comentario="samsung"/>
+			<instancia nome="Gingerbread" cor="-11513601">
+				<instancia nome="2.3" cor="-4934476">
+					<instancia nome="9" cor="-21946">
+						<instancia nome="NEXUS S" cor="-16737895" desenharComentario="true" comentario="samsung"/>
 					</instancia>
 				</instancia>
-				<instancia nome="4.0.3">
-					<instancia nome="15"/>
+				<instancia nome="2.3.3" cor="-4934476">
+					<instancia nome="10" cor="-21946"/>
 				</instancia>
 			</instancia>
-			<instancia nome="Jellybean">
-				<instancia nome="4.1">
-					<instancia nome="16"/>
+			<instancia nome="Honeycomb" cor="-11513601">
+				<instancia nome="3.0" cor="-4934476">
+					<instancia nome="11" cor="-21946"/>
 				</instancia>
-				<instancia nome="4.2">
-					<instancia nome="17">
-						<instancia nome="NEXUS 4" desenharComentario="true" comentario="lg"/>
+				<instancia nome="3.1" cor="-4934476">
+					<instancia nome="12" cor="-21946"/>
+				</instancia>
+				<instancia nome="3.2" cor="-4934476">
+					<instancia nome="13" cor="-21946"/>
+				</instancia>
+			</instancia>
+			<instancia nome="Ice Cream Sandwich" cor="-11513601">
+				<instancia nome="4.0" cor="-4934476">
+					<instancia nome="14" cor="-21946">
+						<instancia nome="GALAXY NEXUS" cor="-16737895" desenharComentario="true" comentario="samsung"/>
 					</instancia>
 				</instancia>
-				<instancia nome="4.3">
-					<instancia nome="18"/>
+				<instancia nome="4.0.3" cor="-4934476">
+					<instancia nome="15" cor="-21946"/>
 				</instancia>
 			</instancia>
-			<instancia nome="Kitkat">
-				<instancia nome="4.4">
-					<instancia nome="19">
-						<instancia nome="NEXUS 5" desenharComentario="true" comentario="lg"/>
+			<instancia nome="Jellybean" cor="-11513601">
+				<instancia nome="4.1" cor="-4934476">
+					<instancia nome="16" cor="-21946"/>
+				</instancia>
+				<instancia nome="4.2" cor="-4934476">
+					<instancia nome="17" cor="-21946">
+						<instancia nome="NEXUS 4" cor="-16737895" desenharComentario="true" comentario="lg"/>
 					</instancia>
 				</instancia>
-				<instancia nome="4.4W">
-					<instancia nome="20"/>
+				<instancia nome="4.3" cor="-4934476">
+					<instancia nome="18" cor="-21946"/>
 				</instancia>
 			</instancia>
-			<instancia nome="Lollipop">
-				<instancia nome="5.0">
-					<instancia nome="21">
-						<instancia nome="NEXUS 6" desenharComentario="true" comentario="motorola"/>
-						<instancia nome="NEXUS 9 (tablet)" desenharComentario="true" comentario="htc"/>
+			<instancia nome="Kitkat" cor="-11513601">
+				<instancia nome="4.4" cor="-4934476">
+					<instancia nome="19" cor="-21946">
+						<instancia nome="NEXUS 5" cor="-16737895" desenharComentario="true" comentario="lg"/>
 					</instancia>
 				</instancia>
-				<instancia nome="5.1">
-					<instancia nome="22"/>
+				<instancia nome="4.4W" cor="-4934476">
+					<instancia nome="20" cor="-21946"/>
 				</instancia>
 			</instancia>
-			<instancia nome="Marshmallow">
-				<instancia nome="6.0">
-					<instancia nome="23">
-						<instancia nome="NEXUS 5X" desenharComentario="true" comentario="lg"/>
-						<instancia nome="NEXUS 6P" desenharComentario="true" comentario="huawei"/>
+			<instancia nome="Lollipop" cor="-11513601">
+				<instancia nome="5.0" cor="-4934476">
+					<instancia nome="21" cor="-21946">
+						<instancia nome="NEXUS 6" cor="-16737895" desenharComentario="true" comentario="motorola"/>
+						<instancia nome="NEXUS 9 (tablet)" cor="-16737895" desenharComentario="true" comentario="htc"/>
+					</instancia>
+				</instancia>
+				<instancia nome="5.1" cor="-4934476">
+					<instancia nome="22" cor="-21946"/>
+				</instancia>
+			</instancia>
+			<instancia nome="Marshmallow" cor="-11513601">
+				<instancia nome="6.0" cor="-4934476">
+					<instancia nome="23" cor="-21946">
+						<instancia nome="NEXUS 5X" cor="-16737895" desenharComentario="true" comentario="lg"/>
+						<instancia nome="NEXUS 6P" cor="-16737895" desenharComentario="true" comentario="huawei"/>
 					</instancia>
 				</instancia>
 			</instancia>
