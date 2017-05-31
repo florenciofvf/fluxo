@@ -16,6 +16,10 @@ public class InstanciaAparencia {
 		g2.setColor(i.cor);
 
 		if (i.braco) {
+			if (i.desenharRetanguloTotal) {
+				g2.setColor(i.cor);
+				g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal, i.dimensao.getAltura());
+			}
 			return;
 		}
 
