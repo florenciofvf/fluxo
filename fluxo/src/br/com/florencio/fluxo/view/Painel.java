@@ -442,7 +442,7 @@ public class Painel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Instancia objeto = procurar();
 
-				if (objeto == null || objeto.isEsquerdo() || objeto instanceof InstanciaRaiz) {
+				if (objeto == null || objeto.isEsquerdo()) {
 					return;
 				}
 

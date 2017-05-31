@@ -235,7 +235,7 @@ public class InstanciaRaiz extends Instancia {
 
 	@Override
 	public void calcularLarguraTotal() {
-		raizEsquerda.calcularLarguraTotal();
+		// raizEsquerda.calcularLarguraTotal();
 		raizDireita.calcularLarguraTotal();
 	}
 
@@ -366,6 +366,25 @@ public class InstanciaRaiz extends Instancia {
 		this.desenharComentario = desenharComentario;
 		raizEsquerda.setDesenharComentario(desenharComentario);
 		raizDireita.setDesenharComentario(desenharComentario);
+	}
+
+	@Override
+	public void setObservacao(String observacao) {
+		super.setObservacao(observacao);
+		raizEsquerda.setObservacao(observacao);
+		raizDireita.setObservacao(observacao);
+	}
+
+	public void setDesenharObservacao(boolean desenharObservacao) {
+		this.desenharObservacao = desenharObservacao;
+		raizEsquerda.setDesenharObservacao(desenharObservacao);
+		raizDireita.setDesenharObservacao(desenharObservacao);
+	}
+
+	@Override
+	public void setDesenharRetanguloTotal(boolean desenharRetanguloTotal) {
+		super.setDesenharRetanguloTotal(desenharRetanguloTotal);
+		raizDireita.setDesenharRetanguloTotal(desenharRetanguloTotal);
 	}
 
 	@Override
