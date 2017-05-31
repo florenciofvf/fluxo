@@ -20,11 +20,13 @@ public class Instancia {
 	final Dimensao dimensaoAparencia = new Dimensao(0, 0);
 	final Localizacao localizacao = new Localizacao(0, 0);
 	final Dimensao dimensao = new Dimensao(0, 0);
+	boolean desenharRetanguloTotal;
 	InstanciaAparencia aparencia;
 	boolean desenharObservacao;
 	boolean desenharComentario;
 	boolean iconeMinMaxClicado;
 	public boolean selecionado;
+	int larguraRetanguloTotal;
 	int alturaComplementar;
 	List<Instancia> filhos;
 	List<Linha> linhas;
@@ -339,7 +341,7 @@ public class Instancia {
 	public Dimensao getDimensaoAparencia() {
 		return dimensaoAparencia;
 	}
-	
+
 	public Localizacao getLocalizacao() {
 		return localizacao;
 	}
@@ -347,7 +349,7 @@ public class Instancia {
 	public Localizacao getLocalizacaoAparencia() {
 		return localizacaoAparencia;
 	}
-	
+
 	void inicializar() {
 		linhas = new ArrayList<>();
 
@@ -454,6 +456,22 @@ public class Instancia {
 			for (Instancia i : filhos) {
 				i.calcularLarguraTotal(integer);
 			}
+		}
+	}
+
+	public void calcularLarguraTotal() {
+		AtomicInteger integer = new AtomicInteger(dimensao.getLargura());
+
+		if (!minimizado) {
+			for (Instancia i : filhos) {
+				i.calcularLarguraTotal(integer);
+			}
+		}
+
+		if (integer.get() == dimensao.getLargura()) {
+			larguraRetanguloTotal = integer.get();
+		} else {
+			larguraRetanguloTotal = integer.get() - localizacao.getX();
 		}
 	}
 
@@ -795,6 +813,14 @@ public class Instancia {
 		this.desenharObservacao = desenharObservacao;
 	}
 
+	public boolean isDesenharRetanguloTotal() {
+		return desenharRetanguloTotal;
+	}
+
+	public void setDesenharRetanguloTotal(boolean desenharRetanguloTotal) {
+		this.desenharRetanguloTotal = desenharRetanguloTotal;
+	}
+
 	public Instancia getPonta() {
 		if (estaVazio()) {
 			return this;
@@ -827,6 +853,14 @@ public class Instancia {
 
 	public void setAlturaComplementar(int alturaComplementar) {
 		this.alturaComplementar = alturaComplementar;
+	}
+
+	public int getLarguraRetanguloTotal() {
+		return larguraRetanguloTotal;
+	}
+
+	public void setLarguraRetanguloTotal(int larguraRetanguloTotal) {
+		this.larguraRetanguloTotal = larguraRetanguloTotal;
 	}
 
 	public void importar(String[] grafo) {

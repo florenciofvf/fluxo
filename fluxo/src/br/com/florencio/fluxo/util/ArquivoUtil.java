@@ -93,6 +93,11 @@ public class ArquivoUtil {
 			pw.print(" alturaComplementar=" + citar("" + i.getAlturaComplementar()));
 		}
 
+		if (i.isDesenharRetanguloTotal()) {
+			pw.print(" desenharRetanguloTotal=" + citar("true"));
+			pw.print(" larguraRetanguloTotal=" + citar("" + i.getLarguraRetanguloTotal()));
+		}
+
 		if (i.isDesenharComentario()) {
 			pw.print(" desenharComentario=" + citar("true"));
 		}
@@ -136,6 +141,13 @@ public class ArquivoUtil {
 
 			String esquerdo = attributes.getValue("esquerdo");
 			instancia.setEsquerdo(Boolean.parseBoolean(esquerdo));
+
+			String desenharRetanguloTotal = attributes.getValue("desenharRetanguloTotal");
+			instancia.setDesenharRetanguloTotal(Boolean.parseBoolean(desenharRetanguloTotal));
+			String larguraRetanguloTotal = attributes.getValue("larguraRetanguloTotal");
+			if (!Util.estaVazio(larguraRetanguloTotal)) {
+				instancia.setLarguraRetanguloTotal(Integer.parseInt(larguraRetanguloTotal));
+			}
 
 			String desenharComentario = attributes.getValue("desenharComentario");
 			instancia.setDesenharComentario(Boolean.parseBoolean(desenharComentario));

@@ -83,6 +83,11 @@ public class InstanciaAparencia {
 						Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 			}
 		}
+
+		if (i.desenharRetanguloTotal) {
+			g2.setColor(i.cor);
+			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal, i.dimensao.getAltura());
+		}
 	}
 
 	public void desenharIcone(Instancia i, Graphics2D g2) {

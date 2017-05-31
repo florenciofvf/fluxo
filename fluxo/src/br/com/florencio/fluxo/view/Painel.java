@@ -42,6 +42,8 @@ import br.com.florencio.fluxo.util.Util;
 
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private JCheckBoxMenuItem menuItemDesenharRetanguloTotal = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_retangulo"));
 	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
 			Strings.get("label_desenhar_comentario"));
 	private JCheckBoxMenuItem menuItemDesenharObservacao = new JCheckBoxMenuItem(
@@ -202,6 +204,8 @@ public class Painel extends JPanel {
 		popup.add(menuObservacao);
 		popup.addSeparator();
 		popup.add(menuItemInfo);
+		popup.addSeparator();
+		popup.add(menuItemDesenharRetanguloTotal);
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
@@ -258,10 +262,10 @@ public class Painel extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
-					menuItemDesenharComentario.setSelected(false);
 					localizacao = new Localizacao(e.getX(), e.getY());
 					Instancia objeto = procurar();
 					if (objeto != null) {
+						menuItemDesenharRetanguloTotal.setSelected(objeto.isDesenharRetanguloTotal());
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						menuItemDesenharObservacao.setSelected(objeto.isDesenharObservacao());
 						popup.show(Painel.this, e.getX(), e.getY());
@@ -275,10 +279,10 @@ public class Painel extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
-					menuItemDesenharComentario.setSelected(false);
 					localizacao = new Localizacao(e.getX(), e.getY());
 					Instancia objeto = procurar();
 					if (objeto != null) {
+						menuItemDesenharRetanguloTotal.setSelected(objeto.isDesenharRetanguloTotal());
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						menuItemDesenharObservacao.setSelected(objeto.isDesenharObservacao());
 						popup.show(Painel.this, e.getX(), e.getY());
@@ -430,6 +434,25 @@ public class Painel extends JPanel {
 
 				new DialogoObsCom(formulario, objeto, false);
 				reorganizar();
+			}
+		});
+
+		menuItemDesenharRetanguloTotal.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null || objeto.isEsquerdo() || objeto instanceof InstanciaRaiz) {
+					return;
+				}
+
+				objeto.setDesenharRetanguloTotal(menuItemDesenharRetanguloTotal.isSelected());
+
+				if (objeto.isDesenharRetanguloTotal()) {
+					objeto.calcularLarguraTotal();
+				}
+
+				repaint();
 			}
 		});
 

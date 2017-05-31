@@ -234,6 +234,12 @@ public class InstanciaRaiz extends Instancia {
 	}
 
 	@Override
+	public void calcularLarguraTotal() {
+		raizEsquerda.calcularLarguraTotal();
+		raizDireita.calcularLarguraTotal();
+	}
+
+	@Override
 	void inverterLocalizacaoX() {
 		throw new IllegalStateException();
 	}
