@@ -20,17 +20,17 @@ public class InstanciaAparencia {
 				if (i.esquerdo) {
 					int l = i.dimensaoAparencia.getLargura();
 					g2.fillRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-							i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+							i.larguraRetanguloTotal, i.dimensao.getAltura());
 
 					g2.setColor(Color.BLACK);
 					g2.drawRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-							i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+							i.larguraRetanguloTotal, i.dimensao.getAltura());
 
 				} else {
-					g2.fillRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
+					g2.fillRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
 							i.dimensao.getAltura());
 					g2.setColor(Color.BLACK);
-					g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
+					g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
 							i.dimensao.getAltura());
 				}
 			}
@@ -45,15 +45,15 @@ public class InstanciaAparencia {
 		if (i.desenharRetanguloTotal) {
 			if (i.esquerdo) {
 				g2.fillRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-						i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+						i.larguraRetanguloTotal, i.dimensao.getAltura());
 				g2.setColor(Color.BLACK);
 				g2.drawRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-						i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+						i.larguraRetanguloTotal, i.dimensao.getAltura());
 			} else {
-				g2.fillRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
+				g2.fillRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
 						i.dimensao.getAltura());
 				g2.setColor(Color.BLACK);
-				g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
+				g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
 						i.dimensao.getAltura());
 			}
 		}
