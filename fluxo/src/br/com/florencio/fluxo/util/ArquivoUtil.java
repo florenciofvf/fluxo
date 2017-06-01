@@ -190,6 +190,7 @@ public class ArquivoUtil {
 				Constantes.USAR_LARGURA_PADRAO = Constantes.LARGURA_PADRAO > 0;
 
 				raiz = new InstanciaRaiz(instancia.getDescricao());
+				raiz.setDesenharRetanguloTotal(instancia.isDesenharRetanguloTotal());
 				raiz.setDesenharComentario(instancia.isDesenharComentario());
 				raiz.setComentario(instancia.getComentario());
 				raiz.setDesenharObservacao(instancia.isDesenharObservacao());
