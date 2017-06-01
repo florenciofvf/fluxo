@@ -77,14 +77,18 @@ public class InstanciaAparencia {
 		}
 
 		if (i.cor != null) {
-			g2.fillRoundRect(x, y, l, a, raio, raio);
-			g2.setColor(Color.BLACK);
-			g2.drawRoundRect(x, y, l, a, raio, raio);
-			g2.setColor(i.cor);
-			desenharIcone(i, g2);
+			if (i.desenharAparencia) {
+				g2.fillRoundRect(x, y, l, a, raio, raio);
+				g2.setColor(Color.BLACK);
+				g2.drawRoundRect(x, y, l, a, raio, raio);
+				g2.setColor(i.cor);
+				desenharIcone(i, g2);
+			}
 		} else {
-			g2.drawRoundRect(x, y, l, a, raio, raio);
-			desenharIcone(i, g2);
+			if (i.desenharAparencia) {
+				g2.drawRoundRect(x, y, l, a, raio, raio);
+				desenharIcone(i, g2);
+			}
 		}
 
 		if (i.cor != null) {

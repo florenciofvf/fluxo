@@ -42,6 +42,8 @@ import br.com.florencio.fluxo.util.Util;
 
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private JCheckBoxMenuItem menuItemDesenharAparencia = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_aparencia"));
 	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
 			Strings.get("label_desenhar_comentario"));
 	private JCheckBoxMenuItem menuItemDesenharObservacao = new JCheckBoxMenuItem(
@@ -206,6 +208,7 @@ public class Painel extends JPanel {
 		popup.add(menuItemInfo);
 		popup.addSeparator();
 		popup.add(menuItemDesenharRetanguloTotal);
+		popup.add(menuItemDesenharAparencia);
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
@@ -269,6 +272,7 @@ public class Painel extends JPanel {
 						menuItemDesenharRetanguloTotal.setSelected(objeto.isDesenharRetanguloTotal());
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						menuItemDesenharObservacao.setSelected(objeto.isDesenharObservacao());
+						menuItemDesenharAparencia.setSelected(objeto.isDesenharAparencia());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
 						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
@@ -287,6 +291,7 @@ public class Painel extends JPanel {
 						menuItemDesenharRetanguloTotal.setSelected(objeto.isDesenharRetanguloTotal());
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						menuItemDesenharObservacao.setSelected(objeto.isDesenharObservacao());
+						menuItemDesenharAparencia.setSelected(objeto.isDesenharAparencia());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
 						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
@@ -455,6 +460,20 @@ public class Painel extends JPanel {
 					objeto.calcularLarguraTotal();
 				}
 
+				repaint();
+			}
+		});
+
+		menuItemDesenharAparencia.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				objeto.setDesenharAparencia(menuItemDesenharAparencia.isSelected());
 				repaint();
 			}
 		});

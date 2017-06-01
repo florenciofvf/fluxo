@@ -20,6 +20,7 @@ public class Instancia {
 	final Dimensao dimensaoAparencia = new Dimensao(0, 0);
 	final Localizacao localizacao = new Localizacao(0, 0);
 	final Dimensao dimensao = new Dimensao(0, 0);
+	boolean desenharAparencia = true;
 	boolean desenharRetanguloTotal;
 	InstanciaAparencia aparencia;
 	boolean desenharObservacao;
@@ -56,6 +57,7 @@ public class Instancia {
 		Instancia obj = new Instancia(descricao);
 		obj.desenharObservacao = desenharObservacao;
 		obj.desenharComentario = desenharComentario;
+		obj.desenharAparencia = desenharAparencia;
 		obj.observacao = observacao;
 		obj.comentario = comentario;
 		obj.minimizado = minimizado;
@@ -677,8 +679,10 @@ public class Instancia {
 		}
 
 		if (!minimizado) {
-			for (Linha l : linhas) {
-				l.desenhar(g2);
+			if (desenharAparencia) {
+				for (Linha l : linhas) {
+					l.desenhar(g2);
+				}
 			}
 
 			for (Instancia i : filhos) {
@@ -898,5 +902,13 @@ public class Instancia {
 
 			sel = obj;
 		}
+	}
+
+	public boolean isDesenharAparencia() {
+		return desenharAparencia;
+	}
+
+	public void setDesenharAparencia(boolean desenharAparencia) {
+		this.desenharAparencia = desenharAparencia;
 	}
 }

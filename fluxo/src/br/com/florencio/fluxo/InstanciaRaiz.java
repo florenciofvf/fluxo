@@ -400,4 +400,11 @@ public class InstanciaRaiz extends Instancia {
 	public Instancia getRaizDireita() {
 		return raizDireita;
 	}
+
+	@Override
+	public void setDesenharAparencia(boolean desenharAparencia) {
+		super.setDesenharAparencia(desenharAparencia);
+		raizEsquerda.setDesenharAparencia(desenharAparencia);
+		raizDireita.setDesenharAparencia(desenharAparencia);
+	}
 }

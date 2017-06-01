@@ -51,12 +51,16 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			g2.drawRoundRect(x, y - m, l, l, raioRaiz, raioRaiz);
 
 			if (i.cor != null) {
-				g2.fillRoundRect(x, y, l, a, raio, raio);
-				g2.setColor(Color.BLACK);
-				g2.drawRoundRect(x, y, l, a, raio, raio);
-				g2.setColor(i.cor);
+				if (i.desenharAparencia) {
+					g2.fillRoundRect(x, y, l, a, raio, raio);
+					g2.setColor(Color.BLACK);
+					g2.drawRoundRect(x, y, l, a, raio, raio);
+					g2.setColor(i.cor);
+				}
 			} else {
-				g2.drawRoundRect(x, y, l, a, raio, raio);
+				if (i.desenharAparencia) {
+					g2.drawRoundRect(x, y, l, a, raio, raio);
+				}
 			}
 
 			if (i.cor != null) {
@@ -104,6 +108,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			raiz.raizEsquerda.setObservacao(i.observacao);
 			raiz.raizEsquerda.setDesenharComentario(i.desenharComentario);
 			raiz.raizEsquerda.setComentario(i.comentario);
+			raiz.raizEsquerda.desenharAparencia = i.desenharAparencia;
 			raiz.raizEsquerda.braco = false;
 			raiz.raizEsquerda.desenhar2(g2);
 			raiz.raizEsquerda.braco = braco;
@@ -115,6 +120,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			raiz.raizDireita.setObservacao(i.observacao);
 			raiz.raizDireita.setDesenharComentario(i.desenharComentario);
 			raiz.raizDireita.setComentario(i.comentario);
+			raiz.raizDireita.desenharAparencia = i.desenharAparencia;
 			raiz.raizDireita.braco = false;
 			raiz.raizDireita.desenhar2(g2);
 			raiz.raizDireita.braco = braco;
@@ -126,12 +132,16 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			x += Constantes.LARGURA_MIN_MAX;
 
 			if (i.cor != null) {
-				g2.fillRoundRect(x, y, l, a, raio, raio);
-				g2.setColor(Color.BLACK);
-				g2.drawRoundRect(x, y, l, a, raio, raio);
-				g2.setColor(i.cor);
+				if (i.desenharAparencia) {
+					g2.fillRoundRect(x, y, l, a, raio, raio);
+					g2.setColor(Color.BLACK);
+					g2.drawRoundRect(x, y, l, a, raio, raio);
+					g2.setColor(i.cor);
+				}
 			} else {
-				g2.drawRoundRect(x, y, l, a, raio, raio);
+				if (i.desenharAparencia) {
+					g2.drawRoundRect(x, y, l, a, raio, raio);
+				}
 			}
 
 			if (i.cor != null) {
