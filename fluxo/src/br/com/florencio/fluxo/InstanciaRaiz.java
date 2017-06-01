@@ -235,7 +235,7 @@ public class InstanciaRaiz extends Instancia {
 
 	@Override
 	public void calcularLarguraTotal() {
-		// raizEsquerda.calcularLarguraTotal();
+		raizEsquerda.calcularLarguraTotal();
 		raizDireita.calcularLarguraTotal();
 	}
 
@@ -384,6 +384,7 @@ public class InstanciaRaiz extends Instancia {
 	@Override
 	public void setDesenharRetanguloTotal(boolean desenharRetanguloTotal) {
 		super.setDesenharRetanguloTotal(desenharRetanguloTotal);
+		raizEsquerda.setDesenharRetanguloTotal(desenharRetanguloTotal);
 		raizDireita.setDesenharRetanguloTotal(desenharRetanguloTotal);
 	}
 

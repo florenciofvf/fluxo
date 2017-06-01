@@ -460,18 +460,30 @@ public class Instancia {
 	}
 
 	public void calcularLarguraTotal() {
-		AtomicInteger integer = new AtomicInteger(dimensao.getLargura());
+		AtomicInteger integer = new AtomicInteger(0);
 
 		if (!minimizado) {
 			for (Instancia i : filhos) {
-				i.calcularLarguraTotal(integer);
+				i.calcularLarguraTotalAux(0, integer);
 			}
 		}
 
-		if (integer.get() == dimensao.getLargura()) {
-			larguraRetanguloTotal = integer.get();
-		} else {
-			larguraRetanguloTotal = integer.get() - localizacao.getX();
+		if (integer.get() > 0) {
+			integer.addAndGet(Constantes.LARGURA_AFASTAMENTO);
+		}
+
+		larguraRetanguloTotal = dimensao.getLargura() + integer.get();
+	}
+
+	private void calcularLarguraTotalAux(int acumulo, AtomicInteger integer) {
+		if (acumulo + dimensao.getLargura() > integer.get()) {
+			integer.set(acumulo + dimensao.getLargura());
+		}
+
+		if (!minimizado) {
+			for (Instancia i : filhos) {
+				i.calcularLarguraTotalAux(acumulo + dimensao.getLargura() + Constantes.LARGURA_AFASTAMENTO, integer);
+			}
 		}
 	}
 

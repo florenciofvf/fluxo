@@ -17,8 +17,15 @@ public class InstanciaAparencia {
 
 		if (i.braco) {
 			if (i.desenharRetanguloTotal) {
-				g2.setColor(i.cor);
-				g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal, i.dimensao.getAltura());
+				if (i.esquerdo) {
+					int l = i.dimensaoAparencia.getLargura();
+					//l += naoEstaVazio ? Constantes.LARGURA_MIN_MAX : 0;
+					g2.drawRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
+							i.larguraRetanguloTotal, i.dimensao.getAltura());
+				} else {
+					g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
+							i.dimensao.getAltura());
+				}
 			}
 			return;
 		}
@@ -90,7 +97,14 @@ public class InstanciaAparencia {
 
 		if (i.desenharRetanguloTotal) {
 			g2.setColor(i.cor);
-			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal, i.dimensao.getAltura());
+			if (i.esquerdo) {
+				l += naoEstaVazio ? Constantes.LARGURA_MIN_MAX : 0;
+				g2.drawRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
+						i.larguraRetanguloTotal, i.dimensao.getAltura());
+			} else {
+				g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
+						i.dimensao.getAltura());
+			}
 		}
 	}
 
