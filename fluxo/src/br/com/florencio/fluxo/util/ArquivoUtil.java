@@ -29,7 +29,7 @@ public class ArquivoUtil {
 	public static void salvarArquivo(InstanciaRaiz raiz, File file) throws Exception {
 		PrintWriter pw = new PrintWriter(file, Constantes.CODIFICACAO);
 		gravarPrologo(pw);
-		inicioTag("", raiz, pw, false, true, true);
+		inicioTag("", raiz, pw, false, true, true, true);
 		if (!raiz.getRaizEsquerda().estaVazio()) {
 			raiz.getRaizEsquerda().imprimir("\t", pw, true);
 		}
@@ -62,15 +62,19 @@ public class ArquivoUtil {
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado) {
-		inicioTag(tab, i, pw, salvarLado, false, false);
+		inicioTag(tab, i, pw, salvarLado, false, false, false);
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado,
-			boolean salvarAlturaPadrao, boolean salvarLarguraPadrao) {
+			boolean salvarAlturaPadrao, boolean salvarLarguraPadrao, boolean salvarDesenharFonte) {
 		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
 		if (salvarLado) {
 			pw.print(" esquerdo=" + citar("" + i.isEsquerdo()));
+		}
+
+		if (salvarDesenharFonte) {
+			pw.print(" desenharFonte=" + citar("" + Constantes.DESENHAR_FONTE));
 		}
 
 		if (salvarAlturaPadrao) {
@@ -172,6 +176,8 @@ public class ArquivoUtil {
 			instancia.setObservacao(observacao);
 
 			if (raiz == null) {
+				Constantes.DESENHAR_FONTE = Boolean.parseBoolean(attributes.getValue("desenharFonte"));
+
 				Constantes.LARGURA_PADRAO = 0;
 				String alturaPadrao = attributes.getValue("alturaPadrao");
 

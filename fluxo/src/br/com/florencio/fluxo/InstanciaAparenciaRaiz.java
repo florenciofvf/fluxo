@@ -63,11 +63,13 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 				g2.setColor(Color.WHITE);
 			}
 
-			g2.drawString(i.descricao, x + 3, y + Constantes.ALTURA_FONTE);
+			if (Constantes.DESENHAR_FONTE) {
+				g2.drawString(i.descricao, x + 3, y + Constantes.ALTURA_FONTE);
+			}
 
 			g2.setColor(i.cor);
 
-			if (contemObservacao) {
+			if (contemObservacao && Constantes.DESENHAR_FONTE) {
 				if (i.desenharObservacao) {
 					g2.drawString(i.observacao, x + 3, y - 2);
 				} else {
@@ -81,7 +83,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 
 			g2.setColor(i.cor);
 
-			if (contemComentario) {
+			if (contemComentario && Constantes.DESENHAR_FONTE) {
 				if (i.desenharComentario) {
 					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
 				} else {
@@ -136,11 +138,13 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 				g2.setColor(Color.WHITE);
 			}
 
-			g2.drawString(i.descricao, x + 3, y + Constantes.ALTURA_FONTE);
+			if (Constantes.DESENHAR_FONTE) {
+				g2.drawString(i.descricao, x + 3, y + Constantes.ALTURA_FONTE);
+			}
 
 			g2.setColor(i.cor);
 
-			if (contemObservacao) {
+			if (contemObservacao && Constantes.DESENHAR_FONTE) {
 				if (i.desenharObservacao) {
 					g2.drawString(i.observacao, x + 3, y - 2);
 				} else {
@@ -154,7 +158,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 
 			g2.setColor(i.cor);
 
-			if (contemComentario) {
+			if (contemComentario && Constantes.DESENHAR_FONTE) {
 				if (i.desenharComentario) {
 					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
 				} else {

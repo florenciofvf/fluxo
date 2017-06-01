@@ -55,6 +55,7 @@ public class Painel extends JPanel {
 	private JCheckBoxMenuItem menuItemDesenharRetanguloTotal = new JCheckBoxMenuItem(Strings.get("label_destacar"));
 	private JMenuItem menuItemComentarioEmFilho = new JMenuItem(Strings.get("label_transformar_comentario_filho"));
 	private JMenuItem menuItemObservacaoEmFilho = new JMenuItem(Strings.get("label_transformar_observacao_filho"));
+	private JCheckBoxMenuItem menuItemDesenharFonte = new JCheckBoxMenuItem(Strings.get("label_desenhar_fonte"));
 	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
 	private JMenuItem menuItemObservacaoEmPai = new JMenuItem(Strings.get("label_transformar_observacao_pai"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
@@ -210,6 +211,7 @@ public class Painel extends JPanel {
 		popupPainel.add(menuItemMaximizarTodos);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharRetangulo);
+		popupPainel.add(menuItemDesenharFonte);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemLarguraPadao);
 		popupPainel.add(menuItemAlturaPadao);
@@ -270,6 +272,7 @@ public class Painel extends JPanel {
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
 						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
+						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
 				}
@@ -287,6 +290,7 @@ public class Painel extends JPanel {
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
 						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
+						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
 				}
@@ -487,6 +491,14 @@ public class Painel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Constantes.DESENHAR_RETANGULO_PADRAO = menuItemDesenharRetangulo.isSelected();
+				repaint();
+			}
+		});
+
+		menuItemDesenharFonte.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Constantes.DESENHAR_FONTE = menuItemDesenharFonte.isSelected();
 				repaint();
 			}
 		});

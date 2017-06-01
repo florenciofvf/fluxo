@@ -8,6 +8,7 @@ public class Constantes {
 	public static final String CODIFICACAO = "iso-8859-1";
 	public static final byte TAMANHO_SINAL_ICONE_COMENTARIO = 4;
 	public static boolean DESENHAR_RETANGULO_PADRAO = false;
+	public static boolean DESENHAR_FONTE = true;
 	public static final byte ALTURA_PADRAO_RETANGULO = 32;
 	public static int RETANGULO_ALTURA_PADRAO = 32;
 	public static boolean USAR_LARGURA_PADRAO = false;
