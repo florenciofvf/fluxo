@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="Java Básico">
+<instancia nome="Java Básico" desenharFonte="true" alturaPadrao="32" larguraPadrao="0">
 	<instancia nome="Java Básico" esquerdo="false">
 		<instancia nome="eclipse" cor="-21946">
 			<instancia nome="views">

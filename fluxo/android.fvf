@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="ANDROID" alturaPadrao="32" cor="-10066177">
+<instancia nome="ANDROID" desenharFonte="true" alturaPadrao="32" larguraPadrao="0" cor="-10066177">
 	<instancia nome="ANDROID" esquerdo="false" cor="-10066177">
-		<instancia nome="Aula 1" cor="-16738816" minimizado="true">
+		<instancia nome="Aula 1" cor="-16738816">
 			<instancia nome="JDK"/>
 			<instancia nome="Linha de Comandos"/>
 			<instancia nome="Exemplos"/>
 		</instancia>
-		<instancia nome="Aula 2" cor="-16738816" minimizado="true">
+		<instancia nome="Aula 2" cor="-16738816">
 			<instancia nome="O que pode conter uma classe"/>
 			<instancia nome="Usando todas as palavras Reservadas"/>
 		</instancia>
-		<instancia nome="Aula 3" cor="-16738816" minimizado="true">
+		<instancia nome="Aula 3" cor="-16738816">
 			<instancia nome="Exercícios"/>
 		</instancia>
-		<instancia nome="Aula 4" cor="-16738816" minimizado="true">
+		<instancia nome="Aula 4" cor="-16738816">
 			<instancia nome="Android Studio"/>
 			<instancia nome="Primeira View"/>
 			<instancia nome="Dependências"/>
 		</instancia>
-		<instancia nome="Aula 5" cor="-16738816" minimizado="true">
+		<instancia nome="Aula 5" cor="-16738816">
 			<instancia nome="Gerenciadores de Layout"/>
 			<instancia nome="Eventos"/>
 		</instancia>

@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<instancia nome="SISTEMA ANDROID" alturaPadrao="21" larguraPadrao="100" cor="-11513601">
+<instancia nome="SISTEMA ANDROID" desenharFonte="true" alturaPadrao="21" larguraPadrao="100" cor="-11513601">
 	<instancia nome="SISTEMA ANDROID" esquerdo="false" cor="-11513601">
 		<instancia nome="VERSÕES" cor="-16738816">
 			<instancia nome="NOME DO ANDROID" cor="-16777063">
 				<instancia nome="VERSÃO" cor="-11645362">
 					<instancia nome="API LEVEL" cor="-52480">
-						<instancia nome="EQUIPAMENTO" cor="-6750208" alturaComplementar="50"/>
+						<instancia nome="EQUIPAMENTO" cor="-6750208" alturaComplementar="5"/>
+					</instancia>
+				</instancia>
+			</instancia>
+			<instancia nome="NOME DO ANDROID" desenharRetanguloTotal="true" larguraRetanguloTotal="566" desenharAparencia="false">
+				<instancia nome="VERSAO" desenharAparencia="false">
+					<instancia nome="API LEVEL" desenharAparencia="false">
+						<instancia nome="EQUIPAMENTO" alturaComplementar="-10" desenharAparencia="false"/>
 					</instancia>
 				</instancia>
 			</instancia>
 			<instancia nome="Cupcake" cor="-11513601">
 				<instancia nome="1.5" cor="-4934476">
-					<instancia nome="3" cor="-21946"/>
+					<instancia nome="3" cor="-21946" alturaComplementar="10"/>
 				</instancia>
 			</instancia>
 			<instancia nome="Donut" cor="-11513601">
@@ -71,11 +78,13 @@
 			</instancia>
 			<instancia nome="Jellybean" cor="-11513601">
 				<instancia nome="4.1" cor="-4934476">
-					<instancia nome="16" cor="-21946"/>
+					<instancia nome="16" cor="-21946">
+						<instancia nome="NEXUS 7 (tablet)" cor="-16737895" desenharObservacao="true" observacao="Asus"/>
+					</instancia>
 				</instancia>
 				<instancia nome="4.2" cor="-4934476">
 					<instancia nome="17" cor="-21946">
-						<instancia nome="NEXUS 4" cor="-16737895" desenharComentario="true" comentario="lg"/>
+						<instancia nome="NEXUS 10 (tablet)" cor="-16737895" desenharComentario="true" comentario="Asus"/>
 					</instancia>
 				</instancia>
 				<instancia nome="4.3" cor="-4934476">

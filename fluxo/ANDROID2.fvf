@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<instancia nome="SISTEMA ANDROID" desenharFonte="true" alturaPadrao="32" larguraPadrao="0" cor="-11513601">
+	<instancia nome="SISTEMA ANDROID" esquerdo="false" cor="-11513601">
+		<instancia nome="ROTEIRO" cor="-21946">
+			<instancia nome="Alocação Dinâmica de Recursos" cor="-16738816"/>
+			<instancia nome="findViewById" cor="-16738816"/>
+			<instancia nome="Invocando Outras Activity" cor="-16738816"/>
+			<instancia nome="Passando Parâmetros para outras Activity" cor="-16738816"/>
+			<instancia nome="Ciclo de Vida" cor="-16738816"/>
+			<instancia nome="Salvar o estado da Activity" cor="-16738816"/>
+			<instancia nome="Obtendo retorno de outra Activity" cor="-16738816"/>
+			<instancia nome="Layouts" cor="-16738816"/>
+			<instancia nome="Componentes" cor="-16738816"/>
+			<instancia nome="TextInputLayout" cor="-16738816" comentario="android.support.design.widget"/>
+			<instancia nome="Adapter" cor="-16738816"/>
+		</instancia>
+	</instancia>
+</instancia>
