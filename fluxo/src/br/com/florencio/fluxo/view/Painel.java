@@ -42,8 +42,6 @@ import br.com.florencio.fluxo.util.Util;
 
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JCheckBoxMenuItem menuItemDesenharRetanguloTotal = new JCheckBoxMenuItem(
-			Strings.get("label_desenhar_retangulo"));
 	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
 			Strings.get("label_desenhar_comentario"));
 	private JCheckBoxMenuItem menuItemDesenharObservacao = new JCheckBoxMenuItem(
@@ -54,6 +52,7 @@ public class Painel extends JPanel {
 			Strings.get("label_transformar_comentario_observacao"));
 	private JMenuItem menuItemObservacaoEmComentario = new JMenuItem(
 			Strings.get("label_transformar_observacao_comentario"));
+	private JCheckBoxMenuItem menuItemDesenharRetanguloTotal = new JCheckBoxMenuItem(Strings.get("label_destacar"));
 	private JMenuItem menuItemComentarioEmFilho = new JMenuItem(Strings.get("label_transformar_comentario_filho"));
 	private JMenuItem menuItemObservacaoEmFilho = new JMenuItem(Strings.get("label_transformar_observacao_filho"));
 	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));

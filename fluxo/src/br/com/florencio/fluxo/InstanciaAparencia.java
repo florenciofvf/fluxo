@@ -19,11 +19,18 @@ public class InstanciaAparencia {
 			if (i.desenharRetanguloTotal) {
 				if (i.esquerdo) {
 					int l = i.dimensaoAparencia.getLargura();
-					//l += naoEstaVazio ? Constantes.LARGURA_MIN_MAX : 0;
+					g2.fillRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
+							i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+
+					g2.setColor(Color.BLACK);
 					g2.drawRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-							i.larguraRetanguloTotal, i.dimensao.getAltura());
+							i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+
 				} else {
-					g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
+					g2.fillRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
+							i.dimensao.getAltura());
+					g2.setColor(Color.BLACK);
+					g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
 							i.dimensao.getAltura());
 				}
 			}
@@ -34,6 +41,24 @@ public class InstanciaAparencia {
 		int y = i.localizacaoAparencia.getY();
 		int l = i.dimensaoAparencia.getLargura();
 		int a = i.dimensaoAparencia.getAltura();
+
+		if (i.desenharRetanguloTotal) {
+			if (i.esquerdo) {
+				g2.fillRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
+						i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+				g2.setColor(Color.BLACK);
+				g2.drawRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
+						i.larguraRetanguloTotal + 1, i.dimensao.getAltura());
+			} else {
+				g2.fillRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
+						i.dimensao.getAltura());
+				g2.setColor(Color.BLACK);
+				g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal + 1,
+						i.dimensao.getAltura());
+			}
+		}
+
+		g2.setColor(i.cor);
 
 		if (naoEstaVazio) {
 			l -= Constantes.LARGURA_MIN_MAX;
@@ -92,18 +117,6 @@ public class InstanciaAparencia {
 				}
 				g2.fillRect(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 						Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
-			}
-		}
-
-		if (i.desenharRetanguloTotal) {
-			g2.setColor(i.cor);
-			if (i.esquerdo) {
-				l += naoEstaVazio ? Constantes.LARGURA_MIN_MAX : 0;
-				g2.drawRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-						i.larguraRetanguloTotal, i.dimensao.getAltura());
-			} else {
-				g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
-						i.dimensao.getAltura());
 			}
 		}
 	}
