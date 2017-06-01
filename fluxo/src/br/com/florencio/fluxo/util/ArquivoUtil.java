@@ -188,6 +188,9 @@ public class ArquivoUtil {
 				}
 
 				Constantes.USAR_LARGURA_PADRAO = Constantes.LARGURA_PADRAO > 0;
+				if (!Constantes.USAR_LARGURA_PADRAO) {
+					Constantes.LARGURA_PADRAO = 0;
+				}
 
 				raiz = new InstanciaRaiz(instancia.getDescricao());
 				raiz.setDesenharRetanguloTotal(instancia.isDesenharRetanguloTotal());

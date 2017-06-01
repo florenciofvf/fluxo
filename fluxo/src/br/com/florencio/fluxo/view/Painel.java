@@ -725,6 +725,9 @@ public class Painel extends JPanel {
 				try {
 					Constantes.LARGURA_PADRAO = Integer.parseInt(valor);
 					Constantes.USAR_LARGURA_PADRAO = Constantes.LARGURA_PADRAO > 0;
+					if (!Constantes.USAR_LARGURA_PADRAO) {
+						Constantes.LARGURA_PADRAO = 0;
+					}
 					reorganizar();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(formulario, ex.getMessage());
