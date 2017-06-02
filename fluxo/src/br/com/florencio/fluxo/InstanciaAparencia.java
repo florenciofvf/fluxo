@@ -15,23 +15,29 @@ public class InstanciaAparencia {
 
 		g2.setColor(i.cor);
 
+		int dimensaoAltura = i.dimensao.getAltura();
+		dimensaoAltura -= i.margemSuperior;
+		dimensaoAltura -= i.margemInferior;
+
 		if (i.braco) {
 			if (i.desenharRetanguloTotal) {
 				if (i.esquerdo) {
 					int l = i.dimensaoAparencia.getLargura();
-					g2.fillRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-							i.larguraRetanguloTotal, i.dimensao.getAltura(), raio, raio);
+					g2.fillRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l),
+							i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio,
+							raio);
 
 					g2.setColor(Color.BLACK);
-					g2.drawRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-							i.larguraRetanguloTotal, i.dimensao.getAltura(), raio, raio);
+					g2.drawRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l),
+							i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio,
+							raio);
 
 				} else {
-					g2.fillRoundRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
-							i.dimensao.getAltura(), raio, raio);
+					g2.fillRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior,
+							i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
 					g2.setColor(Color.BLACK);
-					g2.drawRoundRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
-							i.dimensao.getAltura(), raio, raio);
+					g2.drawRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior,
+							i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
 				}
 			}
 			return;
@@ -44,17 +50,17 @@ public class InstanciaAparencia {
 
 		if (i.desenharRetanguloTotal) {
 			if (i.esquerdo) {
-				g2.fillRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-						i.larguraRetanguloTotal, i.dimensao.getAltura(), raio, raio);
+				g2.fillRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l),
+						i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
 				g2.setColor(Color.BLACK);
-				g2.drawRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l), i.localizacao.getY(),
-						i.larguraRetanguloTotal, i.dimensao.getAltura(), raio, raio);
+				g2.drawRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l),
+						i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
 			} else {
-				g2.fillRoundRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
-						i.dimensao.getAltura(), raio, raio);
+				g2.fillRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal,
+						dimensaoAltura, raio, raio);
 				g2.setColor(Color.BLACK);
-				g2.drawRoundRect(i.localizacao.getX(), i.localizacao.getY(), i.larguraRetanguloTotal,
-						i.dimensao.getAltura(), raio, raio);
+				g2.drawRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal,
+						dimensaoAltura, raio, raio);
 			}
 		}
 

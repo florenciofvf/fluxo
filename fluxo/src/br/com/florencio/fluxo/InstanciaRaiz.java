@@ -407,4 +407,18 @@ public class InstanciaRaiz extends Instancia {
 		raizEsquerda.setDesenharAparencia(desenharAparencia);
 		raizDireita.setDesenharAparencia(desenharAparencia);
 	}
+
+	@Override
+	public void setMargemSuperior(int margemSuperior) {
+		super.setMargemSuperior(margemSuperior);
+		raizEsquerda.setMargemSuperior(margemSuperior);
+		raizDireita.setMargemSuperior(margemSuperior);
+	}
+
+	@Override
+	public void setMargemInferior(int margemInferior) {
+		super.setMargemInferior(margemInferior);
+		raizEsquerda.setMargemInferior(margemInferior);
+		raizDireita.setMargemInferior(margemInferior);
+	}
 }
