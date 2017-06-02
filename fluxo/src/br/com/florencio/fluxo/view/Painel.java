@@ -68,9 +68,10 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemMinimizarTodos2 = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos2 = new JMenuItem(Strings.get("label_maximizar_todos"));
 	private JMenuItem menuItemCopiarSFilhos = new JMenuItem(Strings.get("label_copiar_sem_filhos"));
-	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
 	private JMenuItem menuItemMinimizarTodos = new JMenuItem(Strings.get("label_minimizar_todos"));
 	private JMenuItem menuItemMaximizarTodos = new JMenuItem(Strings.get("label_maximizar_todos"));
+	private JMenuItem menuItemMargemSuperior = new JMenuItem(Strings.get("label_margem_superior"));
+	private JMenuItem menuItemMargemInferior = new JMenuItem(Strings.get("label_margem_inferior"));
 	private JMenuItem menuItemColarPaiPonta = new JMenuItem(Strings.get("label_colar_pai_ponta"));
 	private JMenuItem menuItemComentario = new JMenuItem(Strings.get("label_adicionar_alterar"));
 	private JMenuItem menuItemObservacao = new JMenuItem(Strings.get("label_adicionar_alterar"));
@@ -82,6 +83,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemExcluirAcima = new JMenuItem(Strings.get("label_excluir_acima"));
 	private JMenuItem menuItemAlturaPadao = new JMenuItem(Strings.get("label_altura_padrao"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
+	private JMenuItem menuItemComplemento = new JMenuItem(Strings.get("label_complemento"));
 	private JMenuItem menuItemColarPai = new JMenuItem(Strings.get("label_colar_pai"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
@@ -158,7 +160,9 @@ public class Painel extends JPanel {
 
 		popup.addSeparator();
 		JMenu menuAltura = new JMenu(Strings.get("label_altura"));
+		menuAltura.add(menuItemMargemSuperior);
 		menuAltura.add(menuItemMargemInferior);
+		menuAltura.add(menuItemComplemento);
 		popup.add(menuAltura);
 
 		popup.addSeparator();
@@ -734,7 +738,7 @@ public class Painel extends JPanel {
 			}
 		});
 
-		menuItemMargemInferior.addActionListener(new ActionListener() {
+		menuItemComplemento.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Instancia objeto = procurar();
@@ -753,6 +757,62 @@ public class Painel extends JPanel {
 				try {
 					objeto.setAlturaComplementar(Integer.parseInt(valor));
 					reorganizar();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(formulario, ex.getMessage());
+				}
+			}
+		});
+
+		menuItemMargemSuperior.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				String valor = JOptionPane.showInputDialog(formulario, objeto.getDescricao(),
+						objeto.getMargemSuperior());
+
+				if (Util.estaVazio(valor)) {
+					return;
+				}
+
+				try {
+					int i = Integer.parseInt(valor);
+					if (i >= 0) {
+						objeto.setMargemSuperior(i);
+						reorganizar();
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(formulario, ex.getMessage());
+				}
+			}
+		});
+
+		menuItemMargemInferior.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					return;
+				}
+
+				String valor = JOptionPane.showInputDialog(formulario, objeto.getDescricao(),
+						objeto.getMargemInferior());
+
+				if (Util.estaVazio(valor)) {
+					return;
+				}
+
+				try {
+					int i = Integer.parseInt(valor);
+					if (i >= 0) {
+						objeto.setMargemInferior(i);
+						reorganizar();
+					}
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(formulario, ex.getMessage());
 				}

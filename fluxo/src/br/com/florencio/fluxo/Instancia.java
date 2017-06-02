@@ -30,6 +30,8 @@ public class Instancia {
 	int larguraRetanguloTotal;
 	int alturaComplementar;
 	List<Instancia> filhos;
+	int margemSuperior;
+	int margemInferior;
 	List<Linha> linhas;
 	boolean minimizado;
 	String observacao;
@@ -380,6 +382,8 @@ public class Instancia {
 		}
 
 		altura += alturaComplementar;
+		altura += margemSuperior;
+		altura += margemInferior;
 
 		dimensao.setLarguraAltura(0, altura);
 	}
@@ -429,6 +433,7 @@ public class Instancia {
 	}
 
 	void definirLocalizacaoY(int acumulo) {
+		acumulo += margemSuperior;
 		if (!minimizado) {
 			for (Instancia i : filhos) {
 				i.setLocalizacao(i.localizacao.getX(), acumulo);
@@ -910,5 +915,21 @@ public class Instancia {
 
 	public void setDesenharAparencia(boolean desenharAparencia) {
 		this.desenharAparencia = desenharAparencia;
+	}
+
+	public int getMargemSuperior() {
+		return margemSuperior;
+	}
+
+	public void setMargemSuperior(int margemSuperior) {
+		this.margemSuperior = margemSuperior;
+	}
+
+	public int getMargemInferior() {
+		return margemInferior;
+	}
+
+	public void setMargemInferior(int margemInferior) {
+		this.margemInferior = margemInferior;
 	}
 }

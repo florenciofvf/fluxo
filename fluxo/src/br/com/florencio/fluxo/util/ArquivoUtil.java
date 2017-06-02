@@ -122,6 +122,14 @@ public class ArquivoUtil {
 			pw.print(" observacao=" + citar(Util.escaparString(i.getObservacao())));
 		}
 
+		if (i.getMargemSuperior() > 0) {
+			pw.print(" margemSuperior=" + citar("" + i.getMargemSuperior()));
+		}
+
+		if (i.getMargemInferior() > 0) {
+			pw.print(" margemInferior=" + citar("" + i.getMargemInferior()));
+		}
+
 		if (i.estaVazio()) {
 			pw.println("/>");
 		} else {
@@ -179,6 +187,16 @@ public class ArquivoUtil {
 				instancia.setAlturaComplementar(Integer.parseInt(alturaComplementar));
 			}
 
+			String margemSuperior = attributes.getValue("margemSuperior");
+			if (!Util.estaVazio(margemSuperior)) {
+				instancia.setMargemSuperior(Integer.parseInt(margemSuperior));
+			}
+
+			String margemInferior = attributes.getValue("margemInferior");
+			if (!Util.estaVazio(margemInferior)) {
+				instancia.setMargemInferior(Integer.parseInt(margemInferior));
+			}
+
 			String comentario = attributes.getValue("comentario");
 			instancia.setComentario(comentario);
 
@@ -210,9 +228,12 @@ public class ArquivoUtil {
 
 				raiz = new InstanciaRaiz(instancia.getDescricao());
 				raiz.setDesenharRetanguloTotal(instancia.isDesenharRetanguloTotal());
+				raiz.setAlturaComplementar(instancia.getAlturaComplementar());
 				raiz.setDesenharComentario(instancia.isDesenharComentario());
 				raiz.setDesenharObservacao(instancia.isDesenharObservacao());
 				raiz.setDesenharAparencia(instancia.isDesenharAparencia());
+				raiz.setMargemSuperior(instancia.getMargemSuperior());
+				raiz.setMargemInferior(instancia.getMargemInferior());
 				raiz.setComentario(instancia.getComentario());
 				raiz.setObservacao(instancia.getObservacao());
 				raiz.setCor(instancia.getCor());
