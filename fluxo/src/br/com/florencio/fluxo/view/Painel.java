@@ -691,8 +691,13 @@ public class Painel extends JPanel {
 				}
 
 				Instancia pai = objeto.getPai();
-				pai.setComentario(objeto.getDescricao());
-				pai.setDesenharComentario(true);
+				if (pai.getPai() instanceof InstanciaRaiz) {
+					pai.getPai().setComentario(objeto.getDescricao());
+					pai.getPai().setDesenharComentario(true);
+				} else {
+					pai.setComentario(objeto.getDescricao());
+					pai.setDesenharComentario(true);
+				}
 				pai.excluir(objeto);
 				reorganizar();
 			}
@@ -717,8 +722,13 @@ public class Painel extends JPanel {
 				}
 
 				Instancia pai = objeto.getPai();
-				pai.setObservacao(objeto.getDescricao());
-				pai.setDesenharObservacao(true);
+				if (pai.getPai() instanceof InstanciaRaiz) {
+					pai.getPai().setObservacao(objeto.getDescricao());
+					pai.getPai().setDesenharObservacao(true);
+				} else {
+					pai.setObservacao(objeto.getDescricao());
+					pai.setDesenharObservacao(true);
+				}
 				pai.excluir(objeto);
 				reorganizar();
 			}
