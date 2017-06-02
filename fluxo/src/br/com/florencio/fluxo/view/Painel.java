@@ -86,9 +86,11 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
 	private JMenuItem menuItemColar = new JMenuItem(Strings.get("label_colar_filho"));
+	private JMenuItem menuItemCopiarCor = new JMenuItem(Strings.get("label_copiar"));
 	private JMenuItem menuItemAmarelo = new JMenuItem(Strings.get("label_amarelo"));
 	private JMenuItem menuItemLaranja = new JMenuItem(Strings.get("label_laranja"));
 	private JMenuItem menuItemNovoFilho = new JMenuItem(Strings.get("label_filho"));
+	private JMenuItem menuItemColarCor = new JMenuItem(Strings.get("label_colar"));
 	private JMenuItem menuItemRecortar = new JMenuItem(Strings.get("label_este"));
 	private JMenuItem menuItemPadrao = new JMenuItem(Strings.get("label_padrao"));
 	private JMenuItem menuItemUltimo = new JMenuItem(Strings.get("label_ultimo"));
@@ -110,6 +112,7 @@ public class Painel extends JPanel {
 	private InstanciaRaiz raiz;
 	private Instancia copiado;
 	private boolean animando;
+	private Color corCopiado;
 	private String arquivo;
 
 	public Painel(Formulario formulario, InstanciaRaiz raiz) {
@@ -172,6 +175,9 @@ public class Painel extends JPanel {
 
 		popup.addSeparator();
 		JMenu menuCor = new JMenu(Strings.get("label_cor"));
+		menuCor.add(menuItemCopiarCor);
+		menuCor.add(menuItemColarCor);
+		menuCor.addSeparator();
 		menuCor.add(menuItemVermelho);
 		menuCor.add(menuItemLaranja);
 		menuCor.add(menuItemAmarelo);
@@ -911,6 +917,20 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemCopiarCor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Instancia objeto = procurar();
+
+				if (objeto == null) {
+					corCopiado = null;
+					return;
+				}
+
+				corCopiado = objeto.getCor();
+			}
+		});
+
 		menuItemCopiarSFilhos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1101,6 +1121,13 @@ public class Painel extends JPanel {
 				if (objeto.ultimo()) {
 					reorganizar();
 				}
+			}
+		});
+
+		menuItemColarCor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setCor(procurar(), corCopiado);
 			}
 		});
 
