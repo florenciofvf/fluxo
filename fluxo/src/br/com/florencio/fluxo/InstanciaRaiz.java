@@ -107,7 +107,7 @@ public class InstanciaRaiz extends Instancia {
 		definirLocalizacaoX();
 		definirLocalizacaoY(0);
 		definirLocalizacaoAfastamentoHorizontal();
-		definirLocalizacaoAparenciaVertical(Constantes.APARENCIA_MEIO);
+		definirLocalizacaoAparenciaVertical(Constantes.ALINHAMENTO);
 		AtomicInteger valor = inverterLadoEsquerdo();
 		deslocarTodaHierarquia(valor);
 		voltarRaizELadoDireito();

@@ -29,7 +29,7 @@ public class ArquivoUtil {
 	public static void salvarArquivo(InstanciaRaiz raiz, File file) throws Exception {
 		PrintWriter pw = new PrintWriter(file, Constantes.CODIFICACAO);
 		gravarPrologo(pw);
-		inicioTag("", raiz, pw, false, true, true, true);
+		inicioTag("", raiz, pw, false, true, true, true, true);
 		if (!raiz.getRaizEsquerda().estaVazio()) {
 			raiz.getRaizEsquerda().imprimir("\t", pw, true);
 		}
@@ -62,17 +62,21 @@ public class ArquivoUtil {
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado) {
-		inicioTag(tab, i, pw, salvarLado, false, false, false);
+		inicioTag(tab, i, pw, salvarLado, false, false, false, false);
 	}
 
 	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado,
-			boolean salvarAlturaPadrao, boolean salvarLarguraPadrao, boolean salvarDesenharFonte) {
+			boolean salvarAlturaPadrao, boolean salvarLarguraPadrao, boolean salvarDesenharFonte, boolean salvarAlinhamento) {
 		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
 		if (salvarLado) {
 			pw.print(" esquerdo=" + citar("" + i.isEsquerdo()));
 		}
 
+		if (salvarAlinhamento) {
+			pw.print(" alinhamento=" + citar("" + Constantes.ALINHAMENTO));
+		}
+		
 		if (salvarDesenharFonte) {
 			pw.print(" desenharFonte=" + citar("" + Constantes.DESENHAR_FONTE));
 		}
@@ -206,7 +210,6 @@ public class ArquivoUtil {
 			if (raiz == null) {
 				Constantes.DESENHAR_FONTE = Boolean.parseBoolean(attributes.getValue("desenharFonte"));
 
-				Constantes.LARGURA_PADRAO = 0;
 				String alturaPadrao = attributes.getValue("alturaPadrao");
 
 				if (!Util.estaVazio(alturaPadrao)) {
@@ -215,12 +218,18 @@ public class ArquivoUtil {
 					Constantes.RETANGULO_ALTURA_PADRAO = Constantes.ALTURA_PADRAO_RETANGULO;
 				}
 
+				Constantes.LARGURA_PADRAO = 0;
 				String larguraPadrao = attributes.getValue("larguraPadrao");
-
 				if (!Util.estaVazio(larguraPadrao)) {
 					Constantes.LARGURA_PADRAO = Integer.parseInt(larguraPadrao);
 				}
-
+				
+				Constantes.ALINHAMENTO = Constantes.APARENCIA_MEIO;
+				String alinhamento = attributes.getValue("alinhamento");
+				if (!Util.estaVazio(alinhamento)) {
+					Constantes.ALINHAMENTO = Byte.parseByte(alinhamento);
+				}
+				
 				Constantes.USAR_LARGURA_PADRAO = Constantes.LARGURA_PADRAO > 0;
 				if (!Constantes.USAR_LARGURA_PADRAO) {
 					Constantes.LARGURA_PADRAO = 0;

@@ -556,7 +556,7 @@ public class Instancia {
 		}
 
 		if (Constantes.APARENCIA_ACIMA == local) {
-			localizacaoAparencia.setXY(localizacao.getX(), localizacao.getY());
+			localizacaoAparencia.setXY(localizacao.getX(), localizacao.getY() + margemSuperior);
 
 		} else if (Constantes.APARENCIA_MEIO == local) {
 
@@ -568,11 +568,9 @@ public class Instancia {
 
 		} else if (Constantes.APARENCIA_ABAIXO == local) {
 
-			int altura = dimensao.getAltura();
-			altura -= margemSuperior;
-			altura -= margemInferior;
-			localizacaoAparencia.setXY(localizacao.getX(),
-					(localizacao.getY() + altura) - dimensaoAparencia.getAltura());
+			int y = (localizacao.getY() + dimensao.getAltura()) - dimensaoAparencia.getAltura();
+			y -= margemInferior;
+			localizacaoAparencia.setXY(localizacao.getX(), y);
 
 		} else {
 			throw new RuntimeException();

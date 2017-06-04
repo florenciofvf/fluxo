@@ -22,5 +22,6 @@ public class Constantes {
 	public static final byte APARENCIA_ABAIXO = 0;
 	public static final byte APARENCIA_ACIMA = 1;
 	public static final byte APARENCIA_MEIO = 2;
+	public static byte ALINHAMENTO = APARENCIA_MEIO;
 	public static byte ALTURA_FONTE;
 }

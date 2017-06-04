@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
@@ -29,6 +30,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
 
 import br.com.florencio.fluxo.Instancia;
@@ -42,27 +44,31 @@ import br.com.florencio.fluxo.util.Util;
 
 public class Painel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JCheckBoxMenuItem menuItemDesenharAparencia = new JCheckBoxMenuItem(
-			Strings.get("label_desenhar_aparencia"));
-	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
-			Strings.get("label_desenhar_comentario"));
-	private JCheckBoxMenuItem menuItemDesenharObservacao = new JCheckBoxMenuItem(
-			Strings.get("label_desenhar_observacao"));
-	private JCheckBoxMenuItem menuItemDesenharRetangulo = new JCheckBoxMenuItem(
-			Strings.get("label_desenhar_retangulo"));
+
 	private JMenuItem menuItemComentarioEmObservacao = new JMenuItem(
 			Strings.get("label_transformar_comentario_observacao"));
 	private JMenuItem menuItemObservacaoEmComentario = new JMenuItem(
 			Strings.get("label_transformar_observacao_comentario"));
+	private JCheckBoxMenuItem menuItemDesenharObservacao = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_observacao"));
+	private JCheckBoxMenuItem menuItemDesenharComentario = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_comentario"));
+	private JCheckBoxMenuItem menuItemDesenharAparencia = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_aparencia"));
+	private JCheckBoxMenuItem menuItemDesenharRetangulo = new JCheckBoxMenuItem(
+			Strings.get("label_desenhar_retangulo"));
+	private JRadioButtonMenuItem menuItemAlinhamentoSuperior = new JRadioButtonMenuItem(Strings.get("label_superior"));
+	private JRadioButtonMenuItem menuItemAlinhamentoInferior = new JRadioButtonMenuItem(Strings.get("label_inferior"));
 	private JCheckBoxMenuItem menuItemDesenharRetanguloTotal = new JCheckBoxMenuItem(Strings.get("label_destacar"));
 	private JMenuItem menuItemComentarioEmFilho = new JMenuItem(Strings.get("label_transformar_comentario_filho"));
 	private JMenuItem menuItemObservacaoEmFilho = new JMenuItem(Strings.get("label_transformar_observacao_filho"));
 	private JCheckBoxMenuItem menuItemDesenharFonte = new JCheckBoxMenuItem(Strings.get("label_desenhar_fonte"));
+	private JRadioButtonMenuItem menuItemAlinhamentoMeio = new JRadioButtonMenuItem(Strings.get("label_meio"));
 	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
 	private JMenuItem menuItemObservacaoEmPai = new JMenuItem(Strings.get("label_transformar_observacao_pai"));
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
-	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
 	private JMenuItem menuItemRecortarSFilhos = new JMenuItem(Strings.get("label_recortar_sem_filhos"));
+	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
 	private JMenuItem menuItemComentarioVirar = new JMenuItem(Strings.get("label_virar_comentario"));
 	private JMenuItem menuItemObservacaoVirar = new JMenuItem(Strings.get("label_virar_observacao"));
 	private JMenuItem menuItemMinimizarTodos2 = new JMenuItem(Strings.get("label_minimizar_todos"));
@@ -224,10 +230,28 @@ public class Painel extends JPanel {
 		popupPainel.add(menuItemMaximizarTodos);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharRetangulo);
+		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharFonte);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemLarguraPadao);
 		popupPainel.add(menuItemAlturaPadao);
+		popupPainel.addSeparator();
+
+		JMenu menuAlinhamento = new JMenu(Strings.get("label_alinhamento"));
+		menuAlinhamento.add(menuItemAlinhamentoSuperior);
+		menuAlinhamento.add(menuItemAlinhamentoMeio);
+		menuAlinhamento.add(menuItemAlinhamentoInferior);
+
+		ButtonGroup grupo = new ButtonGroup();
+		grupo.add(menuItemAlinhamentoSuperior);
+		grupo.add(menuItemAlinhamentoInferior);
+		grupo.add(menuItemAlinhamentoMeio);
+
+		menuItemAlinhamentoInferior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ABAIXO);
+		menuItemAlinhamentoSuperior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ACIMA);
+		menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
+
+		popupPainel.add(menuAlinhamento);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemGerarImagem);
 	}
@@ -285,6 +309,9 @@ public class Painel extends JPanel {
 						menuItemDesenharAparencia.setSelected(objeto.isDesenharAparencia());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
+						menuItemAlinhamentoInferior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ABAIXO);
+						menuItemAlinhamentoSuperior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ACIMA);
+						menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
 						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
 						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
@@ -304,6 +331,9 @@ public class Painel extends JPanel {
 						menuItemDesenharAparencia.setSelected(objeto.isDesenharAparencia());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
+						menuItemAlinhamentoInferior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ABAIXO);
+						menuItemAlinhamentoSuperior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ACIMA);
+						menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
 						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
 						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
@@ -524,6 +554,36 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemAlinhamentoSuperior.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (menuItemAlinhamentoSuperior.isSelected()) {
+					Constantes.ALINHAMENTO = Constantes.APARENCIA_ACIMA;
+					reorganizar();
+				}
+			}
+		});
+
+		menuItemAlinhamentoInferior.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (menuItemAlinhamentoInferior.isSelected()) {
+					Constantes.ALINHAMENTO = Constantes.APARENCIA_ABAIXO;
+					reorganizar();
+				}
+			}
+		});
+
+		menuItemAlinhamentoMeio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (menuItemAlinhamentoMeio.isSelected()) {
+					Constantes.ALINHAMENTO = Constantes.APARENCIA_MEIO;
+					reorganizar();
+				}
+			}
+		});
+		
 		menuItemDesenharFonte.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
