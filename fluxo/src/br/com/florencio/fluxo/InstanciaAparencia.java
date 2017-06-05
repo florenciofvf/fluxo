@@ -79,11 +79,13 @@ public class InstanciaAparencia {
 		}
 
 		if (i.selecionado) {
+			g2.setColor(Color.BLACK);
 			Stroke stroke = g2.getStroke();
 			g2.setStroke(Constantes.STROKE);
 			g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
 					l + Constantes.LARGURA_MIN_MAX * 2, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
 			g2.setStroke(stroke);
+			g2.setColor(i.cor);
 		}
 
 		if (i.cor != null) {

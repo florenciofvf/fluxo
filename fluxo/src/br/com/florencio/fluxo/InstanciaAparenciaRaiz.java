@@ -29,6 +29,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		InstanciaRaiz raiz = (InstanciaRaiz) i;
 
 		if (i.selecionado) {
+			g2.setColor(Color.BLACK);
 			Stroke stroke = g2.getStroke();
 			g2.setStroke(Constantes.STROKE);
 			if (raiz.raizEsquerda.estaVazio() ^ raiz.raizDireita.estaVazio()) {
@@ -49,6 +50,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 				}
 			}
 			g2.setStroke(stroke);
+			g2.setColor(i.cor);
 		}
 
 		if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
