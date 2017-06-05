@@ -1548,10 +1548,13 @@ public class Painel extends JPanel {
 		if (!raiz.processado) {
 			return;
 		}
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setStroke(Constantes.STROKE2);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		raiz.desenhar((Graphics2D) g);
+		raiz.desenhar(g2);
 	}
 
 	public String getArquivo() {

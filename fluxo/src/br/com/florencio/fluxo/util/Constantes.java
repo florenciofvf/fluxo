@@ -9,6 +9,7 @@ public class Constantes {
 	}
 
 	public static final Stroke STROKE = new BasicStroke(2.0f);
+	public static final Stroke STROKE2 = new BasicStroke(1.5f);
 	public static final String CODIFICACAO = "iso-8859-1";
 	public static final byte TAMANHO_SINAL_ICONE_COMENTARIO = 4;
 	public static boolean DESENHAR_RETANGULO_PADRAO = false;
