@@ -1,10 +1,14 @@
 package br.com.florencio.fluxo.util;
 
+import java.awt.BasicStroke;
+import java.awt.Stroke;
+
 public class Constantes {
 
 	private Constantes() {
 	}
 
+	public static final Stroke STROKE = new BasicStroke(2.0f);
 	public static final String CODIFICACAO = "iso-8859-1";
 	public static final byte TAMANHO_SINAL_ICONE_COMENTARIO = 4;
 	public static boolean DESENHAR_RETANGULO_PADRAO = false;

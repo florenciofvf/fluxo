@@ -2,6 +2,7 @@ package br.com.florencio.fluxo;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 import br.com.florencio.fluxo.util.Constantes;
 
@@ -28,6 +29,8 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		InstanciaRaiz raiz = (InstanciaRaiz) i;
 
 		if (i.selecionado) {
+			Stroke stroke = g2.getStroke();
+			g2.setStroke(Constantes.STROKE);
 			if (raiz.raizEsquerda.estaVazio() ^ raiz.raizDireita.estaVazio()) {
 				if (raiz.raizEsquerda.estaVazio()) {
 					g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
@@ -45,6 +48,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 							raio);
 				}
 			}
+			g2.setStroke(stroke);
 		}
 
 		if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
