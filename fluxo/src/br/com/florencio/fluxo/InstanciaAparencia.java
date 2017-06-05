@@ -12,7 +12,7 @@ public class InstanciaAparencia {
 		final boolean contemComentario = i.getComentario().length() > 0;
 		final boolean contemObservacao = i.getObservacao().length() > 0;
 		final boolean naoEstaVazio = !i.estaVazio();
-		final byte raio = 8;
+		byte raio = 10;
 
 		g2.setColor(i.cor);
 
@@ -78,16 +78,6 @@ public class InstanciaAparencia {
 			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
 		}
 
-		if (i.selecionado || i.marcado) {
-			g2.setColor(i.marcado ? Color.BLUE : Color.BLACK);
-			Stroke stroke = g2.getStroke();
-			g2.setStroke(Constantes.STROKE);
-			g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
-					l + Constantes.LARGURA_MIN_MAX * 2, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
-			g2.setStroke(stroke);
-			g2.setColor(i.cor);
-		}
-
 		if (i.cor != null) {
 			if (i.desenharAparencia) {
 				g2.fillRoundRect(x, y, l, a, raio, raio);
@@ -137,6 +127,25 @@ public class InstanciaAparencia {
 						Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 			}
 		}
+
+		if (i.selecionado || i.marcado) {
+			raio += 2;
+			g2.setColor(Color.BLUE);
+			Stroke stroke = g2.getStroke();
+			g2.setStroke(Constantes.STROKE);
+			if (naoEstaVazio) {
+				if (i.esquerdo) {
+					g2.drawRoundRect(x - 2 - Constantes.LARGURA_MIN_MAX, y - 2, l + Constantes.LARGURA_MIN_MAX + 4,
+							a + 4, raio, raio);
+				} else {
+					g2.drawRoundRect(x - 2, y - 2, l + Constantes.LARGURA_MIN_MAX + 4, a + 4, raio, raio);
+				}
+			} else {
+				g2.drawRoundRect(x - 2, y - 2, l + 4, a + 4, raio, raio);
+			}
+			g2.setStroke(stroke);
+		}
+
 	}
 
 	public void desenharIcone(Instancia i, Graphics2D g2) {

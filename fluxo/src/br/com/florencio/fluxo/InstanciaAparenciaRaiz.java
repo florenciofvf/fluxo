@@ -11,7 +11,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 	public void desenhar(Instancia i, Graphics2D g2) {
 		final boolean contemComentario = i.getComentario().length() > 0;
 		final boolean contemObservacao = i.getObservacao().length() > 0;
-		final byte raio = 8;
+		byte raio = 10;
 
 		g2.setColor(i.cor);
 
@@ -27,31 +27,6 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		}
 
 		InstanciaRaiz raiz = (InstanciaRaiz) i;
-
-		if (i.selecionado || i.marcado) {
-			g2.setColor(i.marcado ? Color.BLUE : Color.BLACK);
-			Stroke stroke = g2.getStroke();
-			g2.setStroke(Constantes.STROKE);
-			if (raiz.raizEsquerda.estaVazio() ^ raiz.raizDireita.estaVazio()) {
-				if (raiz.raizEsquerda.estaVazio()) {
-					g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
-							l + Constantes.LARGURA_MIN_MAX, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
-				} else {
-					g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX, l + Constantes.LARGURA_MIN_MAX,
-							a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
-				}
-			} else {
-				if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
-					g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,
-							l + Constantes.LARGURA_MIN_MAX * 2, a + Constantes.LARGURA_MIN_MAX * 2, raio, raio);
-				} else {
-					g2.drawRoundRect(x, y - Constantes.LARGURA_MIN_MAX, l, a + Constantes.LARGURA_MIN_MAX * 2, raio,
-							raio);
-				}
-			}
-			g2.setStroke(stroke);
-			g2.setColor(i.cor);
-		}
 
 		if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
 			g2.drawRoundRect(x, y - m, l, l, raioRaiz, raioRaiz);
@@ -190,6 +165,28 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 
 			raiz.raizEsquerda.desenharIcone(g2);
 			raiz.raizDireita.desenharIcone(g2);
+		}
+
+		if (i.selecionado || i.marcado) {
+			raio += 2;
+			g2.setColor(Color.BLUE);
+			Stroke stroke = g2.getStroke();
+			g2.setStroke(Constantes.STROKE);
+			if (raiz.raizEsquerda.estaVazio() ^ raiz.raizDireita.estaVazio()) {
+				if (raiz.raizEsquerda.estaVazio()) {
+					g2.drawRoundRect(x - 2, y - 2, l + 4, a + 4, raio, raio);
+				} else {
+					g2.drawRoundRect(x - 2, y - 2, l + 4, a + 4, raio, raio);
+				}
+			} else {
+				if (raiz.raizEsquerda.estaVazio() && raiz.raizDireita.estaVazio()) {
+					g2.drawRoundRect(x - 2, y - 2, l + 4, a + 4, raio, raio);
+				} else {
+					g2.drawRoundRect(x - 2 - Constantes.LARGURA_MIN_MAX, y - 2, l + Constantes.LARGURA_MIN_MAX * 2 + 4,
+							a + 4, raio, raio);
+				}
+			}
+			g2.setStroke(stroke);
 		}
 	}
 }
