@@ -115,6 +115,7 @@ public class Painel extends JPanel {
 	private JPopupMenu popupPainel = new JPopupMenu();
 	private JPopupMenu popup = new JPopupMenu();
 	private Localizacao localizacao;
+	private Instancia objetoMarcado;
 	private Instancia selecionado;
 	private Formulario formulario;
 	private InstanciaRaiz raiz;
@@ -350,6 +351,11 @@ public class Painel extends JPanel {
 				if (e.getClickCount() == 2 && raiz != null) {
 					Instancia objeto = raiz.procurar(e.getX(), e.getY());
 
+					if (objetoMarcado != null) {
+						objetoMarcado.setMarcado(false);
+						repaint();
+					}
+
 					if (objeto == null) {
 						return;
 					}
@@ -357,6 +363,9 @@ public class Painel extends JPanel {
 					if (objeto.clicadoAreaIcone(e.getX(), e.getY())) {
 						return;
 					}
+
+					objeto.setMarcado(true);
+					objetoMarcado = objeto;
 
 					String descricao = JOptionPane.showInputDialog(formulario, objeto.getDescricao(),
 							objeto.getDescricao());
@@ -583,7 +592,7 @@ public class Painel extends JPanel {
 				}
 			}
 		});
-		
+
 		menuItemDesenharFonte.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1548,9 +1557,9 @@ public class Painel extends JPanel {
 		if (!raiz.processado) {
 			return;
 		}
-		
+
 		Graphics2D g2 = (Graphics2D) g;
-		
+
 		g2.setStroke(Constantes.STROKE2);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 

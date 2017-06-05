@@ -78,8 +78,8 @@ public class InstanciaAparencia {
 			g2.drawRect(i.localizacao.getX(), i.localizacao.getY(), i.dimensao.getLargura(), i.dimensao.getAltura());
 		}
 
-		if (i.selecionado) {
-			g2.setColor(Color.BLACK);
+		if (i.selecionado || i.marcado) {
+			g2.setColor(i.marcado ? Color.BLUE : Color.BLACK);
 			Stroke stroke = g2.getStroke();
 			g2.setStroke(Constantes.STROKE);
 			g2.drawRoundRect(x - Constantes.LARGURA_MIN_MAX, y - Constantes.LARGURA_MIN_MAX,

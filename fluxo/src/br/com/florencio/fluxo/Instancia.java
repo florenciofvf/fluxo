@@ -28,6 +28,7 @@ public class Instancia {
 	boolean iconeMinMaxClicado;
 	public boolean selecionado;
 	int larguraRetanguloTotal;
+	public boolean marcado;
 	int alturaComplementar;
 	List<Instancia> filhos;
 	int margemSuperior;
@@ -935,5 +936,13 @@ public class Instancia {
 
 	public void setMargemInferior(int margemInferior) {
 		this.margemInferior = margemInferior;
+	}
+
+	public boolean isMarcado() {
+		return marcado;
+	}
+
+	public void setMarcado(boolean marcado) {
+		this.marcado = marcado;
 	}
 }
