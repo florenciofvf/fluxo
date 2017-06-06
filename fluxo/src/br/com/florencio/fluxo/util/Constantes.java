@@ -9,11 +9,11 @@ public class Constantes {
 	private Constantes() {
 	}
 
-	public static final Stroke STROKE_SEL = new BasicStroke(1.5f);
+	public static final Stroke STROKE_SELECIONADO = new BasicStroke(3.0f);
+	public static final Stroke STROKE_PADRAO = new BasicStroke(0.1f);
 	public static final Color COR_BORDA_PADRAO = Color.LIGHT_GRAY;
 	public static final Color COR_SELECIONADO_PADRAO = Color.BLUE;
 	public static final byte TAMANHO_SINAL_ICONE_COMENTARIO = 4;
-	public static final Stroke STROKE = new BasicStroke(3.0f);
 	public static final Color COR_FUNDO_PADRAO = Color.WHITE;
 	public static final Color COR_RETAN_PADRAO = Color.BLACK;
 	public static final String CODIFICACAO = "iso-8859-1";

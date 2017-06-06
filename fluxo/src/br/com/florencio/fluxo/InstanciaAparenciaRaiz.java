@@ -173,7 +173,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 		if (i.selecionado || i.marcado) {
 			raio += 2;
 			Stroke stroke = g2.getStroke();
-			g2.setStroke(Constantes.STROKE);
+			g2.setStroke(Constantes.STROKE_SELECIONADO);
 			g2.setColor(Constantes.COR_SELECIONADO);
 			if (raiz.raizEsquerda.estaVazio() ^ raiz.raizDireita.estaVazio()) {
 				if (raiz.raizEsquerda.estaVazio()) {

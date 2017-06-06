@@ -1396,7 +1396,7 @@ public class Painel extends JPanel {
 				}
 
 				JColorChooser colorChooser = new JColorChooser(Constantes.COR_SELECIONADO);
-				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionado"), true,
 						colorChooser, new OK(colorChooser), null);
 				dialog.setVisible(true);
 			}
@@ -1422,7 +1422,7 @@ public class Painel extends JPanel {
 				}
 
 				JColorChooser colorChooser = new JColorChooser(Constantes.COR_LIMITE);
-				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_limite"), true,
 						colorChooser, new OK(colorChooser), null);
 				dialog.setVisible(true);
 			}
@@ -1448,7 +1448,7 @@ public class Painel extends JPanel {
 				}
 
 				JColorChooser colorChooser = new JColorChooser(Constantes.COR_FUNDO);
-				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_fundo"), true,
 						colorChooser, new OK(colorChooser), null);
 				dialog.setVisible(true);
 			}
@@ -1676,7 +1676,7 @@ public class Painel extends JPanel {
 
 		Graphics2D g2 = (Graphics2D) g;
 
-		g2.setStroke(Constantes.STROKE_SEL);
+		g2.setStroke(Constantes.STROKE_PADRAO);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		raiz.desenhar(g2, g2.getColor());
