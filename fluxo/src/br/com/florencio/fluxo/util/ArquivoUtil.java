@@ -29,7 +29,7 @@ public class ArquivoUtil {
 	public static void salvarArquivo(InstanciaRaiz raiz, File file) throws Exception {
 		PrintWriter pw = new PrintWriter(file, Constantes.CODIFICACAO);
 		gravarPrologo(pw);
-		inicioTag("", raiz, pw, false, true, true, true, true);
+		inicioTagPrincipal("", raiz, pw);
 		if (!raiz.getRaizEsquerda().estaVazio()) {
 			raiz.getRaizEsquerda().imprimir("\t", pw, true);
 		}
@@ -61,33 +61,71 @@ public class ArquivoUtil {
 		return m.raiz;
 	}
 
-	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado) {
-		inicioTag(tab, i, pw, salvarLado, false, false, false, false);
+	public static void inicioTagPrincipal(String tab, Instancia i, PrintWriter pw) {
+		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
+
+		pw.print(" alinhamento=" + citar("" + Constantes.ALINHAMENTO));
+		pw.print(" desenharFonte=" + citar("" + Constantes.DESENHAR_FONTE));
+		pw.print(" alturaPadrao=" + citar("" + Constantes.RETANGULO_ALTURA_PADRAO));
+		pw.print(" larguraPadrao=" + citar("" + Constantes.LARGURA_PADRAO));
+
+		if (i.getCor() != null) {
+			pw.print(" cor=" + citar("" + i.getCor().getRGB()));
+		}
+
+		if (i.isMinimizado()) {
+			pw.print(" minimizado=" + citar("true"));
+		}
+
+		if (i.getAlturaComplementar() != 0) {
+			pw.print(" alturaComplementar=" + citar("" + i.getAlturaComplementar()));
+		}
+
+		if (i.isDesenharRetanguloTotal()) {
+			pw.print(" desenharRetanguloTotal=" + citar("true"));
+			pw.print(" larguraRetanguloTotal=" + citar("" + i.getLarguraRetanguloTotal()));
+		}
+
+		if (i.isDesenharComentario()) {
+			pw.print(" desenharComentario=" + citar("true"));
+		}
+
+		if (!i.isDesenharAparencia()) {
+			pw.print(" desenharAparencia=" + citar("false"));
+		}
+
+		if (i.getComentario().length() > 0) {
+			pw.print(" comentario=" + citar(Util.escaparString(i.getComentario())));
+		}
+
+		if (i.isDesenharObservacao()) {
+			pw.print(" desenharObservacao=" + citar("true"));
+		}
+
+		if (i.getObservacao().length() > 0) {
+			pw.print(" observacao=" + citar(Util.escaparString(i.getObservacao())));
+		}
+
+		if (i.getMargemSuperior() > 0) {
+			pw.print(" margemSuperior=" + citar("" + i.getMargemSuperior()));
+		}
+
+		if (i.getMargemInferior() > 0) {
+			pw.print(" margemInferior=" + citar("" + i.getMargemInferior()));
+		}
+
+		if (i.estaVazio()) {
+			pw.println("/>");
+		} else {
+			pw.println(">");
+		}
 	}
 
-	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado,
-			boolean salvarAlturaPadrao, boolean salvarLarguraPadrao, boolean salvarDesenharFonte,
-			boolean salvarAlinhamento) {
+	public static void inicioTag(String tab, Instancia i, PrintWriter pw, boolean salvarLado) {
 		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
 		if (salvarLado) {
 			pw.print(" esquerdo=" + citar("" + i.isEsquerdo()));
-		}
-
-		if (salvarAlinhamento) {
-			pw.print(" alinhamento=" + citar("" + Constantes.ALINHAMENTO));
-		}
-
-		if (salvarDesenharFonte) {
-			pw.print(" desenharFonte=" + citar("" + Constantes.DESENHAR_FONTE));
-		}
-
-		if (salvarAlturaPadrao) {
-			pw.print(" alturaPadrao=" + citar("" + Constantes.RETANGULO_ALTURA_PADRAO));
-		}
-
-		if (salvarLarguraPadrao) {
-			pw.print(" larguraPadrao=" + citar("" + Constantes.LARGURA_PADRAO));
 		}
 
 		if (i.getCor() != null) {
