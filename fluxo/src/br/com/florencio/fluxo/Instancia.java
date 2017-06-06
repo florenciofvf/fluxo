@@ -679,14 +679,8 @@ public class Instancia {
 		return (x >= X && x <= X + Constantes.LARGURA_MIN_MAX) && (y >= Y && y <= Y + A);
 	}
 
-	public void desenhar(Graphics2D g2) {
-		Color cor = g2.getColor();
+	public void desenhar(Graphics2D g2, Color corPadrao) {
 		aparencia.desenhar(this, g2);
-		g2.setColor(cor);
-
-		if (braco) {
-			cor = pai.cor;
-		}
 
 		if (!minimizado) {
 			if (desenharAparencia) {
@@ -696,7 +690,8 @@ public class Instancia {
 			}
 
 			for (Instancia i : filhos) {
-				i.desenhar(g2);
+				g2.setColor(corPadrao);
+				i.desenhar(g2, corPadrao);
 			}
 		}
 	}

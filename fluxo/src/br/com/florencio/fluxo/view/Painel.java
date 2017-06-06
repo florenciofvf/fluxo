@@ -1428,7 +1428,7 @@ public class Painel extends JPanel {
 						g2.setColor(Color.LIGHT_GRAY);
 						g2.setFont(getFont());
 
-						raiz.desenhar(g2);
+						raiz.desenhar(g2, g2.getColor());
 
 						try {
 							ImageIO.write(bi, "png", file);
@@ -1563,7 +1563,7 @@ public class Painel extends JPanel {
 		g2.setStroke(Constantes.STROKE2);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		raiz.desenhar(g2);
+		raiz.desenhar(g2, g2.getColor());
 	}
 
 	public String getArquivo() {

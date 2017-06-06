@@ -188,5 +188,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 			}
 			g2.setStroke(stroke);
 		}
+
+		g2.setColor(i.cor);
 	}
 }

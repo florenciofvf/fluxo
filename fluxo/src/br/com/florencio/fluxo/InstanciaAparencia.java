@@ -146,6 +146,7 @@ public class InstanciaAparencia {
 			g2.setStroke(stroke);
 		}
 
+		g2.setColor(i.cor);
 	}
 
 	public void desenharIcone(Instancia i, Graphics2D g2) {
