@@ -55,14 +55,13 @@ public class Painel extends JPanel {
 			Strings.get("label_desenhar_comentario"));
 	private JCheckBoxMenuItem menuItemDesenharAparencia = new JCheckBoxMenuItem(
 			Strings.get("label_desenhar_aparencia"));
-	private JCheckBoxMenuItem menuItemDesenharRetangulo = new JCheckBoxMenuItem(
-			Strings.get("label_desenhar_retangulo"));
 	private JRadioButtonMenuItem menuItemAlinhamentoSuperior = new JRadioButtonMenuItem(Strings.get("label_superior"));
 	private JRadioButtonMenuItem menuItemAlinhamentoInferior = new JRadioButtonMenuItem(Strings.get("label_inferior"));
-	private JCheckBoxMenuItem menuItemDesenharRetanguloTotal = new JCheckBoxMenuItem(Strings.get("label_destacar"));
 	private JMenuItem menuItemComentarioEmFilho = new JMenuItem(Strings.get("label_transformar_comentario_filho"));
 	private JMenuItem menuItemObservacaoEmFilho = new JMenuItem(Strings.get("label_transformar_observacao_filho"));
+	private JCheckBoxMenuItem menuItemDesenharLimite = new JCheckBoxMenuItem(Strings.get("label_desenhar_limite"));
 	private JCheckBoxMenuItem menuItemDesenharFonte = new JCheckBoxMenuItem(Strings.get("label_desenhar_fonte"));
+	private JCheckBoxMenuItem menuItemDesenharDestacado = new JCheckBoxMenuItem(Strings.get("label_destacar"));
 	private JRadioButtonMenuItem menuItemAlinhamentoMeio = new JRadioButtonMenuItem(Strings.get("label_meio"));
 	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
 	private JMenuItem menuItemObservacaoEmPai = new JMenuItem(Strings.get("label_transformar_observacao_pai"));
@@ -87,6 +86,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemSelecionarCor = new JMenuItem(Strings.get("label_selecionar_cor"));
 	private JMenuItem menuItemLarguraPadao = new JMenuItem(Strings.get("label_largura_padrao"));
 	private JMenuItem menuItemExcluirAcima = new JMenuItem(Strings.get("label_excluir_acima"));
+	private JMenuItem menuItemCorSelecionado = new JMenuItem(Strings.get("label_selecionado"));
 	private JMenuItem menuItemAlturaPadao = new JMenuItem(Strings.get("label_altura_padrao"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
 	private JMenuItem menuItemComplemento = new JMenuItem(Strings.get("label_complemento"));
@@ -94,11 +94,14 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
 	private JMenuItem menuItemColar = new JMenuItem(Strings.get("label_colar_filho"));
+	private JMenuItem menuItemCorLimite = new JMenuItem(Strings.get("label_limite"));
 	private JMenuItem menuItemCopiarCor = new JMenuItem(Strings.get("label_copiar"));
 	private JMenuItem menuItemAmarelo = new JMenuItem(Strings.get("label_amarelo"));
 	private JMenuItem menuItemLaranja = new JMenuItem(Strings.get("label_laranja"));
 	private JMenuItem menuItemNovoFilho = new JMenuItem(Strings.get("label_filho"));
+	private JMenuItem menuItemCorFundo = new JMenuItem(Strings.get("label_fundo"));
 	private JMenuItem menuItemColarCor = new JMenuItem(Strings.get("label_colar"));
+	private JMenuItem menuItemCorBorda = new JMenuItem(Strings.get("label_borda"));
 	private JMenuItem menuItemRecortar = new JMenuItem(Strings.get("label_este"));
 	private JMenuItem menuItemPadrao = new JMenuItem(Strings.get("label_padrao"));
 	private JMenuItem menuItemUltimo = new JMenuItem(Strings.get("label_ultimo"));
@@ -126,6 +129,7 @@ public class Painel extends JPanel {
 
 	public Painel(Formulario formulario, InstanciaRaiz raiz) {
 		this.formulario = formulario;
+		setBackground(Constantes.COR_FUNDO);
 		this.raiz = raiz;
 		montarPopups();
 		registrarEventos();
@@ -224,13 +228,13 @@ public class Painel extends JPanel {
 		popup.addSeparator();
 		popup.add(menuItemInfo);
 		popup.addSeparator();
-		popup.add(menuItemDesenharRetanguloTotal);
+		popup.add(menuItemDesenharDestacado);
 		popup.add(menuItemDesenharAparencia);
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
 		popupPainel.addSeparator();
-		popupPainel.add(menuItemDesenharRetangulo);
+		popupPainel.add(menuItemDesenharLimite);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharFonte);
 		popupPainel.addSeparator();
@@ -255,6 +259,14 @@ public class Painel extends JPanel {
 		popupPainel.add(menuAlinhamento);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemGerarImagem);
+
+		popupPainel.addSeparator();
+		JMenu menuCores = new JMenu(Strings.get("label_cor"));
+		menuCores.add(menuItemCorSelecionado);
+		menuCores.add(menuItemCorLimite);
+		menuCores.add(menuItemCorFundo);
+		menuCores.add(menuItemCorBorda);
+		popupPainel.add(menuCores);
 	}
 
 	public void reorganizar() {
@@ -304,16 +316,16 @@ public class Painel extends JPanel {
 					localizacao = new Localizacao(e.getX(), e.getY());
 					Instancia objeto = procurar();
 					if (objeto != null) {
-						menuItemDesenharRetanguloTotal.setSelected(objeto.isDesenharRetanguloTotal());
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						menuItemDesenharObservacao.setSelected(objeto.isDesenharObservacao());
 						menuItemDesenharAparencia.setSelected(objeto.isDesenharAparencia());
+						menuItemDesenharDestacado.setSelected(objeto.isDesenharDestacado());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
 						menuItemAlinhamentoInferior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ABAIXO);
 						menuItemAlinhamentoSuperior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ACIMA);
 						menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
-						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
+						menuItemDesenharLimite.setSelected(Constantes.DESENHAR_LIMITE);
 						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
@@ -326,16 +338,16 @@ public class Painel extends JPanel {
 					localizacao = new Localizacao(e.getX(), e.getY());
 					Instancia objeto = procurar();
 					if (objeto != null) {
-						menuItemDesenharRetanguloTotal.setSelected(objeto.isDesenharRetanguloTotal());
 						menuItemDesenharComentario.setSelected(objeto.isDesenharComentario());
 						menuItemDesenharObservacao.setSelected(objeto.isDesenharObservacao());
 						menuItemDesenharAparencia.setSelected(objeto.isDesenharAparencia());
+						menuItemDesenharDestacado.setSelected(objeto.isDesenharDestacado());
 						popup.show(Painel.this, e.getX(), e.getY());
 					} else {
 						menuItemAlinhamentoInferior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ABAIXO);
 						menuItemAlinhamentoSuperior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ACIMA);
 						menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
-						menuItemDesenharRetangulo.setSelected(Constantes.DESENHAR_RETANGULO_PADRAO);
+						menuItemDesenharLimite.setSelected(Constantes.DESENHAR_LIMITE);
 						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
@@ -494,7 +506,7 @@ public class Painel extends JPanel {
 			}
 		});
 
-		menuItemDesenharRetanguloTotal.addActionListener(new ActionListener() {
+		menuItemDesenharDestacado.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Instancia objeto = procurar();
@@ -503,9 +515,9 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				objeto.setDesenharRetanguloTotal(menuItemDesenharRetanguloTotal.isSelected());
+				objeto.setDesenharDestacado(menuItemDesenharDestacado.isSelected());
 
-				if (objeto.isDesenharRetanguloTotal()) {
+				if (objeto.isDesenharDestacado()) {
 					objeto.calcularLarguraTotal();
 				}
 
@@ -555,10 +567,10 @@ public class Painel extends JPanel {
 			}
 		});
 
-		menuItemDesenharRetangulo.addActionListener(new ActionListener() {
+		menuItemDesenharLimite.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Constantes.DESENHAR_RETANGULO_PADRAO = menuItemDesenharRetangulo.isSelected();
+				Constantes.DESENHAR_LIMITE = menuItemDesenharLimite.isSelected();
 				repaint();
 			}
 		});
@@ -915,7 +927,7 @@ public class Painel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String valor = JOptionPane.showInputDialog(formulario, Strings.get("label_altura_padrao"),
-						Constantes.RETANGULO_ALTURA_PADRAO);
+						Constantes.ALTURA_PADRAO);
 
 				if (Util.estaVazio(valor)) {
 					return;
@@ -924,7 +936,7 @@ public class Painel extends JPanel {
 				try {
 					int alturaPadrao = Integer.parseInt(valor);
 					if (alturaPadrao > Constantes.APARENCIA_ALTURA_PADRAO) {
-						Constantes.RETANGULO_ALTURA_PADRAO = alturaPadrao;
+						Constantes.ALTURA_PADRAO = alturaPadrao;
 						reorganizar();
 					}
 				} catch (Exception ex) {
@@ -1365,6 +1377,109 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemCorSelecionado.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				class OK implements ActionListener {
+					JColorChooser chooser;
+
+					public OK(JColorChooser c) {
+						chooser = c;
+					}
+
+					public void actionPerformed(ActionEvent e) {
+						Color cor = chooser.getColor();
+						if (cor != null) {
+							Constantes.COR_SELECIONADO = cor;
+						}
+					}
+				}
+
+				JColorChooser colorChooser = new JColorChooser(Constantes.COR_SELECIONADO);
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+						colorChooser, new OK(colorChooser), null);
+				dialog.setVisible(true);
+			}
+		});
+
+		menuItemCorLimite.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				class OK implements ActionListener {
+					JColorChooser chooser;
+
+					public OK(JColorChooser c) {
+						chooser = c;
+					}
+
+					public void actionPerformed(ActionEvent e) {
+						Color cor = chooser.getColor();
+						if (cor != null) {
+							Constantes.COR_LIMITE = cor;
+							repaint();
+						}
+					}
+				}
+
+				JColorChooser colorChooser = new JColorChooser(Constantes.COR_LIMITE);
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+						colorChooser, new OK(colorChooser), null);
+				dialog.setVisible(true);
+			}
+		});
+
+		menuItemCorFundo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				class OK implements ActionListener {
+					JColorChooser chooser;
+
+					public OK(JColorChooser c) {
+						chooser = c;
+					}
+
+					public void actionPerformed(ActionEvent e) {
+						Color cor = chooser.getColor();
+						if (cor != null) {
+							Constantes.COR_FUNDO = cor;
+							setBackground(Constantes.COR_FUNDO);
+						}
+					}
+				}
+
+				JColorChooser colorChooser = new JColorChooser(Constantes.COR_FUNDO);
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+						colorChooser, new OK(colorChooser), null);
+				dialog.setVisible(true);
+			}
+		});
+
+		menuItemCorBorda.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				class OK implements ActionListener {
+					JColorChooser chooser;
+
+					public OK(JColorChooser c) {
+						chooser = c;
+					}
+
+					public void actionPerformed(ActionEvent e) {
+						Color cor = chooser.getColor();
+						if (cor != null) {
+							Constantes.COR_BORDA = cor;
+							repaint();
+						}
+					}
+				}
+
+				JColorChooser colorChooser = new JColorChooser(Constantes.COR_BORDA);
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_selecionar_cor"), true,
+						colorChooser, new OK(colorChooser), null);
+				dialog.setVisible(true);
+			}
+		});
+
 		menuItemMinimizarTodos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1423,9 +1538,9 @@ public class Painel extends JPanel {
 
 						Graphics2D g2 = bi.createGraphics();
 						g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-						g2.setColor(Color.WHITE);
+						g2.setColor(Constantes.COR_FUNDO);
 						g2.fillRect(0, 0, getWidth(), getHeight());
-						g2.setColor(Color.LIGHT_GRAY);
+						g2.setColor(Constantes.COR_BORDA);
 						g2.setFont(getFont());
 
 						raiz.desenhar(g2, g2.getColor());
@@ -1523,6 +1638,7 @@ public class Painel extends JPanel {
 			}
 
 			raiz = ArquivoUtil.lerArquivo(file);
+			setBackground(Constantes.COR_FUNDO);
 			reorganizar();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(formulario, e.getMessage());
@@ -1560,7 +1676,7 @@ public class Painel extends JPanel {
 
 		Graphics2D g2 = (Graphics2D) g;
 
-		g2.setStroke(Constantes.STROKE2);
+		g2.setStroke(Constantes.STROKE_SEL);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		raiz.desenhar(g2, g2.getColor());

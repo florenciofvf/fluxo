@@ -21,12 +21,12 @@ public class Instancia {
 	final Localizacao localizacao = new Localizacao(0, 0);
 	final Dimensao dimensao = new Dimensao(0, 0);
 	boolean desenharAparencia = true;
-	boolean desenharRetanguloTotal;
 	InstanciaAparencia aparencia;
 	boolean desenharObservacao;
 	boolean desenharComentario;
 	boolean iconeMinMaxClicado;
 	public boolean selecionado;
+	boolean desenharDestacado;
 	int larguraRetanguloTotal;
 	public boolean marcado;
 	int alturaComplementar;
@@ -379,7 +379,7 @@ public class Instancia {
 		}
 
 		if (altura == 0) {
-			altura = Constantes.RETANGULO_ALTURA_PADRAO;
+			altura = Constantes.ALTURA_PADRAO;
 		}
 
 		altura += alturaComplementar;
@@ -834,12 +834,12 @@ public class Instancia {
 		this.desenharObservacao = desenharObservacao;
 	}
 
-	public boolean isDesenharRetanguloTotal() {
-		return desenharRetanguloTotal;
+	public boolean isDesenharDestacado() {
+		return desenharDestacado;
 	}
 
-	public void setDesenharRetanguloTotal(boolean desenharRetanguloTotal) {
-		this.desenharRetanguloTotal = desenharRetanguloTotal;
+	public void setDesenharDestacado(boolean desenharDestacado) {
+		this.desenharDestacado = desenharDestacado;
 	}
 
 	public Instancia getPonta() {

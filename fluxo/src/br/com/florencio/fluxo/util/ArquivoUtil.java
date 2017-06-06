@@ -64,10 +64,14 @@ public class ArquivoUtil {
 	public static void inicioTagPrincipal(String tab, Instancia i, PrintWriter pw) {
 		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
-		pw.print(" alinhamento=" + citar("" + Constantes.ALINHAMENTO));
+		pw.print(" corSelecionado=" + citar("" + Constantes.COR_SELECIONADO.getRGB()));
+		pw.print(" corLimite=" + citar("" + Constantes.COR_LIMITE.getRGB()));
 		pw.print(" desenharFonte=" + citar("" + Constantes.DESENHAR_FONTE));
-		pw.print(" alturaPadrao=" + citar("" + Constantes.RETANGULO_ALTURA_PADRAO));
 		pw.print(" larguraPadrao=" + citar("" + Constantes.LARGURA_PADRAO));
+		pw.print(" corFundo=" + citar("" + Constantes.COR_FUNDO.getRGB()));
+		pw.print(" corBorda=" + citar("" + Constantes.COR_BORDA.getRGB()));
+		pw.print(" alturaPadrao=" + citar("" + Constantes.ALTURA_PADRAO));
+		pw.print(" alinhamento=" + citar("" + Constantes.ALINHAMENTO));
 
 		if (i.getCor() != null) {
 			pw.print(" cor=" + citar("" + i.getCor().getRGB()));
@@ -81,8 +85,8 @@ public class ArquivoUtil {
 			pw.print(" alturaComplementar=" + citar("" + i.getAlturaComplementar()));
 		}
 
-		if (i.isDesenharRetanguloTotal()) {
-			pw.print(" desenharRetanguloTotal=" + citar("true"));
+		if (i.isDesenharDestacado()) {
+			pw.print(" desenharDestacado=" + citar("true"));
 			pw.print(" larguraRetanguloTotal=" + citar("" + i.getLarguraRetanguloTotal()));
 		}
 
@@ -140,8 +144,8 @@ public class ArquivoUtil {
 			pw.print(" alturaComplementar=" + citar("" + i.getAlturaComplementar()));
 		}
 
-		if (i.isDesenharRetanguloTotal()) {
-			pw.print(" desenharRetanguloTotal=" + citar("true"));
+		if (i.isDesenharDestacado()) {
+			pw.print(" desenharDestacado=" + citar("true"));
 			pw.print(" larguraRetanguloTotal=" + citar("" + i.getLarguraRetanguloTotal()));
 		}
 
@@ -195,21 +199,17 @@ public class ArquivoUtil {
 				throws SAXException {
 			Instancia instancia = new Instancia(attributes.getValue("nome"));
 
-			String minimizado = attributes.getValue("minimizado");
-			instancia.setMinimizado(Boolean.parseBoolean(minimizado));
+			instancia.setDesenharComentario(Boolean.parseBoolean(attributes.getValue("desenharComentario")));
+			instancia.setDesenharObservacao(Boolean.parseBoolean(attributes.getValue("desenharObservacao")));
+			instancia.setDesenharDestacado(Boolean.parseBoolean(attributes.getValue("desenharDestacado")));
+			instancia.setMinimizado(Boolean.parseBoolean(attributes.getValue("minimizado")));
+			instancia.setEsquerdo(Boolean.parseBoolean(attributes.getValue("esquerdo")));
+			instancia.setComentario(attributes.getValue("comentario"));
+			instancia.setObservacao(attributes.getValue("observacao"));
 
-			String esquerdo = attributes.getValue("esquerdo");
-			instancia.setEsquerdo(Boolean.parseBoolean(esquerdo));
-
-			String desenharRetanguloTotal = attributes.getValue("desenharRetanguloTotal");
-			instancia.setDesenharRetanguloTotal(Boolean.parseBoolean(desenharRetanguloTotal));
-			String larguraRetanguloTotal = attributes.getValue("larguraRetanguloTotal");
-			if (!Util.estaVazio(larguraRetanguloTotal)) {
-				instancia.setLarguraRetanguloTotal(Integer.parseInt(larguraRetanguloTotal));
+			if (!Util.estaVazio(attributes.getValue("larguraRetanguloTotal"))) {
+				instancia.setLarguraRetanguloTotal(Integer.parseInt(attributes.getValue("larguraRetanguloTotal")));
 			}
-
-			String desenharComentario = attributes.getValue("desenharComentario");
-			instancia.setDesenharComentario(Boolean.parseBoolean(desenharComentario));
 
 			String desenharAparencia = attributes.getValue("desenharAparencia");
 			if (desenharAparencia == null || desenharAparencia.length() == 0) {
@@ -217,56 +217,58 @@ public class ArquivoUtil {
 			}
 			instancia.setDesenharAparencia(Boolean.parseBoolean(desenharAparencia));
 
-			String desenharObservacao = attributes.getValue("desenharObservacao");
-			instancia.setDesenharObservacao(Boolean.parseBoolean(desenharObservacao));
-
-			String cor = attributes.getValue("cor");
-			if (!Util.estaVazio(cor)) {
-				instancia.setCor(new Color(Integer.parseInt(cor)));
+			if (!Util.estaVazio(attributes.getValue("cor"))) {
+				instancia.setCor(new Color(Integer.parseInt(attributes.getValue("cor"))));
 			}
 
-			String alturaComplementar = attributes.getValue("alturaComplementar");
-			if (!Util.estaVazio(alturaComplementar)) {
-				instancia.setAlturaComplementar(Integer.parseInt(alturaComplementar));
+			if (!Util.estaVazio(attributes.getValue("alturaComplementar"))) {
+				instancia.setAlturaComplementar(Integer.parseInt(attributes.getValue("alturaComplementar")));
 			}
 
-			String margemSuperior = attributes.getValue("margemSuperior");
-			if (!Util.estaVazio(margemSuperior)) {
-				instancia.setMargemSuperior(Integer.parseInt(margemSuperior));
+			if (!Util.estaVazio(attributes.getValue("margemSuperior"))) {
+				instancia.setMargemSuperior(Integer.parseInt(attributes.getValue("margemSuperior")));
 			}
 
-			String margemInferior = attributes.getValue("margemInferior");
-			if (!Util.estaVazio(margemInferior)) {
-				instancia.setMargemInferior(Integer.parseInt(margemInferior));
+			if (!Util.estaVazio(attributes.getValue("margemInferior"))) {
+				instancia.setMargemInferior(Integer.parseInt(attributes.getValue("margemInferior")));
 			}
-
-			String comentario = attributes.getValue("comentario");
-			instancia.setComentario(comentario);
-
-			String observacao = attributes.getValue("observacao");
-			instancia.setObservacao(observacao);
 
 			if (raiz == null) {
 				Constantes.DESENHAR_FONTE = Boolean.parseBoolean(attributes.getValue("desenharFonte"));
-
-				String alturaPadrao = attributes.getValue("alturaPadrao");
-
-				if (!Util.estaVazio(alturaPadrao)) {
-					Constantes.RETANGULO_ALTURA_PADRAO = Integer.parseInt(alturaPadrao);
-				} else {
-					Constantes.RETANGULO_ALTURA_PADRAO = Constantes.ALTURA_PADRAO_RETANGULO;
-				}
-
-				Constantes.LARGURA_PADRAO = 0;
-				String larguraPadrao = attributes.getValue("larguraPadrao");
-				if (!Util.estaVazio(larguraPadrao)) {
-					Constantes.LARGURA_PADRAO = Integer.parseInt(larguraPadrao);
-				}
-
+				Constantes.COR_SELECIONADO = Constantes.COR_SELECIONADO_PADRAO;
+				Constantes.ALTURA_PADRAO = Constantes.ALTURA_PADRAO_RETANGULO;
+				Constantes.COR_LIMITE = Constantes.COR_RETAN_PADRAO;
+				Constantes.COR_FUNDO = Constantes.COR_FUNDO_PADRAO;
+				Constantes.COR_BORDA = Constantes.COR_BORDA_PADRAO;
 				Constantes.ALINHAMENTO = Constantes.APARENCIA_MEIO;
-				String alinhamento = attributes.getValue("alinhamento");
-				if (!Util.estaVazio(alinhamento)) {
-					Constantes.ALINHAMENTO = Byte.parseByte(alinhamento);
+				Constantes.LARGURA_PADRAO = 0;
+
+				if (!Util.estaVazio(attributes.getValue("corSelecionado"))) {
+					Constantes.COR_SELECIONADO = new Color(Integer.parseInt(attributes.getValue("corSelecionado")));
+				}
+
+				if (!Util.estaVazio(attributes.getValue("corLimite"))) {
+					Constantes.COR_LIMITE = new Color(Integer.parseInt(attributes.getValue("corLimite")));
+				}
+
+				if (!Util.estaVazio(attributes.getValue("corFundo"))) {
+					Constantes.COR_FUNDO = new Color(Integer.parseInt(attributes.getValue("corFundo")));
+				}
+
+				if (!Util.estaVazio(attributes.getValue("corBorda"))) {
+					Constantes.COR_BORDA = new Color(Integer.parseInt(attributes.getValue("corBorda")));
+				}
+
+				if (!Util.estaVazio(attributes.getValue("larguraPadrao"))) {
+					Constantes.LARGURA_PADRAO = Integer.parseInt(attributes.getValue("larguraPadrao"));
+				}
+
+				if (!Util.estaVazio(attributes.getValue("alturaPadrao"))) {
+					Constantes.ALTURA_PADRAO = Integer.parseInt(attributes.getValue("alturaPadrao"));
+				}
+
+				if (!Util.estaVazio(attributes.getValue("alinhamento"))) {
+					Constantes.ALINHAMENTO = Byte.parseByte(attributes.getValue("alinhamento"));
 				}
 
 				Constantes.USAR_LARGURA_PADRAO = Constantes.LARGURA_PADRAO > 0;
@@ -275,10 +277,10 @@ public class ArquivoUtil {
 				}
 
 				raiz = new InstanciaRaiz(instancia.getDescricao());
-				raiz.setDesenharRetanguloTotal(instancia.isDesenharRetanguloTotal());
 				raiz.setAlturaComplementar(instancia.getAlturaComplementar());
 				raiz.setDesenharComentario(instancia.isDesenharComentario());
 				raiz.setDesenharObservacao(instancia.isDesenharObservacao());
+				raiz.setDesenharDestacado(instancia.isDesenharDestacado());
 				raiz.setDesenharAparencia(instancia.isDesenharAparencia());
 				raiz.setMargemSuperior(instancia.getMargemSuperior());
 				raiz.setMargemInferior(instancia.getMargemInferior());

@@ -382,10 +382,10 @@ public class InstanciaRaiz extends Instancia {
 	}
 
 	@Override
-	public void setDesenharRetanguloTotal(boolean desenharRetanguloTotal) {
-		super.setDesenharRetanguloTotal(desenharRetanguloTotal);
-		raizEsquerda.setDesenharRetanguloTotal(desenharRetanguloTotal);
-		raizDireita.setDesenharRetanguloTotal(desenharRetanguloTotal);
+	public void setDesenharDestacado(boolean desenharDestacado) {
+		super.setDesenharDestacado(desenharDestacado);
+		raizEsquerda.setDesenharDestacado(desenharDestacado);
+		raizDireita.setDesenharDestacado(desenharDestacado);
 	}
 
 	@Override
