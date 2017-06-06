@@ -28,7 +28,7 @@ public class InstanciaAparencia {
 							i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio,
 							raio);
 
-					g2.setColor(Color.BLACK);
+					g2.setColor(Color.LIGHT_GRAY);
 					g2.drawRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l),
 							i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio,
 							raio);
@@ -36,7 +36,7 @@ public class InstanciaAparencia {
 				} else {
 					g2.fillRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior,
 							i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
-					g2.setColor(Color.BLACK);
+					g2.setColor(Color.LIGHT_GRAY);
 					g2.drawRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior,
 							i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
 				}
@@ -53,13 +53,13 @@ public class InstanciaAparencia {
 			if (i.esquerdo) {
 				g2.fillRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l),
 						i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
-				g2.setColor(Color.BLACK);
+				g2.setColor(Color.LIGHT_GRAY);
 				g2.drawRoundRect(i.localizacao.getX() - (i.larguraRetanguloTotal - l),
 						i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal, dimensaoAltura, raio, raio);
 			} else {
 				g2.fillRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal,
 						dimensaoAltura, raio, raio);
-				g2.setColor(Color.BLACK);
+				g2.setColor(Color.LIGHT_GRAY);
 				g2.drawRoundRect(i.localizacao.getX(), i.localizacao.getY() + i.margemSuperior, i.larguraRetanguloTotal,
 						dimensaoAltura, raio, raio);
 			}
@@ -81,7 +81,7 @@ public class InstanciaAparencia {
 		if (i.cor != null) {
 			if (i.desenharAparencia) {
 				g2.fillRoundRect(x, y, l, a, raio, raio);
-				g2.setColor(Color.BLACK);
+				g2.setColor(Color.LIGHT_GRAY);
 				g2.drawRoundRect(x, y, l, a, raio, raio);
 				g2.setColor(i.cor);
 				desenharIcone(i, g2);
@@ -108,7 +108,7 @@ public class InstanciaAparencia {
 				g2.drawString(i.observacao, x + 3, y - 2);
 			} else {
 				if (i.cor != null) {
-					g2.setColor(Color.BLACK);
+					g2.setColor(Color.LIGHT_GRAY);
 				}
 				g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
 			}
@@ -121,7 +121,7 @@ public class InstanciaAparencia {
 				g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
 			} else {
 				if (i.cor != null) {
-					g2.setColor(Color.BLACK);
+					g2.setColor(Color.LIGHT_GRAY);
 				}
 				g2.fillRect(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 						Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
@@ -208,7 +208,7 @@ public class InstanciaAparencia {
 	protected void iconeLadoDireito(Graphics2D g2, int x, int y, int l, final boolean colorido) {
 		if (colorido) {
 			g2.fillOval(x + l, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.LIGHT_GRAY);
 		}
 		g2.drawOval(x + l, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX, Constantes.LARGURA_MIN_MAX);
 	}
@@ -217,7 +217,7 @@ public class InstanciaAparencia {
 		if (colorido) {
 			g2.fillOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX,
 					Constantes.LARGURA_MIN_MAX);
-			g2.setColor(Color.BLACK);
+			g2.setColor(Color.LIGHT_GRAY);
 		}
 		g2.drawOval(x - Constantes.LARGURA_MIN_MAX, y + Constantes.MARGEM_MIN_MAX, Constantes.LARGURA_MIN_MAX,
 				Constantes.LARGURA_MIN_MAX);
