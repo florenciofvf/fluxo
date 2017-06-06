@@ -1,5 +1,6 @@
 package br.com.florencio.fluxo.util;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.File;
 import java.io.PrintWriter;
@@ -64,6 +65,8 @@ public class ArquivoUtil {
 	public static void inicioTagPrincipal(String tab, Instancia i, PrintWriter pw) {
 		pw.print(tab + "<instancia nome=" + citar(Util.escaparString(i.getDescricao())));
 
+		pw.print(" linhaSelecionado=" + citar("" + ((BasicStroke) Constantes.STROKE_SELECIONADO).getLineWidth()));
+		pw.print(" linhaBorda=" + citar("" + ((BasicStroke) Constantes.STROKE_PADRAO).getLineWidth()));
 		pw.print(" corSelecionado=" + citar("" + Constantes.COR_SELECIONADO.getRGB()));
 		pw.print(" corLimite=" + citar("" + Constantes.COR_LIMITE.getRGB()));
 		pw.print(" desenharFonte=" + citar("" + Constantes.DESENHAR_FONTE));
@@ -234,6 +237,8 @@ public class ArquivoUtil {
 			}
 
 			if (raiz == null) {
+				Constantes.STROKE_SELECIONADO = new BasicStroke(Constantes.STROKE_SELECIONADO_F);
+				Constantes.STROKE_PADRAO = new BasicStroke(Constantes.STROKE_PADRAO_F);
 				Constantes.DESENHAR_FONTE = Boolean.parseBoolean(attributes.getValue("desenharFonte"));
 				Constantes.COR_SELECIONADO = Constantes.COR_SELECIONADO_PADRAO;
 				Constantes.ALTURA_PADRAO = Constantes.ALTURA_PADRAO_RETANGULO;
@@ -242,6 +247,15 @@ public class ArquivoUtil {
 				Constantes.COR_BORDA = Constantes.COR_BORDA_PADRAO;
 				Constantes.ALINHAMENTO = Constantes.APARENCIA_MEIO;
 				Constantes.LARGURA_PADRAO = 0;
+
+				if (!Util.estaVazio(attributes.getValue("linhaSelecionado"))) {
+					Constantes.STROKE_SELECIONADO = new BasicStroke(
+							Float.parseFloat(attributes.getValue("linhaSelecionado")));
+				}
+
+				if (!Util.estaVazio(attributes.getValue("linhaBorda"))) {
+					Constantes.STROKE_PADRAO = new BasicStroke(Float.parseFloat(attributes.getValue("linhaBorda")));
+				}
 
 				if (!Util.estaVazio(attributes.getValue("corSelecionado"))) {
 					Constantes.COR_SELECIONADO = new Color(Integer.parseInt(attributes.getValue("corSelecionado")));

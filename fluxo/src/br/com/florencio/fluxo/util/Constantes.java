@@ -9,8 +9,10 @@ public class Constantes {
 	private Constantes() {
 	}
 
-	public static final Stroke STROKE_SELECIONADO = new BasicStroke(3.0f);
-	public static final Stroke STROKE_PADRAO = new BasicStroke(0.1f);
+	public static final float STROKE_SELECIONADO_F = 2.0f;
+	public static final float STROKE_PADRAO_F = 1.0f;
+	public static Stroke STROKE_SELECIONADO = new BasicStroke(STROKE_SELECIONADO_F);
+	public static Stroke STROKE_PADRAO = new BasicStroke(STROKE_PADRAO_F);
 	public static final Color COR_BORDA_PADRAO = Color.LIGHT_GRAY;
 	public static final Color COR_SELECIONADO_PADRAO = Color.BLUE;
 	public static final byte TAMANHO_SINAL_ICONE_COMENTARIO = 4;

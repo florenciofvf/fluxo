@@ -1,5 +1,6 @@
 package br.com.florencio.fluxo.view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -68,6 +69,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemExcluirHierarquia = new JMenuItem(Strings.get("label_excluir_hierarquia"));
 	private JMenuItem menuItemRecortarSFilhos = new JMenuItem(Strings.get("label_recortar_sem_filhos"));
 	private JMenuItem menuItemPadraoHierarquia = new JMenuItem(Strings.get("label_padrao_hierarquia"));
+	private JMenuItem menuItemSelecionadoLinha = new JMenuItem(Strings.get("label_selecionado_linha"));
 	private JMenuItem menuItemComentarioVirar = new JMenuItem(Strings.get("label_virar_comentario"));
 	private JMenuItem menuItemObservacaoVirar = new JMenuItem(Strings.get("label_virar_observacao"));
 	private JMenuItem menuItemMinimizarTodos2 = new JMenuItem(Strings.get("label_minimizar_todos"));
@@ -90,6 +92,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemAlturaPadao = new JMenuItem(Strings.get("label_altura_padrao"));
 	private JMenuItem menuItemGerarImagem = new JMenuItem(Strings.get("label_gerar_imagem"));
 	private JMenuItem menuItemComplemento = new JMenuItem(Strings.get("label_complemento"));
+	private JMenuItem menuItemBordaLinha = new JMenuItem(Strings.get("label_borda_linha"));
 	private JMenuItem menuItemColarPai = new JMenuItem(Strings.get("label_colar_pai"));
 	private JMenuItem menuItemPrimeiro = new JMenuItem(Strings.get("label_primeiro"));
 	private JMenuItem menuItemVermelho = new JMenuItem(Strings.get("label_vermelho"));
@@ -262,6 +265,9 @@ public class Painel extends JPanel {
 
 		popupPainel.addSeparator();
 		JMenu menuCores = new JMenu(Strings.get("label_cor"));
+		menuCores.add(menuItemSelecionadoLinha);
+		menuCores.add(menuItemBordaLinha);
+		menuCores.addSeparator();
 		menuCores.add(menuItemCorSelecionado);
 		menuCores.add(menuItemCorLimite);
 		menuCores.add(menuItemCorFundo);
@@ -900,6 +906,50 @@ public class Painel extends JPanel {
 			}
 		});
 
+		menuItemSelecionadoLinha.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String valor = JOptionPane.showInputDialog(formulario, Strings.get("label_selecionado_linha"),
+						((BasicStroke) Constantes.STROKE_SELECIONADO).getLineWidth());
+
+				if (Util.estaVazio(valor)) {
+					return;
+				}
+
+				try {
+					float f = Float.parseFloat(valor);
+					if (f > 0) {
+						Constantes.STROKE_SELECIONADO = new BasicStroke(f);
+						reorganizar();
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(formulario, ex.getMessage());
+				}
+			}
+		});
+
+		menuItemBordaLinha.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String valor = JOptionPane.showInputDialog(formulario, Strings.get("label_borda_linha"),
+						((BasicStroke) Constantes.STROKE_PADRAO).getLineWidth());
+
+				if (Util.estaVazio(valor)) {
+					return;
+				}
+
+				try {
+					float f = Float.parseFloat(valor);
+					if (f > 0) {
+						Constantes.STROKE_PADRAO = new BasicStroke(f);
+						reorganizar();
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(formulario, ex.getMessage());
+				}
+			}
+		});
+
 		menuItemLarguraPadao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1422,8 +1472,8 @@ public class Painel extends JPanel {
 				}
 
 				JColorChooser colorChooser = new JColorChooser(Constantes.COR_LIMITE);
-				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_limite"), true,
-						colorChooser, new OK(colorChooser), null);
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_limite"), true, colorChooser,
+						new OK(colorChooser), null);
 				dialog.setVisible(true);
 			}
 		});
@@ -1448,8 +1498,8 @@ public class Painel extends JPanel {
 				}
 
 				JColorChooser colorChooser = new JColorChooser(Constantes.COR_FUNDO);
-				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_fundo"), true,
-						colorChooser, new OK(colorChooser), null);
+				JDialog dialog = JColorChooser.createDialog(formulario, Strings.get("label_fundo"), true, colorChooser,
+						new OK(colorChooser), null);
 				dialog.setVisible(true);
 			}
 		});
