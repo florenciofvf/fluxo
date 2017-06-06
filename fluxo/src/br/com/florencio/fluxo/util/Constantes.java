@@ -39,5 +39,6 @@ public class Constantes {
 	public static Color COR_LIMITE = COR_RETAN_PADRAO;
 	public static byte ALINHAMENTO = APARENCIA_MEIO;
 	public static int LARGURA_PADRAO = 0;
+	public static boolean DESTACAR_RAIZ;
 	public static byte ALTURA_FONTE;
 }

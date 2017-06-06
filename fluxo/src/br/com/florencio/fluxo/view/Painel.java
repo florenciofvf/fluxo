@@ -62,6 +62,7 @@ public class Painel extends JPanel {
 	private JMenuItem menuItemObservacaoEmFilho = new JMenuItem(Strings.get("label_transformar_observacao_filho"));
 	private JCheckBoxMenuItem menuItemDesenharLimite = new JCheckBoxMenuItem(Strings.get("label_desenhar_limite"));
 	private JCheckBoxMenuItem menuItemDesenharFonte = new JCheckBoxMenuItem(Strings.get("label_desenhar_fonte"));
+	private JCheckBoxMenuItem menuItemDestacadoRaiz = new JCheckBoxMenuItem(Strings.get("label_destacar_raiz"));
 	private JCheckBoxMenuItem menuItemDesenharDestacado = new JCheckBoxMenuItem(Strings.get("label_destacar"));
 	private JRadioButtonMenuItem menuItemAlinhamentoMeio = new JRadioButtonMenuItem(Strings.get("label_meio"));
 	private JMenuItem menuItemComentarioEmPai = new JMenuItem(Strings.get("label_transformar_comentario_pai"));
@@ -237,6 +238,8 @@ public class Painel extends JPanel {
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
 		popupPainel.addSeparator();
+		popupPainel.add(menuItemDestacadoRaiz);
+		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharLimite);
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharFonte);
@@ -333,6 +336,7 @@ public class Painel extends JPanel {
 						menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
 						menuItemDesenharLimite.setSelected(Constantes.DESENHAR_LIMITE);
 						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
+						menuItemDestacadoRaiz.setSelected(Constantes.DESTACAR_RAIZ);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
 				}
@@ -355,6 +359,7 @@ public class Painel extends JPanel {
 						menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
 						menuItemDesenharLimite.setSelected(Constantes.DESENHAR_LIMITE);
 						menuItemDesenharFonte.setSelected(Constantes.DESENHAR_FONTE);
+						menuItemDestacadoRaiz.setSelected(Constantes.DESTACAR_RAIZ);
 						popupPainel.show(Painel.this, e.getX(), e.getY());
 					}
 				}
@@ -577,6 +582,14 @@ public class Painel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Constantes.DESENHAR_LIMITE = menuItemDesenharLimite.isSelected();
+				repaint();
+			}
+		});
+
+		menuItemDestacadoRaiz.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Constantes.DESTACAR_RAIZ = menuItemDestacadoRaiz.isSelected();
 				repaint();
 			}
 		});

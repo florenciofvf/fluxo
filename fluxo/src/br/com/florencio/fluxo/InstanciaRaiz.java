@@ -421,7 +421,7 @@ public class InstanciaRaiz extends Instancia {
 		raizEsquerda.setMargemInferior(margemInferior);
 		raizDireita.setMargemInferior(margemInferior);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "RAIZ: " + descricao;

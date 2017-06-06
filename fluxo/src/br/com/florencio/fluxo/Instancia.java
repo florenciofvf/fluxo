@@ -114,7 +114,7 @@ public class Instancia {
 	}
 
 	public void replicarLado() {
-		if(!(pai instanceof InstanciaRaiz)) {
+		if (!(pai instanceof InstanciaRaiz)) {
 			esquerdo = pai.esquerdo;
 		}
 
@@ -942,7 +942,7 @@ public class Instancia {
 	public void setMarcado(boolean marcado) {
 		this.marcado = marcado;
 	}
-	
+
 	@Override
 	public String toString() {
 		return descricao;
