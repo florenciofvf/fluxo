@@ -1,6 +1,7 @@
 package br.com.florencio.fluxo.view;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -8,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.lang.reflect.Method;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -46,10 +48,17 @@ public class Formulario extends JFrame {
 		montarLayout();
 		registrarEventos();
 		setSize(800, 600);
+
 		if (System.getProperty("os.name").startsWith("Mac OS")) {
-			// com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(this,
-			// true);
+			try {
+				Class<?> classe = Class.forName("com.apple.eawt.FullScreenUtilities");
+				Method method = classe.getMethod("setWindowCanFullScreen", Window.class, Boolean.TYPE);
+				method.invoke(classe, this, true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+
 		setVisible(true);
 	}
 
