@@ -64,7 +64,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 					g2.drawString(i.observacao, x + 3, y - 2);
 				} else {
 					if (i.cor != null) {
-						g2.setColor(Constantes.COR_BORDA);
+						g2.setColor(Constantes.COR_BORDA.brighter());
 					}
 					g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
@@ -78,7 +78,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
 				} else {
 					if (i.cor != null) {
-						g2.setColor(Constantes.COR_BORDA);
+						g2.setColor(Constantes.COR_BORDA.brighter());
 					}
 					g2.fillRect(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
@@ -151,7 +151,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 					g2.drawString(i.observacao, x + 3, y - 2);
 				} else {
 					if (i.cor != null) {
-						g2.setColor(Constantes.COR_BORDA);
+						g2.setColor(Constantes.COR_BORDA.brighter());
 					}
 					g2.fillRect(x, y, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
@@ -165,7 +165,7 @@ public class InstanciaAparenciaRaiz extends InstanciaAparencia {
 					g2.drawString(i.comentario, x + 3, y + Constantes.ALTURA_FONTE + Constantes.ALTURA_FONTE + 3);
 				} else {
 					if (i.cor != null) {
-						g2.setColor(Constantes.COR_BORDA);
+						g2.setColor(Constantes.COR_BORDA.brighter());
 					}
 					g2.fillRect(x, y + a - 3, Constantes.TAMANHO_SINAL_ICONE_COMENTARIO,
 							Constantes.TAMANHO_SINAL_ICONE_COMENTARIO);
