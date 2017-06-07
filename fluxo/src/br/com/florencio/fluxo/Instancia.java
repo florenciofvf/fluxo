@@ -392,8 +392,8 @@ public class Instancia {
 	}
 
 	void definirDimensaoLargura(FontMetrics metrics) {
-		int larguraObservacao = metrics.stringWidth(getObservacao());
-		int larguraComentario = metrics.stringWidth(getComentario());
+		int larguraObservacao = desenharObservacao ? metrics.stringWidth(getObservacao()) : 0;
+		int larguraComentario = desenharComentario ? metrics.stringWidth(getComentario()) : 0;
 		int larguraDescricao = metrics.stringWidth(getDescricao());
 
 		int largura = larguraObservacao;
