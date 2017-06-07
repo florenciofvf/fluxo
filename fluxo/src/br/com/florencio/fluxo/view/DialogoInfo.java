@@ -32,7 +32,7 @@ public class DialogoInfo extends JDialog {
 
 	private class ModeloObjeto implements TableModel {
 		private final String[] COLUNAS = { "PROPRIEDADE", "VALOR" };
-		private final int TOTAL_PROPRIEDADES = 17;
+		private final int TOTAL_PROPRIEDADES = 20;
 		private final Instancia objeto;
 
 		public ModeloObjeto(Instancia objeto) {
@@ -192,6 +192,30 @@ public class DialogoInfo extends JDialog {
 					return "Altura Complementar";
 				if (columnIndex == 1)
 					return objeto.getAlturaComplementar();
+			}
+
+			linha++;
+			if (rowIndex == linha) {
+				if (columnIndex == 0)
+					return "Margem Superior";
+				if (columnIndex == 1)
+					return objeto.getMargemSuperior();
+			}
+
+			linha++;
+			if (rowIndex == linha) {
+				if (columnIndex == 0)
+					return "Margem Inferior";
+				if (columnIndex == 1)
+					return objeto.getMargemInferior();
+			}
+
+			linha++;
+			if (rowIndex == linha) {
+				if (columnIndex == 0)
+					return "Desenhar Destacado";
+				if (columnIndex == 1)
+					return objeto.isDesenharDestacado();
 			}
 
 			linha++;

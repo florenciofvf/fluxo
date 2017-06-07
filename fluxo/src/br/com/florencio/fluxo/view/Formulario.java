@@ -47,8 +47,9 @@ public class Formulario extends JFrame {
 		registrarEventos();
 		setSize(800, 600);
 		if (System.getProperty("os.name").startsWith("Mac OS")) {
-	        //com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(this, true);
-	    }
+			// com.apple.eawt.FullScreenUtilities.setWindowCanFullScreen(this,
+			// true);
+		}
 		setVisible(true);
 	}
 

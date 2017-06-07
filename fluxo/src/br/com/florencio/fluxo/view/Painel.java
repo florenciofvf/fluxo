@@ -211,6 +211,16 @@ public class Painel extends JPanel {
 		popup.add(menuCor);
 
 		popup.addSeparator();
+		JMenu menuObservacao = new JMenu(Strings.get("label_observacao"));
+		menuObservacao.add(menuItemObservacao);
+		menuObservacao.add(menuItemDesenharObservacao);
+		menuObservacao.add(menuItemObservacaoEmFilho);
+		menuObservacao.add(menuItemObservacaoEmPai);
+		menuObservacao.add(menuItemObservacaoVirar);
+		menuObservacao.add(menuItemObservacaoEmComentario);
+		popup.add(menuObservacao);
+
+		popup.addSeparator();
 		JMenu menuComentario = new JMenu(Strings.get("label_comentario"));
 		menuComentario.add(menuItemComentario);
 		menuComentario.add(menuItemDesenharComentario);
@@ -221,33 +231,29 @@ public class Painel extends JPanel {
 		popup.add(menuComentario);
 
 		popup.addSeparator();
-		JMenu menuObservacao = new JMenu(Strings.get("label_observacao"));
-		menuObservacao.add(menuItemObservacao);
-		menuObservacao.add(menuItemDesenharObservacao);
-		menuObservacao.add(menuItemObservacaoEmFilho);
-		menuObservacao.add(menuItemObservacaoEmPai);
-		menuObservacao.add(menuItemObservacaoVirar);
-		menuObservacao.add(menuItemObservacaoEmComentario);
-		popup.add(menuObservacao);
-		popup.addSeparator();
 		popup.add(menuItemInfo);
+
 		popup.addSeparator();
 		popup.add(menuItemDesenharDestacado);
 		popup.add(menuItemDesenharAparencia);
 
 		popupPainel.add(menuItemMinimizarTodos);
 		popupPainel.add(menuItemMaximizarTodos);
+
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDestacadoRaiz);
+
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharLimite);
+
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemDesenharFonte);
+
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemLarguraPadao);
 		popupPainel.add(menuItemAlturaPadao);
-		popupPainel.addSeparator();
 
+		popupPainel.addSeparator();
 		JMenu menuAlinhamento = new JMenu(Strings.get("label_alinhamento"));
 		menuAlinhamento.add(menuItemAlinhamentoSuperior);
 		menuAlinhamento.add(menuItemAlinhamentoMeio);
@@ -261,8 +267,8 @@ public class Painel extends JPanel {
 		menuItemAlinhamentoInferior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ABAIXO);
 		menuItemAlinhamentoSuperior.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_ACIMA);
 		menuItemAlinhamentoMeio.setSelected(Constantes.ALINHAMENTO == Constantes.APARENCIA_MEIO);
-
 		popupPainel.add(menuAlinhamento);
+
 		popupPainel.addSeparator();
 		popupPainel.add(menuItemGerarImagem);
 
