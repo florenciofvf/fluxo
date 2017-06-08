@@ -377,7 +377,22 @@ public class Painel extends JPanel {
 					return;
 				}
 
-				if (e.getClickCount() == 2 && raiz != null) {
+				if (e.isControlDown() && raiz != null) {
+					Instancia objeto = raiz.procurar(e.getX(), e.getY());
+
+					if (objetoMarcado != null) {
+						objetoMarcado.setMarcado(false);
+						repaint();
+					}
+
+					if (objeto == null) {
+						return;
+					}
+
+					objeto.setMarcado(true);
+					objetoMarcado = objeto;
+					repaint();
+				} else if (e.getClickCount() == 2 && raiz != null) {
 					Instancia objeto = raiz.procurar(e.getX(), e.getY());
 
 					if (objetoMarcado != null) {
